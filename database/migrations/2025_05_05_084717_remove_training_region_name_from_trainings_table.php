@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_regions', function (Blueprint $table) {
-            $table->id('training_region_id');
-            $table->string('training_region_name', 100);
-            $table->timestamps();
+        Schema::table('trainings', function (Blueprint $table) {
+            //
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_regions');
+        Schema::table('trainings', function (Blueprint $table) {
+            //
+        });
     }
 };

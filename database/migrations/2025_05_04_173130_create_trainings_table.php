@@ -12,7 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('trainings', function (Blueprint $table) {
-            $table->id();
+            $table->id('training_id'); // Primary key
+            $table->foreignId('training_region_id')->constrained('training_regions')->onDelete('cascade'); // Foreign key
+
+            $table->string('training_title', 50);
+            $table->text('training_description');
+            $table->decimal('training_price_rupiah', 10, 2);
+            $table->decimal('training_price_dollar', 10, 2);
+            $table->string('training_image', 255);
+            $table->dateTime('training_schedule');
+            $table->string('training_location', 255);
+            $table->unsignedInteger('training_slot');
             $table->timestamps();
         });
     }
