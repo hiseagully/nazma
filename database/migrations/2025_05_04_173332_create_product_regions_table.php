@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Product Regions
         Schema::create('product_regions', function (Blueprint $table) {
-            $table->id();
+            $table->id('product_region_id');
+            $table->string('product_region_city', 100);
+            $table->string('product_region_province', 100);
+            $table->string('product_region_country', 100);
             $table->timestamps();
         });
+
     }
 
     /**

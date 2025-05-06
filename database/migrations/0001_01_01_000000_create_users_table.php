@@ -14,15 +14,15 @@ return new class extends Migration
         // Users
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
-            $table->string('user_name', 20);
-            $table->string('user_email', 100)->unique();
-            $table->string('user_password', 100);
-            $table->string('user_phone', 20);
+            $table->string('user_name', 50);
+            $table->string('user_email', 150)->unique();
+            $table->string('user_password', 255);
+            $table->string('user_phone', 15);
             $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
+            $table->string('user_email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });

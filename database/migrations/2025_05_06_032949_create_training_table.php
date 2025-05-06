@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trainings', function (Blueprint $table) {
-            $table->id('training_id'); // Primary key
-            $table->foreignId('training_region_id')->constrained('training_regions')->onDelete('cascade'); // Foreign key
-
+        Schema::create('training', function (Blueprint $table) {
+            $table->id('training_id');
+            $table->foreignId('training_region_id')->constrained('training_regions')->onDelete('cascade');
             $table->string('training_title', 50);
             $table->text('training_description');
             $table->decimal('training_price_rupiah', 10, 2);
@@ -25,6 +24,7 @@ return new class extends Migration
             $table->unsignedInteger('training_slot');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trainings');
+        Schema::dropIfExists('training');
     }
 };
