@@ -1,0 +1,324 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>NaZMaLogy Landing Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[#f4f8ff] text-black">
+    <x-header></x-header>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-text max-w-xl w-full">
+        <p class="hero-subtitle">
+            <a href="/landingpage" class="text-[#f58220] hover:underline">Home</a>
+        </p>
+        <h1 class="hero-title">
+          Join the Training and<br />
+          Find Our Products<br />
+          That You Want
+        </h1>
+        <a href="/login" class="hero-button inline-flex items-center">
+            <span>GET STARTED</span>
+            <i class="fas fa-angle-double-right ml-2"></i>
+        </a>
+      </div>
+      <div class="hero-image-container">
+        <img
+          alt="Illustration of a woman presenting charts to three seated people in a modern office with city view"
+          class="hero-image"
+          height="200"
+          src="https://storage.googleapis.com/a1aa/image/f0b04399-044c-44fe-628c-f99db3b553ec.jpg"
+          width="400"
+        />
+      </div>
+    </section>
+
+    <!-- Our Service Section -->
+    <section class="our-service-section">
+      <h2 class="our-service-title">Our Service</h2>
+      <div class="our-service-grid">
+        <div>
+          <img
+            alt="Icon showing three people collaborating with charts and graphs on a screen"
+            class="service-icon"
+            height="100"
+            src="https://storage.googleapis.com/a1aa/image/178ff260-2256-4df2-79a6-73c305335f42.jpg"
+            width="100"
+          />
+          <h3 class="service-title">Training</h3>
+          <p class="service-description">
+            A curated selection of high-quality local products from Indonesian
+            small businesses (UMKM), handpicked by the Nazma team. These items
+            showcase the beauty of local creativity and cultural heritage,
+            ranging from handcrafted goods and fashion to traditional regional
+            specialties.
+          </p>
+        </div>
+        <div>
+          <img
+            alt="Icon showing a smartphone with shopping bags and boxes around it"
+            class="service-icon"
+            height="100"
+            src="https://storage.googleapis.com/a1aa/image/1bb5be32-f384-403b-51bf-d7101d6f86d6.jpg"
+            width="100"
+          />
+          <h3 class="service-title">Products</h3>
+          <p class="service-description">
+            A curated selection of high-quality local products from Indonesian
+            small businesses (UMKM), handpicked by the Nazma team. These items
+            showcase the beauty of local creativity and cultural heritage,
+            ranging from handcrafted goods and fashion to traditional regional
+            specialties.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Training Carousel Section -->
+    <section class="carousel-section">
+      <h2 class="carousel-title">Training</h2>
+      <div class="carousel-wrapper">
+        <button
+          aria-label="Previous"
+          class="carousel-button carousel-prev"
+          id="training-prev"
+        >
+          <i class="fas fa-angle-left"></i>
+        </button>
+        <div class="carousel-grid" id="training-list"></div>
+        <button
+          aria-label="Next"
+          class="carousel-button carousel-next"
+          id="training-next"
+        >
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+      <div class="carousel-dots" id="training-dots"></div>
+    </section>
+
+    <!-- Products Carousel Section -->
+    <section class="carousel-section">
+      <h2 class="carousel-title">Products</h2>
+      <div class="carousel-wrapper">
+        <button
+          aria-label="Previous"
+          class="carousel-button carousel-prev"
+          id="product-prev"
+        >
+          <i class="fas fa-angle-left"></i>
+        </button>
+        <div class="carousel-grid" id="product-list"></div>
+        <button
+          aria-label="Next"
+          class="carousel-button carousel-next"
+          id="product-next"
+        >
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+      <div class="carousel-dots" id="product-dots"></div>
+    </section>
+  </main>
+
+  <script>
+    // Data for training and products
+    const trainingData = [
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        date: "21-22 April 2025",
+        location: "D.I.Yogyakarta",
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        date: "21-22 April 2025",
+        location: "D.I.Yogyakarta",
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        date: "21-22 April 2025",
+        location: "D.I.Yogyakarta",
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        date: "21-22 April 2025",
+        location: "D.I.Yogyakarta",
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        date: "21-22 April 2025",
+        location: "D.I.Yogyakarta",
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        date: "21-22 April 2025",
+        location: "D.I.Yogyakarta",
+      },
+    ];
+
+    const productData = [
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        price: "$ 80",
+        category: "Aksesoris",
+        disabled: false,
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        price: "$ 80",
+        category: "Aksesoris",
+        disabled: false,
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        price: "$ 80",
+        category: "Aksesoris",
+        disabled: false,
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        price: "$ 80",
+        category: "Aksesoris",
+        disabled: false,
+      },
+      {
+        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
+        alt: "Workshop Contract Development poster with a man in black shirt",
+        title: "Training: Contract Development",
+        price: "$ 80",
+        category: "Aksesoris",
+        disabled: false,
+      },
+    ];
+
+    // Carousel state and rendering
+    function renderCarousel(containerId, dotsId, data, itemsPerPage, isProduct = false) {
+      const container = document.getElementById(containerId);
+      const dotsContainer = document.getElementById(dotsId);
+      let currentPage = 0;
+      const totalPages = Math.ceil(data.length / itemsPerPage);
+
+      function render() {
+        container.innerHTML = "";
+        dotsContainer.innerHTML = "";
+        const start = currentPage * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pageItems = data.slice(start, end);
+
+        pageItems.forEach((item) => {
+          const card = document.createElement("article");
+          card.className = "bg-white rounded-xl shadow-md overflow-hidden cursor-pointer";
+          if (isProduct && item.disabled) {
+            card.classList.add("opacity-40");
+          }
+          card.innerHTML = `
+            <img src="${item.img}" alt="${item.alt}" class="w-full object-cover" height="200" width="300"/>
+            <div class="p-4 ${isProduct ? "" : "text-xs"}">
+              ${
+                isProduct
+                  ? `<p class="text-xs ${item.disabled ? "text-gray-400" : "text-gray-900"} mb-1 font-semibold">${item.title}</p>
+                     <p class="text-xs ${item.disabled ? "text-gray-400" : "text-gray-400"} mb-1">${item.price}</p>
+                     <p class="text-xs ${item.disabled ? "text-gray-400" : "text-gray-400"} text-right">${item.category}</p>`
+                  : `<p class="text-xs ${currentPage === 0 && start === 0 ? "text-gray-400" : "text-gray-900"} mb-1 font-semibold">${item.title}</p>
+                     <p class="text-xs text-gray-400 mb-1">${item.date}</p>
+                     <p class="text-xs text-gray-400 text-right">${item.location}</p>`
+              }
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+        for (let i = 0; i < totalPages; i++) {
+          const dot = document.createElement("span");
+          dot.className = `w-2 h-2 rounded-full cursor-pointer ${i === currentPage ? "bg-[#f58220]" : "bg-gray-300"}`;
+          dot.addEventListener("click", () => {
+            currentPage = i;
+            render();
+          });
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function prev() {
+        currentPage = (currentPage - 1 + totalPages) % totalPages;
+        render();
+      }
+
+      function next() {
+        currentPage = (currentPage + 1) % totalPages;
+        render();
+      }
+
+      render();
+
+      return { prev, next };
+    }
+
+    // Initialize carousels
+    const trainingCarousel = renderCarousel("training-list", "training-dots", trainingData, 4, false);
+    const productCarousel = renderCarousel("product-list", "product-dots", productData, 4, true);
+
+    // Attach event listeners for buttons
+    document.getElementById("training-prev").addEventListener("click", trainingCarousel.prev);
+    document.getElementById("training-next").addEventListener("click", trainingCarousel.next);
+    document.getElementById("product-prev").addEventListener("click", productCarousel.prev);
+    document.getElementById("product-next").addEventListener("click", productCarousel.next);
+
+    const dots = document.querySelectorAll('.carousel-dots span');
+    let currentSlide = 0;
+
+    function updateDots(index) {
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[index].classList.add('active');
+    }
+
+    // Simulasi ganti slide manual (misalnya via next/prev)
+    document.querySelector('.carousel-next').addEventListener('click', () => {
+        currentSlide = (currentSlide + 1) % dots.length;
+        updateDots(currentSlide);
+    });
+
+    document.querySelector('.carousel-prev').addEventListener('click', () => {
+        currentSlide = (currentSlide - 1 + dots.length) % dots.length;
+        updateDots(currentSlide);
+    });
+  </script>
+  <x-footer></x-footer>
+</body>
+</html>
