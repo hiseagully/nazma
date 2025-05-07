@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f5f8ff;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    max-width: 1120px;
+    width: 100%;
+  }
+
+  /* Trainee Data Section */
+  .trainee-data {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.05);
+    flex: 1 1 600px;
+    max-width: 600px;
+  }
+
+  .section-title {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: #000;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 8px;
+  }
+
+  .form-space > div {
+    margin-bottom: 24px;
+  }
+
+  label.label,
+  span.label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #000;
+    margin-bottom: 6px;
+  }
+
+  input[type="email"].input-email {
+    width: 100%;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    color: #000;
+    outline-offset: 2px;
+  }
+
+  input[type="email"].input-email::placeholder {
+    color: #d1d5db;
+  }
+
+  input[type="text"].input-fullname {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.875rem;
+    color: #d1d5db;
+    outline-offset: 2px;
+  }
+
+  input[type="text"].input-fullname::placeholder {
+    color: #d1d5db;
+  }
+
+  input[type="text"].input-fullname:focus,
+  input[type="email"].input-email:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 2px #f97316;
+    color: #000;
+  }
+
+  /* Date of Birth selects */
+  .dob-selects {
+    display: flex;
+    gap: 12px;
+    max-width: 400px;
+  }
+
+  select.select-dob {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    appearance: none;
+    background-color: #fff;
+    outline-offset: 2px;
+    cursor: pointer;
+  }
+
+  select.select-dob:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 2px #f97316;
+    color: #000;
+  }
+
+  /* Gender */
+  .gender-options {
+    display: flex;
+    gap: 16px;
+    max-width: 320px;
+  }
+
+  .gender-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    user-select: none;
+  }
+
+  .gender-input {
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  /* Address */
+  textarea.textarea-address {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    color: #d1d5db;
+    resize: none;
+    outline-offset: 2px;
+  }
+
+  textarea.textarea-address::placeholder {
+    color: #d1d5db;
+  }
+
+  textarea.textarea-address:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 2px #f97316;
+    color: #000;
+  }
+
+  /* Payment Section */
+  .payment-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 24px 32px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.05);
+    width: 100%;
+    max-width: 320px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .payment-info {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .payment-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .payment-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #000;
+    line-height: 1.2;
+  }
+
+  .payment-date {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.8);
+    margin-top: 4px;
+  }
+
+  .payment-summary {
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+
+  .payment-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #000;
+    margin-bottom: 8px;
+  }
+
+  .payment-select {
+    width: 144px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+  }
+
+  /* Checkout Button */
+  .checkout-btn {
+    background: linear-gradient(90deg, #f59e0b 0%, #f97316 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 12px 0;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .checkout-btn:hover {
+    background: linear-gradient(90deg, #fbbf24 0%, #fb923c 100%);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    main {
+      flex-direction: column;
+      align-items: center;
+    }
+    .trainee-data,
+    .payment-section {
+      max-width: 100%;
+      width: 100%;
+    }
+  }

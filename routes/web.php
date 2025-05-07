@@ -34,3 +34,15 @@ Route::get('/signup', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+Route::get('/training', function () {
+    return view('user.training');
+});
+
+Route::get('/trainingdetail', function () {
+    return view('user.trainingdetail');
+});
+
+Route::get('/trainingdata', function () {
+    return view('user.trainingdata');
+});
