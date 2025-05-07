@@ -1,0 +1,24 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Scroll-to-top button styling */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 5rem; /* Lebih tinggi, biar nggak nutupin footer */
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgba(247, 148, 29, 0.7); /* Lebih transparan */
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: background-color 0.3s ease;
+}
+
+#scrollTopBtn:hover {
+    background-color: rgba(217, 127, 20, 0.7); /* Hover juga transparan */
+}

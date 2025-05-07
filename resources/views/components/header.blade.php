@@ -13,7 +13,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Poppins', sans-serif; /* Ganti font di sini */
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
@@ -47,11 +47,10 @@
       margin-right: 10px;
     }
 
-    header.logo-text {
+    .logo-text {
       font-size: 24px;
-      font-weight: 700, bold;
+      font-weight: 700;
       color: #333;
-      font-family: 'Poppins', sans-serif;
     }
 
     .nav-menu {
@@ -96,10 +95,6 @@
         display: none;
       }
     }
-
-    .content {
-      padding: 2rem 5%;
-    }
   </style>
 </head>
 <body>
@@ -116,14 +111,23 @@
 
     <nav>
       <ul class="nav-menu">
-        <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Training</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Product</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Contact Us</a></li>
+        <li class="nav-item">
+          <a href="/landingpage" class="nav-link {{ Request::is('landingpage') ? 'active' : '' }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/training" class="nav-link {{ Request::is('training', 'trainingdetail') ? 'active' : '' }}">Training</a>
+        </li>
+        <li class="nav-item">
+          <a href="/product" class="nav-link {{ Request::is('product') ? 'active' : '' }}">Product</a>
+        </li>
+        <li class="nav-item">
+          <a href="/contact-us" class="nav-link {{ Request::is('contact-us') ? 'active' : '' }}">Contact Us</a>
+        </li>
       </ul>
     </nav>
 
     <a href="/login" class="login-btn">Login</a>
   </header>
+
 </body>
 </html>
