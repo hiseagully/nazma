@@ -14,8 +14,10 @@ return new class extends Migration
          // Products
          Schema::create('products', function (Blueprint $table) {
             $table->id('product_id');
-            $table->foreignId('product_category_id')->constrained('product_categories')->onDelete('cascade');
-            $table->foreignId('product_region_id')->constrained('product_regions')->onDelete('cascade');
+            $table->unsignedBigInteger('product_category_id')->nullable();
+            $table->foreignId('product_category_id')->references('product_category_id')->on('product_categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('product_region_id')->nullable();
+            $table->foreignId('product_region_id')->references('product_region_id')->on('product_regions')->onUpdate('cascade')->onDelete('cascade');
             $table->string('product_name', 100);
             $table->text('product_description');
             $table->decimal('product_price_rupiah', 10, 2);

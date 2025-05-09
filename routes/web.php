@@ -36,13 +36,21 @@ Route::get('/login', function () {
 });
 
 Route::get('/training', function () {
-    return view('user.training');
+    return view('user.training.training');
 });
 
 Route::get('/trainingdetail', function () {
-    return view('user.trainingdetail');
+    return view('user.training.trainingdetail');
 });
 
 Route::get('/trainingdata', function () {
-    return view('user.trainingdata');
+    return view('user.training.trainingdata');
+});
+
+Route::get('/trainingtransaction', function () {
+    return view('user.training.trainingtransaction');
+});
+
+Route::get('/trainingticket', function () {
+    return view('user.training.trainingticket');
 });

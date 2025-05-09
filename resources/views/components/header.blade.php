@@ -115,7 +115,7 @@
           <a href="/landingpage" class="nav-link {{ Request::is('landingpage') ? 'active' : '' }}">Home</a>
         </li>
         <li class="nav-item">
-          <a href="/training" class="nav-link {{ Request::is('training', 'trainingdetail') ? 'active' : '' }}">Training</a>
+          <a href="/training" class="nav-link {{ Request::is('training', 'trainingdetail', 'trainingdata', 'trainingtransaction', 'trainingticket') ? 'active' : '' }}">Training</a>
         </li>
         <li class="nav-item">
           <a href="/product" class="nav-link {{ Request::is('product') ? 'active' : '' }}">Product</a>

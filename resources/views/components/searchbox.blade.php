@@ -26,13 +26,14 @@
       role="search"
       aria-label="Training search and actions"
     >
-      <button
+      <a
+        href="/training"
         aria-label="Grid view icon"
         class="text-white text-lg flex items-center justify-center"
         type="button"
       >
         <i class="fas fa-th-large"></i>
-      </button>
+      </a>
       <input
         type="text"
         placeholder="Find the training you want"
@@ -46,20 +47,22 @@
       >
         <i class="fas fa-search"></i>
       </button>
-      <button
+      <a
+        href="/trainingtransaction"
         class="flex items-center space-x-1 text-white text-sm font-semibold"
-        type="button"
+        aria-label="Go to Training Transaction"
       >
         <i class="fas fa-exchange-alt"></i>
         <span>Transaction</span>
-      </button>
-      <button
+      </a>
+      <a
+        href="/trainingticket"
         class="flex items-center space-x-1 text-white text-sm font-semibold"
-        type="button"
+        aria-label="Go to Training Ticket"
       >
         <i class="fas fa-ticket-alt"></i>
         <span>Ticket</span>
-      </button>
+      </a>
     </div>
   </div>
 </body>
