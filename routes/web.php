@@ -22,6 +22,14 @@ Route::get('/productcart', function () {
     return view('user.product.productcart');
 });
 
+Route::get('/productdata', function () {
+    return view('user.product.productdata');
+});
+
+Route::get('/producttransaction', function () {
+    return view('user.product.producttransaction');
+});
+
 use App\Http\Controllers\SignupController;
 
 Route::get('/signup', [SignupController::class, 'create'])->name('signup');
