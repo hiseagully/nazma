@@ -16,6 +16,7 @@
 </head>
 <body>
   <x-header></x-header>
+  <x-productsearchbox></x-productsearchbox>
   <!-- Product heading -->
   <div class="max-w-6xl mx-auto w-full px-6 mt-8">
    <h2 class="text-[#f58220] font-bold text-lg select-none" style="font-family: 'Inter', sans-serif">

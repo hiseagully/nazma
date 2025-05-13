@@ -20,6 +20,14 @@
                 <input type="text" name="phone" placeholder="Phone" required>
                 <button type="submit">Sign Up now!</button>
             </form>
+
+            <div class="google-signup">
+                <a href="{{ route('google.signup') }}" class="google-btn">
+                    <img src="{{ asset('images/google-icon.png') }}" alt="Google Icon">
+                    Sign Up with Google
+                </a>
+            </div>
+            
             <p>Already have an account? <a href="/login">Log In</a></p>
         </main>
 

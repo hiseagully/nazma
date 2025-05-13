@@ -115,13 +115,13 @@
           <a href="/landingpage" class="nav-link {{ Request::is('landingpage') ? 'active' : '' }}">Home</a>
         </li>
         <li class="nav-item">
-          <a href="/training" class="nav-link {{ Request::is('training', 'trainingdetail', 'trainingdata', 'trainingtransaction', 'trainingticket') ? 'active' : '' }}">Training</a>
+          <a href="/training" class="nav-link {{ Request::is('training', 'trainingdetail', 'trainingdata', 'trainingtransaction', 'trainingticket', 'trainingticketdetail') ? 'active' : '' }}">Training</a>
         </li>
         <li class="nav-item">
           <a href="/product" class="nav-link {{ Request::is('product') ? 'active' : '' }}">Product</a>
         </li>
         <li class="nav-item">
-          <a href="/contact-us" class="nav-link {{ Request::is('contact-us') ? 'active' : '' }}">Contact Us</a>
+          <a href="/footer" class="nav-link {{ Request::is('footer') ? 'active' : '' }}">Contact Us</a>
         </li>
       </ul>
     </nav>

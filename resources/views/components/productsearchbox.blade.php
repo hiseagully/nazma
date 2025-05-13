@@ -19,34 +19,46 @@
   </style>
 </head>
 <body class="bg-[#F5F7FA]">
- <!-- Search bar -->
- <section class="max-w-5xl mx-auto px-6 sm:px-10 lg:px-0 mt-10 w-full">
-   <div class="flex items-center bg-[#f68b1e] rounded-full overflow-hidden max-w-4xl mx-auto" style="height: 44px">
-    <button aria-label="Grid icon" class="flex items-center justify-center w-12 h-11 text-white text-lg">
-     <i class="fas fa-th-large">
-     </i>
-    </button>
-    <input class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black" placeholder="Find the training you want" type="text"/>
-
-    <button aria-label="Search" class="flex items-center justify-center ml-1 w-8 h-8 bg-white rounded-full mr-3 text-[#f68b1e] text-xs">
-     <i class="fas fa-search">
-     </i>
-    </button>
-    <button aria-label="Cart" class="flex items-center space-x-1 text-white font-semibold text-sm pr-4">
+  <!-- Search Component -->
+  <div class="flex justify-center mt-6">
+    <div
+      class="flex items-center bg-[#F7941D] rounded-full w-[75%] max-w-5xl px-6 py-2 space-x-4"
+      role="search"
+      aria-label="product search and actions"
+    >
+      <a
+        href="/product"
+        aria-label="Grid view icon"
+        class="text-white text-lg flex items-center justify-center"
+        type="button"
+      >
+        <i class="fas fa-th-large"></i>
+      </a>
+      <input class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black" placeholder="Find the product you want" type="text"/>
+      <button
+        aria-label="Search"
+        class="text-[#F7941D] bg-white rounded-full p-2 hover:bg-gray-100"
+        type="submit"
+      >
+        <i class="fas fa-search"></i>
+      </button>
+      <a
+        href="/producttransaction"
+        class="flex items-center space-x-1 text-white text-sm font-semibold"
+        aria-label="Go to Product Transaction"
+      >
+        <i class="fas fa-exchange-alt"></i>
+        <span>Transaction</span>
+      </a>
+      <button aria-label="Cart" class="flex items-center space-x-1 text-white font-semibold text-sm pr-4">
      <i class="fas fa-shopping-cart">
      </i>
      <span>
       Cart
      </span>
     </button>
-    <button aria-label="Transaction" class="flex items-center space-x-1 text-white font-semibold text-sm pr-6">
-     <i class="fas fa-exchange-alt">
-     </i>
-     <span>
-      Transaction
-     </span>
-    </button>
-   </div>
-  </section>
+    </div>
+  </div>
 </body>
 </html>
+

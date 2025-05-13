@@ -43,6 +43,10 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/profile', function () {
+    return view('user.profile');
+});
+
 Route::get('/training', function () {
     return view('user.training.training');
 });
@@ -62,3 +66,13 @@ Route::get('/trainingtransaction', function () {
 Route::get('/trainingticket', function () {
     return view('user.training.trainingticket');
 });
+
+Route::get('/trainingticketdetail', function () {
+    return view('user.training.trainingticketdetail');
+});
+
+use App\Http\Controllers\Auth\GoogleController;
+
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])->name('google.signup');

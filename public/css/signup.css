@@ -126,6 +126,44 @@ p a:hover {
   text-decoration: underline;
 }
 
+/* Google Login */
+.google-login {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.google-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6; /* Abu-abu terang */
+  color: #374151; /* Abu-abu gelap */
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db; /* Border abu-abu */
+  transition: background-color 0.2s ease;
+}
+
+.google-btn img {
+  width: auto; /* Biarkan lebar otomatis */
+  height: 20px; /* Atur tinggi tetap */
+  margin-right: 0.5rem;
+  object-fit: contain; /* Pastikan gambar tetap proporsional */
+}
+
+.google-btn:hover {
+  background-color: #e5e7eb; /* Abu-abu lebih gelap saat hover */
+}
+
+/* Google Signup */
+.google-signup {
+  margin-top: 1rem;
+  text-align: center;
+}
+
 /* Responsive - HP */
 @media (max-width: 768px) {
   .bg-left, .bg-right {

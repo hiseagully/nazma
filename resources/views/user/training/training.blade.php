@@ -9,7 +9,7 @@
     rel="stylesheet"
   />
   <x-header></x-header>
-  <x-searchbox></x-searchbox>
+  <x-trainingsearchbox></x-trainingsearchbox>
   <link rel="stylesheet" href="{{ asset('css/training/training.css') }}">
 </head>
 <body class="bg-[#F5F7FA]">
@@ -59,6 +59,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -66,6 +67,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -82,6 +84,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -89,6 +92,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -105,6 +109,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -112,6 +117,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -128,6 +134,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -135,6 +142,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -151,6 +159,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -158,6 +167,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -174,6 +184,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -181,6 +192,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -197,6 +209,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -204,6 +217,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -220,6 +234,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -227,6 +242,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -243,6 +259,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -250,6 +267,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -266,6 +284,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -273,6 +292,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -289,6 +309,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -296,6 +317,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -312,6 +334,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -319,6 +342,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -335,6 +359,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -342,6 +367,7 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
       </article>
 
       <article
@@ -358,6 +384,7 @@
           height="180"
           loading="lazy"
         />
+        <a href="/trainingdetail">
         <div class="p-3">
           <h3 class="text-sm font-semibold leading-tight">
             Training: Contract Development
@@ -365,6 +392,32 @@
           <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
           <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
         </div>
+        </a>
+      </article>
+
+      <article
+        class="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer select-none"
+        tabindex="0"
+        role="listitem"
+        aria-label="Training: Contract Development, 21-22 April 2025, D.I.Yogyakarta"
+      >
+        <img
+          src="https://storage.googleapis.com/a1aa/image/110f2235-f920-48f5-cf14-d46c279c1f02.jpg"
+          alt="Workshop Contract Development banner with man in black shirt and orange public course button"
+          class="w-full h-[180px] object-cover rounded-t-xl"
+          width="300"
+          height="180"
+          loading="lazy"
+        />
+        <a href="/trainingdetail">
+        <div class="p-3">
+          <h3 class="text-sm font-semibold leading-tight">
+            Training: Contract Development
+          </h3>
+          <p class="text-xs text-gray-400 mt-1">21-22 April 2025</p>
+          <p class="text-xs text-gray-400 mt-1 text-right">D.I.Yogyakarta</p>
+        </div>
+        </a>
       </article>
     </div>
   </main>

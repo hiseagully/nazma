@@ -23,7 +23,7 @@
     <x-header></x-header>
   <main>
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section ">
       <div class="hero-text max-w-xl w-full">
         <p class="hero-subtitle">
             <a href="/landingpage" class="text-[#f58220] hover:underline">Home</a>
@@ -38,12 +38,12 @@
             <i class="fas fa-angle-double-right ml-2"></i>
         </a>
       </div>
-      <div class="hero-image-container">
+      <div class="hero-image-container w-full">
         <img
           alt="Illustration of a woman presenting charts to three seated people in a modern office with city view"
           class="hero-image"
           height="200"
-          src="https://storage.googleapis.com/a1aa/image/f0b04399-044c-44fe-628c-f99db3b553ec.jpg"
+          img src="{{ asset('images/landing.png') }}"
           width="400"
         />
       </div>
@@ -58,7 +58,7 @@
             alt="Icon showing three people collaborating with charts and graphs on a screen"
             class="service-icon"
             height="100"
-            src="https://storage.googleapis.com/a1aa/image/178ff260-2256-4df2-79a6-73c305335f42.jpg"
+            src="{{ asset('images/training.png') }}"
             width="100"
           />
           <h3 class="service-title">Training</h3>
@@ -75,7 +75,7 @@
             alt="Icon showing a smartphone with shopping bags and boxes around it"
             class="service-icon"
             height="100"
-            src="https://storage.googleapis.com/a1aa/image/1bb5be32-f384-403b-51bf-d7101d6f86d6.jpg"
+            src="{{ asset('images/produk.png') }}"
             width="100"
           />
           <h3 class="service-title">Products</h3>

@@ -34,12 +34,7 @@
       >
         <i class="fas fa-th-large"></i>
       </a>
-      <input
-        type="text"
-        placeholder="Find the training you want"
-        class="flex-grow rounded-full px-4 py-2 text-sm placeholder-[#F9F9F9] focus:outline-none"
-        aria-label="Find the training you want"
-      />
+      <input class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black" placeholder="Find the training you want" type="text"/>
       <button
         aria-label="Search"
         class="text-[#F7941D] bg-white rounded-full p-2 hover:bg-gray-100"

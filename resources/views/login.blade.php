@@ -18,6 +18,15 @@
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Login now!</button>
             </form>
+            <p>or</p>
+            <!-- Tambahkan tombol Login dengan Google -->
+            <div class="google-login">
+                <a href="{{ route('google.login') }}" class="google-btn">
+                    <img src="{{ asset('images/google-icon.png') }}" alt="Google Icon">
+                    Login with Google
+                </a>
+            </div>
+
             <p>Don't have an account? <a href="/signup">Sign Up</a></p>
         </main>
 
