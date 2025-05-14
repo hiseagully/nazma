@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ asset('css/product/productcart.css') }}">
 </head>
 <x-header></x-header>
+  <x-productsearchbox></x-productsearchbox>
 <body class="body-bg flex flex-col min-h-[calc(100vh-144px)] px-6 md:px-0">
 <main class="cart-container">
     <h2 class="cart-title">Cart</h2>
@@ -49,9 +50,11 @@
         </div>
       </div>
     </div>
+    <a href="/productdata">
     <div class="checkout-wrapper">
       <button class="checkout-button">Checkout</button>
     </div>
+    </a>
   </main>
 </body>
 <x-footer></x-footer>

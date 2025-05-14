@@ -27,6 +27,7 @@
   <main class="max-w-6xl mx-auto w-full px-6 mt-4 flex-grow">
    <div aria-label="Product list" class="grid grid-cols-2 sm:grid-cols-5 gap-6">
     <!-- Product card template repeated 16 times -->
+    <a href="/productdetail">
     <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
      <img alt="Black baseball cap with white New York Yankees logo on front, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4475c2da-07c9-4ee1-04a7-6b091114bd39.jpg" width="200"/>
      <p class="text-xs text-gray-400 mb-0.5">
@@ -46,6 +47,7 @@
       </span>
      </div>
     </article>
+    </a>
     <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
      <img alt="White handbag with colorful floral design, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3e6c65ba-ba77-4b19-5ccb-b25cf8e1f255.jpg" width="200"/>
      <p class="text-xs text-gray-400 mb-0.5">

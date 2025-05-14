@@ -45,17 +45,19 @@
       <a
         href="/producttransaction"
         class="flex items-center space-x-1 text-white text-sm font-semibold"
-        aria-label="Go to Product Transaction"
+        aria-label="Go to Product Purchase"
       >
         <i class="fas fa-exchange-alt"></i>
-        <span>Transaction</span>
+        <span>Purchase</span>
       </a>
-      <button aria-label="Cart" class="flex items-center space-x-1 text-white font-semibold text-sm pr-4">
-     <i class="fas fa-shopping-cart">
-     </i>
-     <span>
-      Cart
-     </span>
+     <a
+        href="/productcart"
+        class="flex items-center space-x-1 text-white text-sm font-semibold"
+        aria-label="Go to Product Purchase"
+      >
+        <i class="fas fa-shopping-cart"></i>
+        <span>Cart</span>
+      </a>
     </button>
     </div>
   </div>

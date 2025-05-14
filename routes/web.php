@@ -10,6 +10,8 @@ Route::get('/landingpage', function () {
     return view('landingpage');
 });
 
+
+//product
 Route::get('/product', function () {
     return view('user.product.product');
 });
@@ -30,11 +32,16 @@ Route::get('/producttransaction', function () {
     return view('user.product.producttransaction');
 });
 
+Route::get('/productorder', function () {
+    return view('user.product.productorder');
+});
+
 use App\Http\Controllers\SignupController;
 
 Route::get('/signup', [SignupController::class, 'create'])->name('signup');
 Route::post('/signup', [SignupController::class, 'store'])->name('signup.store');
 
+//training
 Route::get('/signup', function () {
     return view('user.signup');
 });
@@ -69,6 +76,11 @@ Route::get('/trainingticket', function () {
 
 Route::get('/trainingticketdetail', function () {
     return view('user.training.trainingticketdetail');
+});
+
+//admin
+Route::get('/dashboardadmin', function () {
+    return view('admin.dashboardadmin');
 });
 
 use App\Http\Controllers\Auth\GoogleController;

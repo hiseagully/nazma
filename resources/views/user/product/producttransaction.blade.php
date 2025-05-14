@@ -37,9 +37,11 @@
        29 April 2025 08.38 WIB
       </p>
      </div>
+     <a href="/productorder">
      <button class="mt-4 sm:mt-0 sm:ml-auto border border-[#f68b1e] text-[#f68b1e] font-semibold rounded-full px-6 py-2 text-sm hover:bg-[#f68b1e] hover:text-white transition whitespace-nowrap" type="button">
       View Detail
      </button>
+     </a>
     </article>
     <article class="flex flex-col sm:flex-row sm:items-center border border-gray-200 rounded-lg p-4 mb-4" style="min-height: 96px">
      <img alt="White handbag with colorful butterfly pattern on a white background" class="w-20 h-20 rounded-md flex-shrink-0 mx-auto sm:mx-0" height="80" src="https://storage.googleapis.com/a1aa/image/8ec251e4-d970-4f4e-7208-dbedd5e7bd78.jpg" width="80"/>
