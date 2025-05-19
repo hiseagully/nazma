@@ -12,15 +12,24 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'users'; // Nama tabel
+
+    protected $primaryKey = 'user_id'; // Ganti dengan nama primary key kamu
+
+    public $incrementing = true; // atau false jika bukan auto increment
+
+    protected $keyType = 'int'; // atau 'string' jika tipe string
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'user_name',
+        'user_email',
+        'user_password',
+        'user_phone',
     ];
 
     /**
@@ -44,5 +53,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Override agar Auth dan Hash pakai kolom yang benar
+    public function getAuthPassword()
+    {
+        return $this->user_password;
+    }
+
+    public function getEmailForPasswordReset()
+    {
+        return $this->user_email;
     }
 }

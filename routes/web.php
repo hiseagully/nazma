@@ -50,11 +50,6 @@ Route::get('/loginadmin', function () {
     return view('admin.loginadmin');
 });
 
-//user
-Route::get('/signup', function () {
-    return view('user.signup');
-});
-
 Route::get('/login', function () {
     return view('login');
 });
@@ -97,7 +92,7 @@ Route::get('/userdata', function () {
     return view('admin.userdata');
 });
 
-Route::get('/trainingdata', function () {
+Route::get('/trainingdataadmin', function () {
     return view('admin.training.trainingdata');
 });
 
@@ -118,7 +113,7 @@ Route::get('/productdata', function () {
 });
 
 
-\Route::get('/customerdata', function () {
+Route::get('/customerdata', function () {
     return view('admin.product.customerdata');
 });
 
@@ -134,4 +129,7 @@ use App\Http\Controllers\Auth\GoogleController;
 
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
-Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])->name('google.signup');
+
+use App\Http\Controllers\LoginController;
+
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');

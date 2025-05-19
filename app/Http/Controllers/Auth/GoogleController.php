@@ -19,22 +19,23 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            // Buat pengguna baru atau ambil pengguna yang sudah ada
             $user = User::firstOrCreate(
-                ['email' => $googleUser->getEmail()],
+                ['user_email' => $googleUser->getEmail()],
                 [
-                    'name' => $googleUser->getName(),
-                    'password' => bcrypt('defaultpassword'), // Atur password default
+                    'user_name'     => $googleUser->getName(),
+                    'user_password' => bcrypt('defaultpassword'),
+                    'user_phone'    => '',
                 ]
             );
 
-            // Login pengguna
-            Auth::login($user);
-
-            // Arahkan ke halaman setelah login
-            return redirect()->route('profile'); // Ganti dengan rute setelah login
+            // Jika user berhasil dibuat/ditemukan, redirect ke login dengan notif sukses
+            if ($user) {
+                return redirect('/landingpage')->with('success', 'Sign up with Google successful! Welcome!');
+            } else {
+                return redirect('/signup')->with('error', 'Failed to sign up with Google.');
+            }
         } catch (\Exception $e) {
-            return redirect()->route('signup')->with('error', 'Failed to sign up with Google.');
+            return redirect('/signup')->with('error', 'Failed to sign up with Google.');
         }
     }
 }

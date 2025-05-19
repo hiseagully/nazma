@@ -8,11 +8,31 @@
 </head>
 <body>
     <div class="background-wrapper">
-        <img src="{{ asset('images/left-image.png') }}" class="bg-left" alt="Left Background">
-        
         <main>
             <h1>Login</h1>
-            <form action="{{ route('signup.store') }}" method="POST">
+
+            {{-- Notif Success/Error --}}
+            @if(session('success'))
+                <div class="notif-success">
+                    <svg class="icon-success" fill="none" viewBox="0 0 24 24" stroke="green" width="24" height="24">
+                        <circle cx="12" cy="12" r="10" stroke="green" stroke-width="2" fill="#d1fae5"/>
+                        <path stroke="green" stroke-width="2" d="M7 13l3 3 7-7"/>
+                    </svg>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="notif-error">
+                    <svg class="icon-success" fill="none" viewBox="0 0 24 24" stroke="red" width="24" height="24">
+                        <circle cx="12" cy="12" r="10" stroke="red" stroke-width="2" fill="#fee2e2"/>
+                        <path stroke="red" stroke-width="2" d="M7 13l3 3 7-7"/>
+                    </svg>
+                    <span>{{ session('error') }}</span>
+                </div>
+            @endif
+
+            <form action="{{ route('login.authenticate') }}" method="POST">
                 @csrf
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
@@ -26,11 +46,8 @@
                     Login with Google
                 </a>
             </div>
-
             <p>Don't have an account? <a href="/signup">Sign Up</a></p>
         </main>
-
-        <img src="{{ asset('images/right-image.png') }}" class="bg-right" alt="Right Background">
     </div>
 </body>
 </html>
