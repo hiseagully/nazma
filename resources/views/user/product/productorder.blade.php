@@ -19,7 +19,7 @@
   <x-header></x-header>
   <x-productsearchbox></x-productsearchbox>
   <!-- Main content -->
-  <main class="flex-grow px-6 sm:px-8 lg:px-12 mt-8 max-w-5xl mx-auto w-full mb-16">
+  <main class="flex-grow px-6 sm:px-8 lg:px-12 mt-8 max-w-5xl mx-auto w-full">
    <section aria-label="My Order" class="bg-white rounded-lg shadow-md border border-gray-200 p-10">
     <h2 class="font-semibold text-lg mb-6">
      My Order
@@ -82,10 +82,9 @@
          Subtotal:
         </p>
        </div>
-       <div
-          class="text-[#f68b1e] text-xs font-semibold cursor-pointer" id="openModal1" role="button" tabindex="0">
-          Beri Penilaian
-        </div>
+       <div class="text-[#f68b1e] text-xs font-semibold cursor-pointer select-none">
+        Beri Penilaian
+       </div>
        <div class="font-semibold text-sm ml-6 select-none">
         $ 80
        </div>
@@ -106,10 +105,9 @@
          Subtotal:
         </p>
        </div>
-       <div
-          class="text-[#f68b1e] text-xs font-semibold cursor-pointer" id="openModal2" role="button" tabindex="0">
-          Beri Penilaian
-        </div>
+       <div class="text-[#f68b1e] text-xs font-semibold cursor-pointer select-none">
+        Beri Penilaian
+       </div>
        <div class="font-semibold text-sm ml-6 select-none">
         $ 80
        </div>
@@ -170,55 +168,6 @@
    </section>
   </main>
   <x-footer></x-footer>
-  <!-- Modal -->
-  <div
-    id="modal"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-title"
-    aria-describedby="modal-desc"
-  >
-    <div
-      class="bg-white rounded-lg w-72 p-6 relative flex flex-col items-center space-y-4"
-    >
-      <button
-        id="closeModal"
-        aria-label="Close modal"
-        class="absolute top-3 right-3 text-gray-600 hover:text-black"
-        type="button"
-      >
-        <i class="fas fa-times"></i>
-      </button>
-      <h3 class="text-center font-semibold text-sm" id="modal-title">
-        Beri Penilaian
-      </h3>
-      <img
-        id="modalImage"
-        alt="White handbag with colorful floral pattern, 160x160"
-        class="rounded-lg"
-        height="160"
-        src="https://storage.googleapis.com/a1aa/image/a16aa5ec-ef1e-4f20-c9c9-b5bc8071148e.jpg"
-        width="160"
-      />
-      <p id="modalTitle" class="font-semibold text-center text-sm">
-        Tas Warna Nusantara
-      </p>
-      <div class="flex space-x-1 text-yellow-400 text-lg" id="modalStars">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="far fa-star"></i>
-      </div>
-      <button
-        class="bg-gradient-to-b from-[#fca311] to-[#d1861a] text-white font-semibold text-sm rounded-full px-6 py-2"
-        type="button"
-      >
-        Send
-      </button>
-    </div>
-  </div>
   <script>
     // Elements
     const modal = document.getElementById("modal");

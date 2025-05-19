@@ -41,7 +41,16 @@ use App\Http\Controllers\SignupController;
 Route::get('/signup', [SignupController::class, 'create'])->name('signup');
 Route::post('/signup', [SignupController::class, 'store'])->name('signup.store');
 
-//training
+//admin
+Route::get('/signupadmin', function () {
+    return view('admin.signupadmin');
+});
+
+Route::get('/loginadmin', function () {
+    return view('admin.loginadmin');
+});
+
+//user
 Route::get('/signup', function () {
     return view('user.signup');
 });
@@ -54,6 +63,7 @@ Route::get('/profile', function () {
     return view('user.profile');
 });
 
+//training
 Route::get('/training', function () {
     return view('user.training.training');
 });
@@ -81,6 +91,43 @@ Route::get('/trainingticketdetail', function () {
 //admin
 Route::get('/dashboardadmin', function () {
     return view('admin.dashboardadmin');
+});
+
+Route::get('/userdata', function () {
+    return view('admin.userdata');
+});
+
+Route::get('/trainingdata', function () {
+    return view('admin.training.trainingdata');
+});
+
+Route::get('/traineedata', function () {
+    return view('admin.training.traineedata');
+});
+
+Route::get('/trainingtransactiondata', function () {
+    return view('admin.training.trainingtransactiondata');
+});
+
+Route::get('/trainingticketdata', function () {
+    return view('admin.training.trainingticketdata');
+});
+
+Route::get('/productdata', function () {
+    return view('admin.product.productdata');
+});
+
+
+\Route::get('/customerdata', function () {
+    return view('admin.product.customerdata');
+});
+
+Route::get('/productorder', function () {
+    return view('admin.product.productorder');
+});
+
+Route::get('/producttransaction', function () {
+    return view('admin.product.producttransaction');
 });
 
 use App\Http\Controllers\Auth\GoogleController;

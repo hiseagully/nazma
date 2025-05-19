@@ -41,26 +41,47 @@
       <table class="min-w-full bg-white border border-gray-200 rounded-lg">
        <thead>
         <tr class="bg-gray-100 text-gray-700">
-         <th class="py-3 px-4 border-b text-left">Nama</th>
-         <th class="py-3 px-4 border-b text-left">Email</th>
-         <th class="py-3 px-4 border-b text-left">No HP</th>
+         <th class="py-3 px-4 border-b text-left">ID</th>
+         <th class="py-3 px-4 border-b text-left">Region ID</th>
+         <th class="py-3 px-4 border-b text-left">Judul</th>
+         <th class="py-3 px-4 border-b text-left">Deskripsi</th>
+         <th class="py-3 px-4 border-b text-left">Harga (Rp)</th>
+         <th class="py-3 px-4 border-b text-left">Harga ($)</th>
+         <th class="py-3 px-4 border-b text-left">Gambar</th>
+         <th class="py-3 px-4 border-b text-left">Jadwal</th>
+         <th class="py-3 px-4 border-b text-left">Lokasi</th>
+         <th class="py-3 px-4 border-b text-left">Slot</th>
          <th class="py-3 px-4 border-b text-left">Aksi</th>
         </tr>
        </thead>
        <tbody>
         <tr>
-         <td class="py-2 px-4 border-b">John Doe</td>
-         <td class="py-2 px-4 border-b">john@example.com</td>
-         <td class="py-2 px-4 border-b">08123456789</td>
+         <td class="py-2 px-4 border-b">1</td>
+         <td class="py-2 px-4 border-b">2</td>
+         <td class="py-2 px-4 border-b">Pelatihan Laravel</td>
+         <td class="py-2 px-4 border-b">Belajar Laravel dari dasar hingga mahir.</td>
+         <td class="py-2 px-4 border-b">500000.00</td>
+         <td class="py-2 px-4 border-b">35.00</td>
+         <td class="py-2 px-4 border-b"><img src="/images/laravel.png" alt="Gambar" class="w-16 h-10 object-cover rounded" /></td>
+         <td class="py-2 px-4 border-b">2025-06-01 09:00</td>
+         <td class="py-2 px-4 border-b">Jakarta</td>
+         <td class="py-2 px-4 border-b">30</td>
          <td class="py-2 px-4 border-b">
           <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"><i class="fas fa-edit"></i> Edit</button>
           <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-trash"></i> Hapus</button>
          </td>
         </tr>
         <tr>
-         <td class="py-2 px-4 border-b">Jane Smith</td>
-         <td class="py-2 px-4 border-b">jane@example.com</td>
-         <td class="py-2 px-4 border-b">08987654321</td>
+         <td class="py-2 px-4 border-b">2</td>
+         <td class="py-2 px-4 border-b">1</td>
+         <td class="py-2 px-4 border-b">Pelatihan Vue.js</td>
+         <td class="py-2 px-4 border-b">Belajar Vue.js untuk frontend modern.</td>
+         <td class="py-2 px-4 border-b">600000.00</td>
+         <td class="py-2 px-4 border-b">40.00</td>
+         <td class="py-2 px-4 border-b"><img src="/images/vue.png" alt="Gambar" class="w-16 h-10 object-cover rounded" /></td>
+         <td class="py-2 px-4 border-b">2025-07-10 13:00</td>
+         <td class="py-2 px-4 border-b">Bandung</td>
+         <td class="py-2 px-4 border-b">25</td>
          <td class="py-2 px-4 border-b">
           <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"><i class="fas fa-edit"></i> Edit</button>
           <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-trash"></i> Hapus</button>
