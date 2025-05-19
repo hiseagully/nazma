@@ -34,6 +34,9 @@ article:hover {
 }
 
 article img {
+    width: 100%; /* Pastikan gambar memenuhi lebar card */
+    height: auto; /* Pertahankan rasio aspek */
+    border-radius: 0.5rem; /* Tambahkan border radius */
     transition: transform 0.3s ease;
 }
 
@@ -43,8 +46,57 @@ article:hover img {
 
 article h3 {
     transition: color 0.3s ease;
+    font-size: 1.25rem; /* Ukuran default */
 }
 
 article:hover h3 {
     color: #F7941D; /* Warna oranye */
+}
+
+article p {
+    font-size: 1rem; /* Ukuran default */
+}
+
+/* Default untuk layar besar */
+.training-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+    gap: 1.5rem;
+    margin: 2rem auto;
+}
+
+/* Untuk layar sedang (tablet) */
+@media (max-width: 1024px) {
+    .training-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+        gap: 1rem;
+    }
+}
+
+/* Untuk layar kecil (ponsel) */
+@media (max-width: 640px) {
+    .training-grid {
+        grid-template-columns: 1fr; /* 1 kolom */
+        gap: 1rem;
+        padding: 0 1rem; /* Tambahkan padding untuk jarak */
+    }
+
+    article {
+        margin: 0 auto; /* Pusatkan card */
+    }
+
+    #scrollTopBtn {
+        bottom: 3rem; /* Naikkan posisi tombol */
+        right: 1rem; /* Kurangi jarak dari kanan */
+        width: 2rem; /* Perkecil ukuran tombol */
+        height: 2rem;
+    }
+
+    article h3 {
+        font-size: 1rem; /* Perkecil ukuran teks untuk layar kecil */
+    }
+
+    article p {
+        font-size: 0.875rem; /* Perkecil ukuran teks untuk layar kecil */
+    }
 }

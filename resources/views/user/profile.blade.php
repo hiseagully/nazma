@@ -3,8 +3,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>NaZMaLogy Profile</title>
-    <x-header></x-header>
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <x-header></x-header>
   </head>
   <body class="profile-page">
     <main class="profile-container">

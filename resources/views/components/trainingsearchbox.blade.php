@@ -17,15 +17,22 @@
       font-family: "Inter", sans-serif;
     }
   </style>
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById("dropdownMenu");
+      dropdown.classList.toggle("hidden");
+    }
+  </script>
 </head>
 <body class="bg-[#F5F7FA]">
   <!-- Search Component -->
   <div class="flex justify-center mt-6">
     <div
-      class="flex items-center bg-[#F7941D] rounded-full w-[75%] max-w-5xl px-6 py-2 space-x-4"
+      class="flex items-center bg-[#F7941D] rounded-full w-[75%] max-w-5xl px-6 py-2 space-x-4 relative"
       role="search"
       aria-label="Training search and actions"
     >
+      <!-- Grid View Icon -->
       <a
         href="/training"
         aria-label="Grid view icon"
@@ -34,7 +41,15 @@
       >
         <i class="fas fa-th-large"></i>
       </a>
-      <input class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black" placeholder="Find the training you want" type="text"/>
+
+      <!-- Search Input -->
+      <input
+        class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black"
+        placeholder="Find the training you want"
+        type="text"
+      />
+
+      <!-- Search Button -->
       <button
         aria-label="Search"
         class="text-[#F7941D] bg-white rounded-full p-2 hover:bg-gray-100"
@@ -42,17 +57,51 @@
       >
         <i class="fas fa-search"></i>
       </button>
+
+      <!-- Hamburger Menu -->
+      <div class="relative">
+        <button
+          class="flex md:hidden items-center justify-center text-white text-lg"
+          aria-label="More options"
+          onclick="toggleDropdown()"
+        >
+          <i class="fas fa-bars"></i> <!-- Setrip tiga -->
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div
+          id="dropdownMenu"
+          class="hidden absolute top-full right-0 mt-2 w-40 bg-[#F7941D] rounded-md shadow-lg z-10"
+        >
+          <a
+            href="/trainingtransaction"
+            class="block px-4 py-2 text-sm text-white hover:bg-[#e67e22]"
+          >
+            Transaction
+          </a>
+          <a
+            href="/trainingticket"
+            class="block px-4 py-2 text-sm text-white hover:bg-[#e67e22]"
+          >
+            Ticket
+          </a>
+        </div>
+      </div>
+
+      <!-- Transaction Link (Visible on medium screens and above) -->
       <a
         href="/trainingtransaction"
-        class="flex items-center space-x-1 text-white text-sm font-semibold"
+        class="hidden md:flex items-center space-x-1 text-white text-sm font-semibold"
         aria-label="Go to Training Transaction"
       >
         <i class="fas fa-exchange-alt"></i>
         <span>Transaction</span>
       </a>
+
+      <!-- Ticket Link (Visible on medium screens and above) -->
       <a
         href="/trainingticket"
-        class="flex items-center space-x-1 text-white text-sm font-semibold"
+        class="hidden md:flex items-center space-x-1 text-white text-sm font-semibold"
         aria-label="Go to Training Ticket"
       >
         <i class="fas fa-ticket-alt"></i>

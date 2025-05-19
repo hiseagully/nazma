@@ -17,8 +17,8 @@
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Login now!</button>
+                <p>or</p>
             </form>
-            <p>or</p>
             <!-- Tambahkan tombol Login dengan Google -->
             <div class="google-login">
                 <a href="{{ route('google.login') }}" class="google-btn">

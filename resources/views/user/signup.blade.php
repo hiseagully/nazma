@@ -19,8 +19,8 @@
                 <input type="password" name="password" placeholder="Password" required>
                 <input type="text" name="phone" placeholder="Phone" required>
                 <button type="submit">Sign Up now!</button>
+                <p>or</p>
             </form>
-
             <div class="google-signup">
                 <a href="{{ route('google.signup') }}" class="google-btn">
                     <img src="{{ asset('images/google-icon.png') }}" alt="Google Icon">

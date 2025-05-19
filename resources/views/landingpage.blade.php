@@ -23,28 +23,26 @@
     <x-header></x-header>
   <main>
     <!-- Hero Section -->
-    <section class="hero-section ">
+    <section class="hero-section grid grid-cols-1 md:grid-cols-2 items-center gap-6 px-6 py-10">
       <div class="hero-text max-w-xl w-full">
         <p class="hero-subtitle">
-            <a href="/landingpage" class="text-[#f58220] hover:underline">Home</a>
+          <a href="/landingpage" class="text-[#FF7A00] hover:underline">Home</a>
         </p>
-        <h1 class="hero-title">
-          Join the Training and<br />
-          Find Our Products<br />
+        <h1 class="hero-title text-3xl md:text-4xl font-bold leading-tight mb-4">
+          Join the Training<br>
+          and Find Our Products<br>
           That You Want
         </h1>
-        <a href="/login" class="hero-button inline-flex items-center">
-            <span>GET STARTED</span>
-            <i class="fas fa-angle-double-right ml-2"></i>
+        <a href="/login" class="hero-button inline-flex items-center bg-[#FF7A00] text-white px-4 py-2 rounded-md shadow-md hover:bg-orange-600 transition">
+          <span>GET STARTED</span>
+          <i class="fas fa-angle-double-right ml-2"></i>
         </a>
       </div>
       <div class="hero-image-container w-full">
         <img
-          alt="Illustration of a woman presenting charts to three seated people in a modern office with city view"
-          class="hero-image"
-          height="200"
-          img src="{{ asset('images/landing.png') }}"
-          width="400"
+          src="{{ asset('images/landing.png') }}"
+          alt="Illustration of a woman presenting charts"
+          class="w-full h-auto object-contain"
         />
       </div>
     </section>
@@ -64,7 +62,7 @@
           <h3 class="service-title">Training</h3>
           <p class="service-description">
             A curated selection of high-quality local products from Indonesian
-            small businesses (UMKM), handpicked by the Nazma team. These items
+            small businesses, handpicked by the Nazma team. These items
             showcase the beauty of local creativity and cultural heritage,
             ranging from handcrafted goods and fashion to traditional regional
             specialties.
@@ -81,7 +79,7 @@
           <h3 class="service-title">Products</h3>
           <p class="service-description">
             A curated selection of high-quality local products from Indonesian
-            small businesses (UMKM), handpicked by the Nazma team. These items
+            small businesses, handpicked by the Nazma team. These items
             showcase the beauty of local creativity and cultural heritage,
             ranging from handcrafted goods and fashion to traditional regional
             specialties.
@@ -146,6 +144,7 @@
         title: "Training: Contract Development",
         date: "21-22 April 2025",
         location: "D.I.Yogyakarta",
+        url: "/trainingdetail",
       },
       {
         img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
@@ -192,6 +191,7 @@
         price: "$ 80",
         category: "Aksesoris",
         disabled: false,
+        url: "/productdetail",
       },
       {
         img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
@@ -250,17 +250,19 @@
           card.innerHTML = `
             <img src="${item.img}" alt="${item.alt}" class="w-full object-cover" height="200" width="300"/>
             <div class="p-4 ${isProduct ? "" : "text-xs"}">
-              ${
-                isProduct
-                  ? `<p class="text-xs ${item.disabled ? "text-gray-400" : "text-gray-900"} mb-1 font-semibold">${item.title}</p>
-                     <p class="text-xs ${item.disabled ? "text-gray-400" : "text-gray-400"} mb-1">${item.price}</p>
-                     <p class="text-xs ${item.disabled ? "text-gray-400" : "text-gray-400"} text-right">${item.category}</p>`
-                  : `<p class="text-xs ${currentPage === 0 && start === 0 ? "text-gray-400" : "text-gray-900"} mb-1 font-semibold">${item.title}</p>
-                     <p class="text-xs text-gray-400 mb-1">${item.date}</p>
-                     <p class="text-xs text-gray-400 text-right">${item.location}</p>`
-              }
+              <p class="text-xs text-gray-900 mb-1 font-semibold">${item.title}</p>
+              <p class="text-xs text-gray-400 mb-1">${item.date}</p>
+              <p class="text-xs text-gray-400 text-right">${item.location}</p>
             </div>
           `;
+
+          // Tambahkan event listener untuk navigasi
+          card.addEventListener("click", () => {
+            if (item.url) {
+              window.location.href = item.url; // Arahkan ke URL
+            }
+          });
+
           container.appendChild(card);
         });
 
