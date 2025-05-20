@@ -117,11 +117,11 @@ Route::get('/customerdata', function () {
     return view('admin.product.customerdata');
 });
 
-Route::get('/productorder', function () {
+Route::get('/productorderadmin', function () {
     return view('admin.product.productorder');
 });
 
-Route::get('/producttransaction', function () {
+Route::get('/producttransactionadmin', function () {
     return view('admin.product.producttransaction');
 });
 
@@ -129,6 +129,7 @@ use App\Http\Controllers\Auth\GoogleController;
 
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])->name('google.signup');
 
 use App\Http\Controllers\LoginController;
 

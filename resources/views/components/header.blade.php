@@ -127,13 +127,17 @@
           <a href="/training" class="nav-link {{ Request::is('training', 'trainingdetail', 'trainingdata', 'trainingtransaction', 'trainingticket', 'trainingticketdetail') ? 'active' : '' }}">Training</a>
         </li>
         <li class="nav-item">
-          <a href="/product" class="nav-link {{ Request::is('product') ? 'active' : '' }}">Product</a>
+          <a href="/product" class="nav-link {{ Request::is('product', 'productcart', 'productdata', 'productdetail', 'productorder', 'producttransaction') ? 'active' : '' }}">Product</a>
         </li>
       </ul>
     </nav>
 
-    <!-- Login Button -->
-    <a href="/login" class="hidden md:inline-block login-btn">Login</a>
+    <!-- Login Button (Desktop) -->
+    @auth
+      <a href="/profile" class="hidden md:inline-block login-btn">Profile</a>
+    @else
+      <a href="/login" class="hidden md:inline-block login-btn">Login</a>
+    @endauth
 
     <!-- Hamburger Menu -->
     <div class="md:hidden relative">
@@ -153,9 +157,15 @@
           <li>
             <a href="/product" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Product</a>
           </li>
-          <li>
-            <a href="/login" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
-          </li>
+          @auth
+            <li>
+              <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+            </li>
+          @else
+            <li>
+              <a href="/login" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
+            </li>
+          @endauth
         </ul>
       </div>
     </div>

@@ -16,18 +16,18 @@
 }
 
 .cart-container {
-  max-width: 80rem; /* max-w-5xl */
+  max-width: 65rem;   
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 100px;
-  margin-top: 2.5rem; /* mt-10 */
+  margin-top: 2.5rem;
   background-color: white;
-  border-radius: 0.75rem; /* rounded-xl */
-  padding: 2rem; /* p-8 */
+  border-radius: 0.75rem;
+  padding: 2rem;   
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* space-y-8 */
+  gap: 2rem;
 }
 
 .cart-title {
@@ -50,6 +50,7 @@
 .cart-item {
   display: flex;
   align-items: center;
+
   gap: 1rem; /* space-x-4 */
 }
 
