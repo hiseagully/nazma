@@ -87,6 +87,11 @@ Route::get('/trainingticketdetail', function () {
     return view('user.training.trainingticketdetail');
 });
 
+use App\Http\Controllers\TrainingController;
+
+Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
+
+
 //admin
 Route::get('/dashboardadmin', function () {
     return view('admin.dashboardadmin');

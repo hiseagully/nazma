@@ -43,7 +43,7 @@
        29 April 2025 8.42 WIB
       </time>
       <p class="transaction-total">
-       Total : $267
+       Total : Rp200.000
       </p>
      </div>
     </article>
@@ -70,7 +70,7 @@
        29 April 2025 8.42 WIB
       </time>
       <p class="transaction-total">
-       Total : $267
+       Total : Rp200.000
       </p>
      </div>
     </article>
@@ -97,7 +97,7 @@
        29 April 2025 8.42 WIB
       </time>
       <p class="transaction-total">
-       Total : $267
+       Total : Rp200.000
       </p>
      </div>
     </article>

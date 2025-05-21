@@ -63,6 +63,7 @@ article p {
     grid-template-columns: repeat(3, 1fr); /* 3 kolom */
     gap: 1.5rem;
     margin: 2rem auto;
+    margin-bottom: 4rem; /* Tambahkan atau perbesar jarak bawah */
 }
 
 /* Untuk layar sedang (tablet) */
@@ -79,6 +80,7 @@ article p {
         grid-template-columns: 1fr; /* 1 kolom */
         gap: 1rem;
         padding: 0 1rem; /* Tambahkan padding untuk jarak */
+        margin-bottom: 3rem;
     }
 
     article {
@@ -100,3 +102,7 @@ article p {
         font-size: 0.875rem; /* Perkecil ukuran teks untuk layar kecil */
     }
 }
+    main,
+    .container {
+        padding-bottom: 4rem; /* atau margin-bottom: 8rem; */
+    }

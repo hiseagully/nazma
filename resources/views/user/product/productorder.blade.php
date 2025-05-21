@@ -83,7 +83,7 @@
         </p>
        </div>
        <div class="text-[#f68b1e] text-xs font-semibold cursor-pointer select-none">
-        Beri Penilaian
+        rate
        </div>
        <div class="font-semibold text-sm ml-6 select-none">
         $ 80
@@ -106,7 +106,7 @@
         </p>
        </div>
        <div class="text-[#f68b1e] text-xs font-semibold cursor-pointer select-none">
-        Beri Penilaian
+        rate
        </div>
        <div class="font-semibold text-sm ml-6 select-none">
         $ 80
