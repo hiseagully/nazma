@@ -277,7 +277,7 @@
        Total:
       </span>
       <span>
-       $ 267
+       Rp 200.000
       </span>
      </div>
      <div class="form-group">

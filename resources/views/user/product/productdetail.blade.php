@@ -27,13 +27,13 @@
    <section class="bg-white rounded-xl p-6 max-w-md w-full flex flex-col justify-between shadow-md">
     <div>
      <p class="text-xs text-gray-600 mb-1">
-      Aksesoris
+      accessories
      </p>
      <h2 class="font-bold text-lg mb-1">
       Tas Warna Nusantara
      </h2>
      <p class="font-semibold text-base mb-4">
-      $ 80.00
+      Rp 250.000
      </p>
      <div class="flex items-center justify-between text-sm mb-2">
       <div class="flex items-center space-x-1">
@@ -65,7 +65,7 @@
        Price:
       </span>
       <span class="font-semibold">
-       $ 80.00
+       Rp 250.000
       </span>
      </div>
     </div>

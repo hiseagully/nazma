@@ -38,7 +38,10 @@
      <hr class="divider"/>
      <div class="price-row">
       <span>Price:</span>
-      <span>$ 267</span>
+      <div style="display: flex; flex-direction: column; align-items: flex-start;">
+        <span>Rp 200.000</span>
+        <span style="font-size: 0.9em; color: #888;">(USD $12,18)</span>
+      </div>
      </div>
     </div>
     <button class="btn-join" type="button">
