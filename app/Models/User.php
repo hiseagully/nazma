@@ -2,26 +2,41 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
 
-    protected $table = 'users';
-    protected $primaryKey = 'user_id';
-    public $incrementing = true;
-    protected $keyType = 'int';
+    protected $table = 'users'; // Nama tabel
 
+    protected $primaryKey = 'user_id'; // Ganti dengan nama primary key kamu
+
+    public $incrementing = true; // atau false jika bukan auto increment
+
+    protected $keyType = 'int'; // atau 'string' jika tipe string
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'user_name',
         'user_email',
+        'user_password',
         'user_phone',
+    ];
+
+    protected $hidden = [
         'user_password',
     ];
 
-    // Untuk Auth Laravel
+    // Override agar Auth pakai kolom yang benar
     public function getAuthPassword()
     {
         return $this->user_password;
