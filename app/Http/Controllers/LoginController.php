@@ -24,7 +24,7 @@ class LoginController extends Controller
         $user = User::where('user_email', $request->email)->first();
 
         if (!$user) {
-            return back()->with('error', 'Email is not registered, please sign up first.');
+            return back()->with('error', 'Email not found, please sign up.');
         }
 
         if (!Hash::check($request->password, $user->user_password)) {

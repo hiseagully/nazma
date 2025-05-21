@@ -18,10 +18,13 @@ class SignupController extends Controller
     {
         // Validasi data
         $request->validate([
+            'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,user_email',
-            'name'     => 'required|string|max:50',
-            'password' => 'required|string|min:6',
-            'phone'    => 'required|string|max:15',
+            'password' => 'required|string|min:8',
+            'phone'    => 'required|string',
+        ], [
+            'email.unique' => 'This email is already registered.',
+            'password.min' => 'Password too short.',
         ]);
 
         $user = User::create([

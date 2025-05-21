@@ -24,11 +24,8 @@
 
             @if(session('error'))
                 <div class="notif-error">
-                    <svg class="icon-success" fill="none" viewBox="0 0 24 24" stroke="red" width="24" height="24">
-                        <circle cx="12" cy="12" r="10" stroke="red" stroke-width="2" fill="#fee2e2"/>
-                        <path stroke="red" stroke-width="2" d="M7 13l3 3 7-7"/>
-                    </svg>
-                    <span>{{ session('error') }}</span>
+                    <span class="notif-error-icon">&#9888;</span>
+                    <span class="notif-error-text">{{ session('error') }}</span>
                 </div>
             @endif
 

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TrainingRegion;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TrainingRegion;
 
 class TrainingRegionController extends Controller
 {
@@ -11,7 +12,7 @@ class TrainingRegionController extends Controller
     public function index()
     {
         $regions = TrainingRegion::all();
-        return view('trainingregions.index', compact('regions'));
+        return view('admin.training.trainingregion', compact('regions'));
     }
 
     // Tampilkan form tambah data
@@ -23,21 +24,17 @@ class TrainingRegionController extends Controller
     // Simpan data baru
     public function store(Request $request)
     {
-        $request->validate([
-            'trainingregionname' => 'required|max:50',
-        ]);
+        $request->validate(['name' => 'required|string|max:50']);
 
-        TrainingRegion::create([
-            'trainingregionname' => $request->trainingregionname,
-        ]);
+        TrainingRegion::create(['trainingregionname' => $request->name]);
 
-        return redirect()->route('trainingregions.index')->with('success', 'Data berhasil ditambahkan!');
+        return redirect()->route('admin.trainingregion.index');
     }
 
     // Hapus data
     public function destroy($id)
     {
-        TrainingRegion::findOrFail($id)->delete();
-        return redirect()->route('trainingregions.index')->with('success', 'Data berhasil dihapus!');
+        TrainingRegion::destroy($id);
+        return redirect()->route('admin.trainingregion.index');
     }
 }

@@ -1,42 +1,35 @@
 <aside
     id="sidebar"
-    class="fixed inset-y-0 left-0 z-50 w-72 md:static md:w-80 border-r border-gray-200 flex flex-col p-6 bg-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out"
->
-    <div class="mb-10">
-        <img
-            alt="Company logo with blue wave icon"
-            class="w-12 h-12"
-            height="48"
-            src="https://storage.googleapis.com/a1aa/image/6c4c8205-51d8-4f5d-380d-392eb2e4959c.jpg"
-            width="48"
-        />
-    </div>
+    class="fixed inset-y-0 left-0 z-50 w-72 md:static md:w-80 border-r flex flex-col p-6 bg-white"
+    style="border-color: #FF7A00;">
     <nav class="flex flex-col space-y-5 text-base font-semibold">
         <a
-            class="flex items-center space-x-3 text-indigo-600 bg-indigo-50 rounded-md px-4 py-3"
+            class="flex items-center space-x-3 rounded-md px-4 py-3"
+            style="color: #FF7A00; background: #FFF3E6;"
             href="#">
-            <i class="fas fa-home text-indigo-600 text-xl"></i>
+            <i class="fas fa-home text-xl" style="color: #FF7A00;"></i>
             <span>Dashboard</span>
         </a>
         <a
-            class="flex items-center space-x-3 text-gray-600 hover:text-gray-900 px-4 py-3"
+            class="flex items-center space-x-3 text-gray-600 hover:text-white hover:bg-[#FF7A00] px-4 py-3 rounded-md transition"
             href="#"
         >
-            <i class="fas fa-users text-gray-400 text-xl"></i>
+            <i class="fas fa-users text-xl" style="color: #FF7A00;"></i>
             <span>Users</span>
         </a>
         <div>
             <button
                 aria-expanded="false"
                 aria-controls="training-menu"
-                class="flex items-center space-x-3 text-gray-600 hover:text-gray-900 font-semibold w-full px-4 py-3 rounded-md focus:outline-none"
+                class="flex items-center space-x-3 text-gray-600 hover:text-white hover:bg-[#FF7A00] font-semibold w-full px-4 py-3 rounded-md focus:outline-none transition"
                 type="button"
                 onclick="toggleMenu('training-menu')"
             >
-                <i class="fas fa-chalkboard-teacher text-gray-400 text-xl"></i>
+                <i class="fas fa-chalkboard-teacher text-xl" style="color: #FF7A00;"></i>
                 <span>Training</span>
                 <i
-                    class="fas fa-chevron-down ml-auto text-gray-400 text-sm transition-transform duration-200"
+                    class="fas fa-chevron-down ml-auto text-sm transition-transform duration-200"
+                    style="color: #FF7A00;"
                     id="training-menu-icon"
                 ></i>
             </button>
@@ -45,28 +38,34 @@
                 id="training-menu"
             >
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Training
                 </a>
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Training Transaction
                 </a>
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Training Ticket
                 </a>
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Trainee
+                </a>
+                <a
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
+                    href="/trainingregion"
+                >
+                    Training Region
                 </a>
             </nav>
         </div>
@@ -74,14 +73,15 @@
             <button
                 aria-expanded="false"
                 aria-controls="product-menu"
-                class="flex items-center space-x-3 text-gray-600 hover:text-gray-900 font-semibold w-full px-4 py-3 rounded-md focus:outline-none"
+                class="flex items-center space-x-3 text-gray-600 hover:text-white hover:bg-[#FF7A00] font-semibold w-full px-4 py-3 rounded-md focus:outline-none transition"
                 type="button"
                 onclick="toggleMenu('product-menu')"
             >
-                <i class="fas fa-box-open text-gray-400 text-xl"></i>
+                <i class="fas fa-box-open text-xl" style="color: #FF7A00;"></i>
                 <span>Product</span>
                 <i
-                    class="fas fa-chevron-down ml-auto text-gray-400 text-sm transition-transform duration-200"
+                    class="fas fa-chevron-down ml-auto text-sm transition-transform duration-200"
+                    style="color: #FF7A00;"
                     id="product-menu-icon"
                 ></i>
             </button>
@@ -90,25 +90,25 @@
                 id="product-menu"
             >
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Products
                 </a>
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Product Transaction
                 </a>
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Customer
                 </a>
                 <a
-                    class="px-4 py-2 rounded-md hover:bg-indigo-50 hover:text-indigo-600"
+                    class="px-4 py-2 rounded-md hover:bg-[#FFF3E6] hover:text-[#FF7A00]"
                     href="#"
                 >
                     Product Order
@@ -116,13 +116,16 @@
             </nav>
         </div>
     </nav>
-    <div class="mt-auto pt-6 border-t border-gray-200">
-        <button
-            class="flex items-center space-x-3 text-gray-600 hover:text-gray-900 font-semibold text-base w-full px-4 py-3 rounded-md"
-            type="button"
-        >
-            <i class="fas fa-cog text-gray-400 text-xl"></i>
-            <span>Settings</span>
-        </button>
+    <div class="mt-auto pt-6 border-t" style="border-color: #FF7A00;">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button
+                class="flex items-center space-x-3 text-red-600 hover:text-white hover:bg-red-500 font-semibold text-base w-full px-4 py-3 rounded-md transition"
+                type="submit"
+            >
+                <i class="fas fa-sign-out-alt text-red-400 text-xl"></i>
+                <span>Logout</span>
+            </button>
+        </form>
     </div>
 </aside>

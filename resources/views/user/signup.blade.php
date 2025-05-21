@@ -21,6 +21,13 @@
                 </div>
             @endif
 
+            @if ($errors->any())
+                <div class="notif-error">
+                    <span class="notif-error-icon">&#9888;</span>
+                    <span class="notif-error-text">{{ implode(' ', $errors->all()) }}</span>
+                </div>
+            @endif
+
             <form action="{{ route('signup.store') }}" method="POST">
                 @csrf
                 <input type="text" name="name" placeholder="Full Name" required>
@@ -41,3 +48,4 @@
     </div>
 </body>
 </html>
+\
