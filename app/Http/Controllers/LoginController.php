@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -27,6 +28,7 @@ class LoginController extends Controller
 
         // Success
         session(['user_id' => $user->user_id]);
+        Auth::login($user);
         return redirect('/landingpage')->with('success', 'Login successful! Welcome back.');
     }
 }

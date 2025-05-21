@@ -4,9 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>NaZMaLogy Profile</title>
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
-    <x-header></x-header>
+    <script src="{{ asset('js/app.js') }}" defer></script>
   </head>
   <body class="profile-page">
+    <x-header></x-header>
     <main class="profile-container">
       <h2 class="profile-title">Profile</h2>
       <form class="profile-form">

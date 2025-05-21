@@ -160,9 +160,9 @@
       </div>
      </div>
      <div class="flex justify-end max-w-3xl">
-      <button class="bg-gray-200 text-gray-900 font-semibold text-sm rounded-md py-2 px-6 mt-6" type="button">
+      <a href="\producttransaction" class="bg-gray-200 text-gray-900 font-semibold text-sm rounded-md py-2 px-6 mt-6" type="button">
        Back
-      </button>
+      </a>
      </div>
     </div>
    </section>

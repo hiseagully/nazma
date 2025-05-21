@@ -37,10 +37,8 @@
        29 April 2025 08.38 WIB
       </p>
      </div>
-     <a href="/productorder">
-     <button class="mt-4 sm:mt-0 sm:ml-auto border border-[#f68b1e] text-[#f68b1e] font-semibold rounded-full px-6 py-2 text-sm hover:bg-[#f68b1e] hover:text-white transition whitespace-nowrap" type="button">
+     <a href="/productorder" class="mt-4 sm:mt-0 sm:ml-auto border border-[#f68b1e] text-[#f68b1e] font-semibold rounded-full px-6 py-2 text-sm hover:bg-[#f68b1e] hover:text-white transition whitespace-nowrap block text-center">
       View Detail
-     </button>
      </a>
     </article>
     <article class="flex flex-col sm:flex-row sm:items-center border border-gray-200 rounded-lg p-4 mb-4" style="min-height: 96px">
@@ -73,9 +71,9 @@
        29 April 2025 08.38 WIB
       </p>
      </div>
-     <button class="mt-4 sm:mt-0 sm:ml-auto border border-[#f68b1e] text-[#f68b1e] font-semibold rounded-full px-6 py-2 text-sm hover:bg-[#f68b1e] hover:text-white transition whitespace-nowrap" type="button">
-      View Detail
-     </button>
+     <a href="/productorder" class="mt-4 sm:mt-0 sm:ml-auto border border-[#f68b1e] text-[#f68b1e] font-semibold rounded-full px-6 py-2 text-sm hover:bg-[#f68b1e] hover:text-white transition whitespace-nowrap block text-center">
+     View Detail
+     </a>
     </article>
    </section>
   </main>

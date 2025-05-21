@@ -62,6 +62,73 @@ Route::get('/customerdata', function () { return view('admin.product.customerdat
 Route::get('/productorderadmin', function () { return view('admin.product.productorder'); });
 Route::get('/producttransactionadmin', function () { return view('admin.product.producttransaction'); });
 
+//training
+Route::get('/training', function () {
+    return view('user.training.training');
+});
+
+Route::get('/trainingdetail', function () {
+    return view('user.training.trainingdetail');
+});
+
+Route::get('/trainingdata', function () {
+    return view('user.training.trainingdata');
+});
+
+Route::get('/trainingtransaction', function () {
+    return view('user.training.trainingtransaction');
+});
+
+Route::get('/trainingticket', function () {
+    return view('user.training.trainingticket');
+});
+
+Route::get('/trainingticketdetail', function () {
+    return view('user.training.trainingticketdetail');
+});
+
+//admin
+Route::get('/dashboardadmin', function () {
+    return view('admin.dashboardadmin');
+});
+
+Route::get('/userdata', function () {
+    return view('admin.userdata');
+});
+
+Route::get('/trainingdataadmin', function () {
+    return view('admin.training.trainingdata');
+});
+
+Route::get('/traineedata', function () {
+    return view('admin.training.traineedata');
+});
+
+Route::get('/trainingtransactiondata', function () {
+    return view('admin.training.trainingtransactiondata');
+});
+
+Route::get('/trainingticketdata', function () {
+    return view('admin.training.trainingticketdata');
+});
+
+Route::get('/productdata', function () {
+    return view('admin.product.productdata');
+});
+
+
+Route::get('/customerdata', function () {
+    return view('admin.product.customerdata');
+});
+
+Route::get('/productorderadmin', function () {
+    return view('admin.product.productorder');
+});
+
+Route::get('/producttransactionadmin', function () {
+    return view('admin.product.producttransaction');
+});
+
 // Google Auth
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
