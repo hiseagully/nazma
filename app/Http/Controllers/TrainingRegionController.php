@@ -37,4 +37,19 @@ class TrainingRegionController extends Controller
         TrainingRegion::destroy($id);
         return redirect()->route('admin.trainingregion.index');
     }
+    
+    // Update data
+    public function update(Request $request, $id)
+    {
+        $region = TrainingRegion::findOrFail($id);
+        $region->update($request->all());
+        return redirect()->route('admin.trainingregion.index')->with('success', 'Region updated successfully!');
+    }
+
+    // Tampilkan form edit data
+    public function edit($id)
+    {
+        $region = TrainingRegion::findOrFail($id);
+        return view('admin.trainingregion.edit', compact('region'));
+    }
 }

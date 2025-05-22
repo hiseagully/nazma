@@ -9,7 +9,8 @@
     rel="stylesheet"
   />
   <x-header></x-header>
-  <x-trainingsearchbox></x-trainingsearchbox>
+  @include('components.trainingsearchbox', ['action' => '/training/search'])
+
   <link rel="stylesheet" href="{{ asset('css/training/training.css') }}">
 </head>
 <body class="bg-[#F5F7FA]">

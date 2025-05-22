@@ -6,6 +6,7 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\TrainingRegionController;
 use App\Http\Controllers\TrainingTransactionController;
+use App\Http\Controllers\TrainingTicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ProductRegionsMapController;
@@ -27,6 +28,8 @@ Route::post('/signup', [SignupController::class, 'store'])->name('signup.store')
 Route::resource('users', UserController::class);
 Route::resource('trainingprogram', TrainingProgramController::class);
 Route::resource('trainingtransaction', TrainingTransactionController::class);
+Route::resource('trainingregion', TrainingRegionController::class);
+Route::resource('trainingticket', TrainingTicketController::class);
 
 // Product (user)
 Route::get('/product', function () { return view('user.product.product'); });
@@ -55,12 +58,14 @@ Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin');
 Route::get('/userdata', function () { return view('admin.userdata'); });
 Route::get('/trainingadmin', [TrainingProgramController::class, 'index']);
 Route::get('/traineeadmin', function () { return view('admin.training.traineedata'); });
-Route::get('/trainingtransactionadmin', function () { return view('admin.training.trainingtransactiondata'); });
-Route::get('/trainingticketadmin', function () { return view('admin.training.trainingticketdata'); });
+Route::get('/trainingtransactionadmin', [TrainingTransactionController::class, 'adminIndex'])->name('admin.trainingtransaction.index');
+Route::get('/trainingticketadmin', [TrainingTicketController::class, 'adminIndex'])->name('admin.trainingticket.index');
 Route::get('/productregionsmapadmin', function () { return view('admin.product.productregionsmapdata'); });
 Route::get('/productadmin', function () { return view('admin.product.productdata'); });
 Route::get('/customeradmin', function () { return view('admin.product.customerdata'); });
 Route::get('/producttransactionadmin', function () { return view('admin.product.producttransaction'); });
+Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
+
 
 // Google Auth
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
