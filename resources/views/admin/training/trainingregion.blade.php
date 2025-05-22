@@ -16,7 +16,7 @@
     <!-- Sidebar backdrop for mobile -->
     <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
     <!-- Sidebar -->
-    @include('components.adminsidebar')
+    <x-adminsidebar :activeMenu="'training'" :activeSubMenu="'trainingregion'" />
     <!-- Main content -->
     <main class="flex-1 flex flex-col border-l border-gray-200 md:ml-0 ml-0">
         <!-- Top bar -->
@@ -128,5 +128,6 @@
         document.getElementById('addModal').classList.add('hidden');
     }
 </script>
+<x-footer></x-footer>
 </body>
 </html>

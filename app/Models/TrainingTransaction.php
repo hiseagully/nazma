@@ -31,7 +31,7 @@ class TrainingTransaction extends Model
     }
 
     // Relasi ke TrainingProgram
-    public function trainingProgram()
+    public function training()
     {
         return $this->belongsTo(TrainingProgram::class, 'trainingid', 'trainingid');
     }

@@ -52,7 +52,7 @@ Route::get('/training/search', [TrainingController::class, 'search'])->name('tra
 // Admin dashboard and data
 Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin'); });
 Route::get('/userdata', function () { return view('admin.userdata'); });
-Route::get('/trainingadmin', function () { return view('admin.training.trainingdata'); });
+Route::get('/trainingadmin', [TrainingProgramController::class, 'index']);
 Route::get('/traineeadmin', function () { return view('admin.training.traineedata'); });
 Route::get('/trainingtransactionadmin', function () { return view('admin.training.trainingtransactiondata'); });
 Route::get('/trainingticketadmin', function () { return view('admin.training.trainingticketdata'); });

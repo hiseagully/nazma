@@ -21,19 +21,23 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        $user = User::where('user_email', $request->email)->first();
+    // Use custom credentials for user_email and user_password
+    $credentials = [
+        'user_email'    => $request->email,
+        'user_password' => $request->password,
+    ];
 
-        if (!$user) {
-            return back()->with('error', 'Email not found, please sign up.');
-        }
+    $user = User::where('user_email', $request->email)->first();
 
-        if (!Hash::check($request->password, $user->user_password)) {
-            return back()->with('error', 'Incorrect password!');
-        }
-
-        // Success
-        session(['user_id' => $user->user_id]);
+    if ($user && Hash::check($request->password, $user->user_password)) {
         Auth::login($user);
-        return redirect('/landingpage')->with('success', 'Login successful! Welcome back.');
+        if ($user->role === 'admin') {
+            return redirect('/dashboardadmin'); // Ganti dengan route dashboard admin kamu
+        } else {
+            return redirect('/landingpage'); // Atau route user biasa
+        }
+    }
+
+    return back()->with('error', 'Email atau password salah!');
     }
 }

@@ -10,4 +10,8 @@ class TrainingRegion extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = ['trainingregionname'];
+
+    public static $rules = [
+        'trainingregionid' => 'required|exists:trainingregions,trainingid',
+    ];
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('user_email', 150);
             $table->string('user_password', 255);
             $table->string('user_phone', 15);
+            $table->string('role')->default('user'); // Nilai: 'user' atau 'admin'
             $table->timestamps();
         });
 
