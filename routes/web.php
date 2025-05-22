@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ProductRegionsMapController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\ProductCatalogController;
 
 // Halaman umum
 Route::get('/', function () { return view('welcome'); });
@@ -83,8 +84,33 @@ Route::put('/{id}', [TrainingRegionController::class, 'update'])->name('update')
 
 //Admin Product Regions Map
 Route::resource('productregionsmapadmin', ProductRegionsMapController::class)->names([
-    'index' => 'productregionsmap.index',
-    'store' => 'productregionsmap.store',
-    'update' => 'productregionsmap.update',
-    'destroy' => 'productregionsmap.destroy',
+    'index' => 'productregionsmapadmin.index',
+    'store' => 'productregionsmapadmin.store',
+    'update' => 'productregionsmapadmin.update',
+    'destroy' => 'productregionsmapadmin.destroy',
+    'edit' => 'productregionsmapadmin.edit',
+    'create' => 'productregionsmapadmin.create',
+    'show' => 'productregionsmapadmin.show',
+]);
+
+// Admin Product Catalog
+Route::resource('productcatalog', App\Http\Controllers\ProductCatalogController::class)->names([
+    'index' => 'productcatalog.index',
+    'store' => 'productcatalog.store',
+    'update' => 'productcatalog.update',
+    'destroy' => 'productcatalog.destroy',
+    'edit' => 'productcatalog.edit',
+    'create' => 'productcatalog.create',
+    'show' => 'productcatalog.show',
+])->parameters(['productcatalog' => 'productcatalog']);
+
+// Admin Product Collection
+Route::resource('productcollection', App\Http\Controllers\ProductCollectionController::class)->names([
+    'index' => 'productcollection.index',
+    'store' => 'productcollection.store',
+    'update' => 'productcollection.update',
+    'destroy' => 'productcollection.destroy',
+    'edit' => 'productcollection.edit',
+    'create' => 'productcollection.create',
+    'show' => 'productcollection.show',
 ]);
