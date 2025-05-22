@@ -12,7 +12,7 @@
     rel="stylesheet"
   />
   <x-header></x-header>
-  <x-trainingsearchbox></x-trainingsearchbox>
+@include('components.trainingsearchbox', ['action' => '/training/search'])
     <link rel="stylesheet" href="{{ asset('css/training/trainingticketdetail.css') }}" />
 </head>
 <body class="flex flex-col min-h-screen">

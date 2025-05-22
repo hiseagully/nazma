@@ -17,4 +17,14 @@ class TrainingTransactionController extends Controller
 
         return view('admin.training.trainingtransaction', compact('transactions'));
     }
+    public function adminIndex()
+    {
+        // Ambil data transaksi beserta relasi user, training, dan region
+        $transactions = \App\Models\TrainingTransaction::with([
+            'user',
+            'training.region'
+        ])->orderByDesc('trainingtransactiondate')->get();
+
+        return view('admin.training.trainingtransactiondata', compact('transactions'));
+    }
 }

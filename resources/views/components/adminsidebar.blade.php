@@ -45,7 +45,7 @@
                     href="/trainingtransactionadmin">Training Transaction</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'trainingticket' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
-                    href="#">Training Ticket</a>
+                    href="/trainingticketadmin">Training Ticket</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'trainee' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="#">Trainee</a>

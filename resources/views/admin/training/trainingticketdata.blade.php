@@ -41,31 +41,25 @@
       <table class="min-w-full bg-white border border-gray-200 rounded-lg">
        <thead>
         <tr class="bg-gray-100 text-gray-700">
-         <th class="py-3 px-4 border-b text-left">Nama</th>
-         <th class="py-3 px-4 border-b text-left">Email</th>
-         <th class="py-3 px-4 border-b text-left">No HP</th>
-         <th class="py-3 px-4 border-b text-left">Aksi</th>
+         <th class="py-3 px-4 border-b text-center">No</th>
+         <th class="py-3 px-4 border-b text-left">User</th>
+         <th class="py-3 px-4 border-b text-left">Training Title</th>
+         <th class="py-3 px-4 border-b text-center">Ticket Code</th>
+         <th class="py-3 px-4 border-b text-center">Status</th>
+         <th class="py-3 px-4 border-b text-center">Created At</th>
         </tr>
        </thead>
        <tbody>
+        @foreach($tickets as $ticket)
         <tr>
-         <td class="py-2 px-4 border-b">John Doe</td>
-         <td class="py-2 px-4 border-b">john@example.com</td>
-         <td class="py-2 px-4 border-b">08123456789</td>
-         <td class="py-2 px-4 border-b">
-          <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"><i class="fas fa-edit"></i> Edit</button>
-          <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-trash"></i> Hapus</button>
-         </td>
+         <td class="py-2 px-4 border-b text-center">{{ $loop->iteration }}</td>
+         <td class="py-2 px-4 border-b">{{ $ticket->user->user_name ?? '-' }}</td>
+         <td class="py-2 px-4 border-b">{{ $ticket->training->trainingtitle ?? '-' }}</td>
+         <td class="py-2 px-4 border-b text-center">{{ $ticket->ticket_code ?? '-' }}</td>
+         <td class="py-2 px-4 border-b text-center">{{ $ticket->status ?? '-' }}</td>
+         <td class="py-2 px-4 border-b text-center">{{ $ticket->created_at }}</td>
         </tr>
-        <tr>
-         <td class="py-2 px-4 border-b">Jane Smith</td>
-         <td class="py-2 px-4 border-b">jane@example.com</td>
-         <td class="py-2 px-4 border-b">08987654321</td>
-         <td class="py-2 px-4 border-b">
-          <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"><i class="fas fa-edit"></i> Edit</button>
-          <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-trash"></i> Hapus</button>
-         </td>
-        </tr>
+        @endforeach
        </tbody>
       </table>
      </div>

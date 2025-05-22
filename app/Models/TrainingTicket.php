@@ -4,24 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TrainingTransaction extends Model
+class TrainingTicket extends Model
 {
-    protected $table = 'trainingtransaction';
-    protected $primaryKey = 'trainingtransactionid';
+    protected $table = 'trainingticket'; // nama tabel di database
+    protected $primaryKey = 'trainingticketid'; // sesuaikan dengan primary key kamu
     public $incrementing = true;
     protected $keyType = 'int';
 
     protected $fillable = [
-        'trainingtransactionmethod',
-        'trainingtransactionstatus',
-        'trainingtransactiondate',
-        'trainingtransactiontotal',
-        'transactiontraineegender',
-        'transactiontraineename',
-        'transactiontraineeage',
-        'transactiontraineeaddress',
+        // tambahkan field yang bisa diisi
         'user_id',
         'trainingid',
+        'ticket_code',
+        'status',
+        // tambahkan field lain sesuai tabel
     ];
 
     // Relasi ke User
@@ -29,6 +25,8 @@ class TrainingTransaction extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
+
+    // Relasi ke Training
     public function training()
     {
         return $this->belongsTo(TrainingProgram::class, 'trainingid', 'trainingid');

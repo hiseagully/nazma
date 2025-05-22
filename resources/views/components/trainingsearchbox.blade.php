@@ -43,7 +43,7 @@
       </a>
 
       <!-- Search Form -->
-      <form action="/training/search" method="GET" class="flex-grow flex items-center space-x-2">
+      <form action="{{ $action ?? '/training/search' }}" method="GET" class="flex-grow flex items-center space-x-2">
         <!-- Search Input -->
         <input
           class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black"

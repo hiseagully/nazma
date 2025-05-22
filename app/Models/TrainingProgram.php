@@ -23,8 +23,5 @@ class TrainingProgram extends Model
     ];
 
     // Relasi ke TrainingRegion
-    public function region()
-    {
-        return $this->belongsTo(TrainingRegion::class, 'trainingregionid', 'trainingid');
-    }
+    public function region()  { return $this->belongsTo(TrainingRegion::class, 'trainingregionid', 'trainingid'); }
 }
