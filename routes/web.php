@@ -8,6 +8,7 @@ use App\Http\Controllers\TrainingRegionController;
 use App\Http\Controllers\TrainingTransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\ProductRegionsMapController;
 use App\Http\Controllers\Auth\GoogleController;
 
 // Halaman umum
@@ -49,18 +50,17 @@ Route::get('/trainingticket', function () { return view('user.training.trainingt
 Route::get('/trainingticketdetail', function () { return view('user.training.trainingticketdetail'); });
 Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
 
-// Admin dashboard and data
+// Admin dashboard Training and Product Data
 Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin'); });
 Route::get('/userdata', function () { return view('admin.userdata'); });
 Route::get('/trainingadmin', [TrainingProgramController::class, 'index']);
 Route::get('/traineeadmin', function () { return view('admin.training.traineedata'); });
 Route::get('/trainingtransactionadmin', function () { return view('admin.training.trainingtransactiondata'); });
 Route::get('/trainingticketadmin', function () { return view('admin.training.trainingticketdata'); });
+Route::get('/productregionsmapadmin', function () { return view('admin.product.productregionsmapdata'); });
 Route::get('/productadmin', function () { return view('admin.product.productdata'); });
 Route::get('/customeradmin', function () { return view('admin.product.customerdata'); });
-Route::get('/productorderadmin', function () { return view('admin.product.productorder'); });
 Route::get('/producttransactionadmin', function () { return view('admin.product.producttransaction'); });
-
 
 // Google Auth
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
@@ -69,9 +69,17 @@ Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])
 
 // Admin Training Region
 Route::prefix('trainingregion')->name('admin.trainingregion.')->group(function() {
-    Route::get('/', [TrainingRegionController::class, 'index'])->name('index');
-    Route::post('/', [TrainingRegionController::class, 'store'])->name('store');
-    Route::delete('/{id}', [TrainingRegionController::class, 'destroy'])->name('destroy');
-    Route::put('/{id}', [TrainingRegionController::class, 'update'])->name('update');
-    // Tambahkan edit/update jika perlu
+Route::get('/', [TrainingRegionController::class, 'index'])->name('index');
+Route::post('/', [TrainingRegionController::class, 'store'])->name('store');
+Route::delete('/{id}', [TrainingRegionController::class, 'destroy'])->name('destroy');
+Route::put('/{id}', [TrainingRegionController::class, 'update'])->name('update');
+// Tambahkan edit/update jika perlu
 });
+
+//Admin Product Regions Map
+Route::resource('productregionsmapadmin', ProductRegionsMapController::class)->names([
+    'index' => 'productregionsmap.index',
+    'store' => 'productregionsmap.store',
+    'update' => 'productregionsmap.update',
+    'destroy' => 'productregionsmap.destroy',
+]);

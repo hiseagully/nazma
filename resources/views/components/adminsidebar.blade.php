@@ -69,19 +69,25 @@
             <nav
                 id="product-menu"
                 class="ml-8 mt-2 flex flex-col space-y-1 text-base {{ ($activeMenu ?? '') === 'product' ? '' : 'hidden' }}"
-            >
+            >   
+                <a class="px-4 py-2 rounded-md transition
+                    {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    href="/admin/product/productregionsmapadmin">Product Regions</a>
+                <a class="px-4 py-2 rounded-md transition
+                    {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    href="/admin/product/productcatalog">Product Catalog</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="#">Products</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'producttransaction' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
-                    href="#">Product Transaction</a>
+                    href="/admin/product/producttransaction">Product Transaction</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'customer' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
-                    href="#">Customer</a>
+                    href="/admin/product/customerdata">Customer</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'productorder' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
-                    href="#">Product Order</a>
+                    href="/admin/product/productorder">Product Order</a>
             </nav>
         </div>
     </nav>
