@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TrainingTicket;
+use App\Models\TrainingTransaction;
 
 class TrainingTicketController extends Controller
 {
     public function adminIndex()
     {
-        $tickets = TrainingTicket::with(['user', 'training'])->orderByDesc('created_at')->get();
+        $tickets = TrainingTransaction::with(['user', 'training'])->orderByDesc('trainingtransactiondate')->get();
         return view('admin.training.trainingticketdata', compact('tickets'));
     }
 }
