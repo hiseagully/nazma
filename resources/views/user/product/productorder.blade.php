@@ -169,21 +169,16 @@
   </main>
   <x-footer></x-footer>
   <!-- Modal Rating Produk -->
-  <div id="modal" class="fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-30 hidden">
-    <div class="bg-white rounded-t-2xl shadow-lg w-full max-w-md p-6 relative mb-0">
-      <button id="closeModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl">&times;</button>
-      <div class="flex flex-col items-center">
-        <img id="modalImage" src="" alt="" class="w-20 h-20 rounded-md object-contain mb-2 border border-gray-200 bg-white"/>
-        <h3 id="modalTitle" class="font-semibold text-lg mb-2"></h3>
-        <form id="ratingForm" method="POST" action="/productorder/rate">
-          @csrf
-          <input type="hidden" name="product_id" id="modalProductId">
-          <input type="hidden" name="stars" id="modalInputStars" value="0">
-          <div id="modalStars" class="flex text-yellow-400 text-xl mb-4 cursor-pointer"></div>
-          <textarea name="review" class="border rounded w-full p-2 mb-3 text-sm" placeholder="Tulis ulasan..." rows="3"></textarea>
-          <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Kirim Rating</button>
-        </form>
-      </div>
+  <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
+    <div class="relative bg-white rounded-2xl w-full max-w-xs p-4 flex flex-col items-center" style="box-shadow: 0 4px 12px rgb(0 0 0 / 0.1); min-height: 370px; font-size: 0.92rem;">
+      <button id="closeModal" aria-label="Close" class="absolute top-3 right-3 text-black text-lg focus:outline-none">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="font-semibold text-base mb-3">Beri Penilaian</h2>
+      <img id="modalImage" alt="White handbag with colorful floral pattern, 160x160" class="mb-4 w-52 h-52 object-cover rounded-xl" height="208" width="208" src=""/>
+      <h3 id="modalTitle" class="font-semibold text-sm mb-4 text-center"></h3>
+      <div id="modalStars" class="flex space-x-1 mb-5 text-yellow-400 text-lg justify-center"></div>
+      <button id="sendRatingBtn" class="bg-gradient-to-r from-orange-400 to-yellow-400 text-white font-semibold rounded-full px-4 py-1.5 w-20 text-center text-sm">Send</button>
     </div>
   </div>
   <script>
@@ -200,16 +195,16 @@
     const products = {
       openModal1: {
         id: 1,
-        image: "https://storage.googleapis.com/a1aa/image/a16aa5ec-ef1e-4f20-c9c9-b5bc8071148e.jpg",
-        alt: "White handbag with colorful floral pattern, 160x160",
+        image: "https://storage.googleapis.com/a1aa/image/8447bbba-ed99-4abf-e603-1550c8b22990.jpg",
+        alt: "A small white handbag with floral pattern and gold chain handle",
         title: "Tas Warna Nusantara",
         stars: 4,
       },
       openModal2: {
         id: 2,
-        image: "https://storage.googleapis.com/a1aa/image/5593cb0f-c023-4434-7569-7acbaf20fb82.jpg",
-        alt: "Black baseball cap with white NY logo, 160x160",
-        title: "Topi Rupa Kota",
+        image: "https://storage.googleapis.com/a1aa/image/624b61f2-e59f-4c92-dab7-5c6c2d56792f.jpg",
+        alt: "Dark gray baseball cap with white NY logo on front",
+        title: "Topi Rupa Kita",
         stars: 3,
       },
     };
@@ -219,16 +214,14 @@
       modalStars.innerHTML = "";
       for (let i = 1; i <= 5; i++) {
         const star = document.createElement("i");
-        star.className = i <= starCount ? "fas fa-star" : "far fa-star";
+        star.className = i <= starCount ? "fas fa-star" : "far fa-star text-yellow-400";
         star.dataset.value = i;
         star.style.cursor = "pointer";
         star.onclick = function() {
-          document.getElementById('modalInputStars').value = i;
           updateStars(i);
         };
         modalStars.appendChild(star);
       }
-      document.getElementById('modalInputStars').value = starCount;
     }
 
     // Open modal function
@@ -239,7 +232,6 @@
       modalImage.src = product.image;
       modalImage.alt = product.alt;
       modalTitle.textContent = product.title;
-      document.getElementById('modalProductId').value = product.id;
       updateStars(product.stars);
       modal.classList.remove("hidden");
     }
@@ -252,46 +244,18 @@
     // Event listeners
     openModal1.addEventListener("click", openModal);
     openModal2.addEventListener("click", openModal);
-    closeModalBtn.addEventListener("click", closeModal);
-
+    document.getElementById('closeModal').addEventListener("click", closeModal);
     // Close modal on clicking outside modal content
     modal.addEventListener("click", (e) => {
       if (e.target === modal) {
         closeModal();
       }
     });
-
-    // Accessibility: open modal on Enter key on "Beri Penilaian"
-    [openModal1, openModal2].forEach((el) => {
-      el.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          openModal(e);
-        }
-      });
-    });
-
-    // Submit rating form via AJAX (prevent reload)
-    document.getElementById('ratingForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
-      fetch(form.action, {
-        method: 'POST',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRF-TOKEN': form.querySelector('[name=_token]').value
-        },
-        body: data
-      })
-      .then(res => res.ok ? res.text() : Promise.reject(res))
-      .then(() => {
-        closeModal();
-        alert('Rating berhasil dikirim!');
-        // Optionally reload or update UI
-      })
-      .catch(() => alert('Gagal mengirim rating'));
-    });
+    // Send button (dummy, just close modal)
+    document.getElementById('sendRatingBtn').onclick = function() {
+      closeModal();
+      alert('Rating berhasil dikirim!');
+    };
   </script>
  </body>
 </html>

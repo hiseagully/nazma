@@ -20,7 +20,13 @@
   </style>
 </head>
 <body class="bg-[#f4f8ff] text-black">
-    <x-header></x-header>
+    <x-header>
+      @guest
+        <a href="/login" class="btn-login">Login</a>
+      @else
+        <a href="/profile" class="btn-profile">Profile</a>
+      @endguest
+    </x-header>
   <main>
     <!-- Hero Section -->
     <section class="hero-section grid grid-cols-1 md:grid-cols-2 items-center gap-6 px-6 py-10">

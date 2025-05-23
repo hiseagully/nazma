@@ -28,7 +28,10 @@ class GoogleController extends Controller
                 ]
             );
 
-            // Jika user berhasil dibuat/ditemukan, redirect ke login dengan notif sukses
+            // Login user setelah signup Google
+            Auth::login($user);
+
+            // Jika user berhasil dibuat/ditemukan, redirect ke landingpage
             if ($user) {
                 return redirect('/landingpage')->with('success', 'Sign up with Google successful! Welcome!');
             } else {

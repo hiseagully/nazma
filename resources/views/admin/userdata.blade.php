@@ -37,38 +37,43 @@
     <!-- Content area -->
     <section class="flex-1 p-6">
      <!-- Tabel User dengan aksi Edit dan Hapus -->
-     <div class="overflow-x-auto">
-      <table class="min-w-full bg-white border border-gray-200 rounded-lg">
-       <thead>
-        <tr class="bg-gray-100 text-gray-700">
-         <th class="py-3 px-4 border-b text-left">Nama</th>
-         <th class="py-3 px-4 border-b text-left">Email</th>
-         <th class="py-3 px-4 border-b text-left">No HP</th>
-         <th class="py-3 px-4 border-b text-left">Aksi</th>
-        </tr>
-       </thead>
-       <tbody>
-        <tr>
-         <td class="py-2 px-4 border-b">John Doe</td>
-         <td class="py-2 px-4 border-b">john@example.com</td>
-         <td class="py-2 px-4 border-b">08123456789</td>
-         <td class="py-2 px-4 border-b">
-          <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"><i class="fas fa-edit"></i> Edit</button>
-          <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-trash"></i> Hapus</button>
-         </td>
-        </tr>
-        <tr>
-         <td class="py-2 px-4 border-b">Jane Smith</td>
-         <td class="py-2 px-4 border-b">jane@example.com</td>
-         <td class="py-2 px-4 border-b">08987654321</td>
-         <td class="py-2 px-4 border-b">
-          <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"><i class="fas fa-edit"></i> Edit</button>
-          <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-trash"></i> Hapus</button>
-         </td>
-        </tr>
-       </tbody>
-      </table>
-     </div>
+     @php
+    use App\Models\User;
+    $users = User::all();
+@endphp
+<div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+        <thead>
+            <tr class="bg-gray-100 text-gray-700">
+                <th class="py-3 px-6 border-b text-center w-16">No</th>
+                <th class="py-3 px-6 border-b text-center">Name</th>
+                <th class="py-3 px-6 border-b text-center">Email</th>
+                <th class="py-3 px-6 border-b text-center">Phone</th>
+                <th class="py-3 px-6 border-b text-center">Role</th>
+                <th class="py-3 px-4 border-b text-center w-48">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($users as $user)
+            <tr class="hover:bg-gray-50">
+                <td class="py-2 px-6 border-b text-center">{{ $loop->iteration }}</td>
+                <td class="py-2 px-6 border-b text-center">{{ $user->user_name }}</td>
+                <td class="py-2 px-6 border-b text-center">{{ $user->user_email }}</td>
+                <td class="py-2 px-6 border-b text-center">{{ $user->user_phone }}</td>
+                <td class="py-2 px-6 border-b text-center">{{ $user->role }}</td>
+                <td class="py-2 px-4 border-b flex justify-center gap-2 text-center">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-2"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"><i class="fas fa-trash"></i> Hapus</button>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="6" class="py-2 px-4 text-gray-500 text-center">No users found.</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
     </section>
    </main>
   </div>
