@@ -12,6 +12,7 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ProductRegionsMapController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ProductCatalogController;
+use Illuminate\Support\Facades\Auth;
 
 // Halaman umum
 Route::get('/', function () { return view('welcome'); });
@@ -56,17 +57,53 @@ Route::get('/training/search', [TrainingController::class, 'search'])->name('tra
 
 // Admin dashboard Training and Product Data
 Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin'); });
-Route::get('/userdata', function () { return view('admin.userdata'); });
+Route::get('/admin/userdata', function () { return view('admin.userdata'); })->name('admin.userdata');
 Route::get('/trainingadmin', [TrainingProgramController::class, 'index']);
 Route::get('/traineeadmin', function () { return view('admin.training.traineedata'); });
 Route::get('/trainingtransactionadmin', [TrainingTransactionController::class, 'adminIndex'])->name('admin.trainingtransaction.index');
 Route::get('/trainingticketadmin', [TrainingTicketController::class, 'adminIndex'])->name('admin.trainingticket.index');
-Route::get('/productregionsmapadmin', function () { return view('admin.product.productregionsmapdata'); });
-Route::get('/productadmin', function () { return view('admin.product.productdata'); });
-Route::get('/customeradmin', function () { return view('admin.product.customerdata'); });
-Route::get('/producttransactionadmin', function () { return view('admin.product.producttransaction'); });
-Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
 
+// Product Admin
+Route::prefix('admin/product')->group(function () {
+    Route::resource('productregionsmapadmin', ProductRegionsMapController::class, [
+        'names' => [
+            'index' => 'productregionsmapadmin.index',
+            'create' => 'productregionsmapadmin.create',
+            'store' => 'productregionsmapadmin.store',
+            'show' => 'productregionsmapadmin.show',
+            'edit' => 'productregionsmapadmin.edit',
+            'update' => 'productregionsmapadmin.update',
+            'destroy' => 'productregionsmapadmin.destroy',
+        ],
+        'parameters' => [
+            'productregionsmapadmin' => 'productregionsmapadmin'
+        ]
+    ]);
+    Route::resource('productcatalog', ProductCatalogController::class, [
+        'names' => [
+            'index' => 'productcatalog.index',
+            'create' => 'productcatalog.create',
+            'store' => 'productcatalog.store',
+            'show' => 'productcatalog.show',
+            'edit' => 'productcatalog.edit',
+            'update' => 'productcatalog.update',
+            'destroy' => 'productcatalog.destroy',
+        ],
+        'parameters' => [
+            'productcatalog' => 'productcatalog'
+        ]
+    ]);
+    Route::get('/productcollection', [ProductCollectionController::class, 'index'])->name('productcollection.index');
+    Route::get('/producttransaction', function() {
+        return view('admin.product.producttransaction');
+    })->name('producttransaction.index');
+    Route::get('/customerdata', function() {
+        return view('admin.product.customerdata');
+    })->name('customerdata.index');
+    Route::get('/productorder', function() {
+        return view('admin.product.productorder');
+    })->name('productorder.index');
+});
 
 // Google Auth
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
@@ -82,35 +119,21 @@ Route::put('/{id}', [TrainingRegionController::class, 'update'])->name('update')
 // Tambahkan edit/update jika perlu
 });
 
-//Admin Product Regions Map
-Route::resource('productregionsmapadmin', ProductRegionsMapController::class)->names([
-    'index' => 'productregionsmapadmin.index',
-    'store' => 'productregionsmapadmin.store',
-    'update' => 'productregionsmapadmin.update',
-    'destroy' => 'productregionsmapadmin.destroy',
-    'edit' => 'productregionsmapadmin.edit',
-    'create' => 'productregionsmapadmin.create',
-    'show' => 'productregionsmapadmin.show',
-]);
-
-// Admin Product Catalog
-Route::resource('productcatalog', App\Http\Controllers\ProductCatalogController::class)->names([
-    'index' => 'productcatalog.index',
-    'store' => 'productcatalog.store',
-    'update' => 'productcatalog.update',
-    'destroy' => 'productcatalog.destroy',
-    'edit' => 'productcatalog.edit',
-    'create' => 'productcatalog.create',
-    'show' => 'productcatalog.show',
-])->parameters(['productcatalog' => 'productcatalog']);
-
-// Admin Product Collection
-Route::resource('productcollection', App\Http\Controllers\ProductCollectionController::class)->names([
-    'index' => 'productcollection.index',
-    'store' => 'productcollection.store',
-    'update' => 'productcollection.update',
-    'destroy' => 'productcollection.destroy',
-    'edit' => 'productcollection.edit',
-    'create' => 'productcollection.create',
-    'show' => 'productcollection.show',
-]);
+// Profile update
+Route::middleware(['auth'])->group(function () {
+    Route::put('/profile', function (Illuminate\Http\Request $request) {
+        $user = Auth::user();
+        $request->validate([
+            'user_name' => 'required|string|max:255',
+            'user_phone' => 'required|string|max:20',
+            'user_password' => 'nullable|string|min:8',
+        ]);
+        $user->user_name = $request->user_name;
+        $user->user_phone = $request->user_phone;
+        if ($request->filled('user_password')) {
+            $user->user_password = Hash::make($request->user_password);
+        }
+        $user->save();
+        return redirect()->back()->with('success', 'Profile updated!');
+    })->name('profile.update');
+});

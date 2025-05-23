@@ -14,7 +14,7 @@
         </a>
         <!-- Users -->
         <a
-            href="#"
+            href="/admin/userdata"
             class="flex items-center gap-3 rounded-md px-4 py-3 transition
                 {{ ($activeMenu ?? '') === 'users' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'text-gray-700 hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
         >
@@ -71,14 +71,14 @@
                 class="ml-8 mt-2 flex flex-col space-y-1 text-base {{ ($activeMenu ?? '') === 'product' ? '' : 'hidden' }}"
             >   
                 <a class="px-4 py-2 rounded-md transition
-                    {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    {{ ($activeSubMenu ?? '') === 'productregionsmapadmin' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/productregionsmapadmin">Product Regions</a>
                 <a class="px-4 py-2 rounded-md transition
-                    {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    {{ ($activeSubMenu ?? '') === 'productcatalog' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/productcatalog">Product Catalog</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
-                    href="#">Products</a>
+                    href="/admin/product/productcollection">Products</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'producttransaction' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/producttransaction">Product Transaction</a>
