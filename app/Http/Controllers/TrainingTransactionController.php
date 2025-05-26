@@ -16,6 +16,11 @@ class TrainingTransactionController extends Controller
         ])->orderByDesc('trainingtransactiondate')->get();
 
         return view('admin.training.trainingtransaction', compact('transactions'));
+
+        // Ambil hanya transaksi dengan status Success
+        $transactions = TrainingTransaction::where('trainingtransactionstatus', 'Success')->get();
+
+        return view('admin.trainee.index', compact('transactions'));
     }
     public function adminIndex()
     {

@@ -7,12 +7,15 @@ use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\TrainingRegionController;
 use App\Http\Controllers\TrainingTransactionController;
 use App\Http\Controllers\TrainingTicketController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\TraineeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductRegionsMapController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ProductCatalogController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\ProductCollectionController;
 
 // Halaman umum
 Route::get('/', function () { return view('welcome'); });
@@ -21,6 +24,7 @@ Route::get('/landingpage', function () { return view('landingpage'); });
 // Auth routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/signup', [SignupController::class, 'create'])->name('signup');
@@ -59,9 +63,9 @@ Route::get('/training/search', [TrainingController::class, 'search'])->name('tra
 Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin'); });
 Route::get('/admin/userdata', function () { return view('admin.userdata'); })->name('admin.userdata');
 Route::get('/trainingadmin', [TrainingProgramController::class, 'index']);
-Route::get('/traineeadmin', function () { return view('admin.training.traineedata'); });
+Route::get('/traineeadmin', [TraineeController::class, 'index'])->name('admin.trainee.index');
 Route::get('/trainingtransactionadmin', [TrainingTransactionController::class, 'adminIndex'])->name('admin.trainingtransaction.index');
-Route::get('/trainingticketadmin', [TrainingTicketController::class, 'adminIndex'])->name('admin.trainingticket.index');
+Route::get('/trainingticketadmin', [TrainingTicketController::class, 'index'])->name('admin.trainingticket.index');
 
 // Product Admin
 Route::prefix('admin/product')->group(function () {
@@ -93,16 +97,16 @@ Route::prefix('admin/product')->group(function () {
             'productcatalog' => 'productcatalog'
         ]
     ]);
-    Route::get('/productcollection', [ProductCollectionController::class, 'index'])->name('productcollection.index');
-    Route::get('/producttransaction', function() {
-        return view('admin.product.producttransaction');
-    })->name('producttransaction.index');
-    Route::get('/customerdata', function() {
-        return view('admin.product.customerdata');
-    })->name('customerdata.index');
-    Route::get('/productorder', function() {
-        return view('admin.product.productorder');
-    })->name('productorder.index');
+    //Route::get('/productcollection', [ProductCollectionController::class, 'index'])->name('productcollection.index');
+    //Route::get('/producttransaction', function() {
+    //    return view('admin.product.producttransaction');
+    //})->name('producttransaction.index');
+    //Route::get('/customerdata', function() {
+    //    return view('admin.product.customerdata');
+    //})->name('customerdata.index');
+    //Route::get('/productorder', function() {
+    //   return view('admin.product.productorder');
+    //})->name('productorder.index');
 });
 
 // Google Auth
@@ -110,7 +114,13 @@ Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name(
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])->name('google.signup');
 
-// Admin Training Region
+// Training Admin
+Route::prefix('admin/training')->name('admin.training.')->group(function() {
+    Route::get('/', [TrainingProgramController::class, 'index'])->name('index');
+    Route::post('/', [TrainingProgramController::class, 'store'])->name('store');
+    Route::delete('/{id}', [TrainingProgramController::class, 'destroy'])->name('destroy');
+    Route::put('/{id}', [TrainingProgramController::class, 'update'])->name('update');
+});
 Route::prefix('trainingregion')->name('admin.trainingregion.')->group(function() {
 Route::get('/', [TrainingRegionController::class, 'index'])->name('index');
 Route::post('/', [TrainingRegionController::class, 'store'])->name('store');
@@ -118,7 +128,9 @@ Route::delete('/{id}', [TrainingRegionController::class, 'destroy'])->name('dest
 Route::put('/{id}', [TrainingRegionController::class, 'update'])->name('update');
 // Tambahkan edit/update jika perlu
 });
-
+Route::prefix('trainingticket')->name('admin.trainingticket.')->group(function() {
+Route::put('/trainingticket/{id}/status', [TrainingTicketController::class, 'updateStatus'])->name('admin.trainingticket.updatestatus');
+});
 // Profile update
 Route::middleware(['auth'])->group(function () {
     Route::put('/profile', function (Illuminate\Http\Request $request) {
