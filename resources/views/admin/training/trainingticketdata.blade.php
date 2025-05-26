@@ -15,17 +15,27 @@
 <div class="flex min-h-screen border border-gray-200">
     <!-- Sidebar backdrop for mobile -->
     <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
+
     <!-- Sidebar -->
     <x-adminsidebar :activeMenu="'training'" :activeSubMenu="'trainingticket'" />
+
     <!-- Main content -->
     <main class="flex-1 flex flex-col border-l border-gray-200 md:ml-0 ml-0">
         <!-- Top bar -->
         @include('components.adminnavbar')
+
         <!-- Content area -->
         <section class="flex-1 p-6">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-semibold">Training Ticket Management</h2>
             </div>
+
+            @if (session('success'))
+                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                     <thead>
@@ -36,6 +46,7 @@
                             <th class="py-3 px-4 border-b text-left">Status</th>
                             <th class="py-3 px-4 border-b text-left">Trainee</th>
                             <th class="py-3 px-4 border-b text-left">Transaction Date</th>
+                            <th class="py-3 px-4 border-b text-left">Detail</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,24 +54,28 @@
                         <tr class="hover:bg-gray-50">
                             <td class="py-2 px-4 border-b">{{ $loop->iteration }}</td>
                             <td class="py-2 px-4 border-b">{{ $trx->training->trainingtitle ?? '-' }}</td>
-                            <td class="py-2 px-4 border-b">{{ $trx->training->trainingday ?? '-' }}</td> 
+                            <td class="py-2 px-4 border-b">{{ $trx->trainingtransactiondate }}</td> 
                             <td class="py-2 px-4 border-b">
-                                <form action="{{ route('admin.trainingticket.updatestatus', $trx->id) }}" method="POST">
+                                <form action="{{ route('admin.trainingticket.updatestatus') }}" method="POST">
                                     @csrf
-                                    @method('PUT')
+                                    <input type="hidden" name="transaction_id" value="{{ $trx->id }}">
+                                    @php
+                                        $defaultStatus = 'Payment Success';
+                                        $selectedStatus = session("ticket_status_{$trx->id}", $defaultStatus);
+                                    @endphp
                                     <select name="status" onchange="this.form.submit()" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                                        <option value="Upcoming" {{ $trx->trainingtransactionstatus == 'Upcoming' ? 'selected' : '' }}>Upcoming</option>
-                                        <option value="Ongoing" {{ $trx->trainingtransactionstatus == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
-                                        <option value="Completed" {{ $trx->trainingtransactionstatus == 'Completed' ? 'selected' : '' }}>Completed</option>
+                                        <option value="Ongoing" {{ $selectedStatus == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
+                                        <option value="Completed" {{ $selectedStatus == 'Completed' ? 'selected' : '' }}>Completed</option>
                                     </select>
                                 </form>
                             </td>
                             <td class="py-2 px-4 border-b">{{ $trx->transactiontraineename }}</td>
-                            <td class="py-2 px-4 border-b">{{ $trx->trainingtransactiondate }}</td>
+                            <td class="py-2 px-4 border-b">
+                                {{ $trx->created_at ? $trx->created_at->format('Y-m-d') : '-' }}
+                            </td>
                             <td class="py-2 px-4 border-b">
                                 <div>
-                                    <div><b>{{ $trx->transactiontraineename }}</b> ({{ $trx->transactiontraineegender == 'm' ? 'Male' : 'Female' }}, {{ $trx->transactiontraineeage }} yrs)</div>
-                                    <div class="text-xs text-gray-500">{{ $trx->transactiontraineeaddress }}</div>
+                                    <div>{{ $trx->transactiontraineename }}</div>
                                 </div>
                             </td>
                         </tr>

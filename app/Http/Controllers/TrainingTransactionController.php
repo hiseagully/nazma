@@ -7,25 +7,29 @@ use App\Models\TrainingTransaction;
 
 class TrainingTransactionController extends Controller
 {
+    // Untuk halaman training transaction
     public function index()
     {
-        // Ambil data transaksi beserta relasi user, training, dan region
         $transactions = TrainingTransaction::with([
             'user',
             'training.region'
         ])->orderByDesc('trainingtransactiondate')->get();
 
         return view('admin.training.trainingtransaction', compact('transactions'));
+    }
 
-        // Ambil hanya transaksi dengan status Success
+    // Untuk halaman trainee data, ambil transaksi dengan status Success
+    public function traineeIndex()
+    {
         $transactions = TrainingTransaction::where('trainingtransactionstatus', 'Success')->get();
 
-        return view('admin.trainee.index', compact('transactions'));
+        return view('admin.training.traineedata', compact('transactions'));
     }
+
+    // Jika perlu adminIndex untuk data lain
     public function adminIndex()
     {
-        // Ambil data transaksi beserta relasi user, training, dan region
-        $transactions = \App\Models\TrainingTransaction::with([
+        $transactions = TrainingTransaction::with([
             'user',
             'training.region'
         ])->orderByDesc('trainingtransactiondate')->get();

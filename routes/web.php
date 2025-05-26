@@ -127,8 +127,11 @@ Route::delete('/{id}', [TrainingRegionController::class, 'destroy'])->name('dest
 Route::put('/{id}', [TrainingRegionController::class, 'update'])->name('update');
 // Tambahkan edit/update jika perlu
 });
-Route::prefix('trainingticket')->name('admin.trainingticket.')->group(function() {
-Route::put('/trainingticket/{id}/status', [TrainingTicketController::class, 'updateStatus'])->name('admin.trainingticket.updatestatus');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/trainingticket', [TrainingTicketController::class, 'index'])->name('trainingticket.index');
+
+    // Ini adalah route untuk update status (via form POST)
+    Route::post('/trainingticket/updatestatus', [TrainingTicketController::class, 'updateStatus'])->name('trainingticket.updatestatus');
 });
 // Profile update
 Route::middleware(['auth'])->group(function () {

@@ -26,7 +26,7 @@
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-semibold">Trainee Data Management</h2>
             </div>
-            <div class="overflow-x-auto">
+            <div class="flex justify-start items-start">
                 <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                     <thead>
                         <tr class="bg-gray-100 text-gray-700">
@@ -40,13 +40,11 @@
                     <tbody>
                         @forelse($transactions as $trx)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border">{{ $loop->iteration }}</td>
-                                <td class="px-4 py-2 border">{{ $trx->transactiontraineename }}</td>
-                                <td class="px-4 py-2 border">
-                                    {{ $trx->transactiontraineegender === 'm' ? 'Laki-laki' : 'Perempuan' }}
-                                </td>
-                                <td class="px-4 py-2 border">{{ $trx->transactiontraineeage }} tahun</td>
-                                <td class="px-4 py-2 border">{{ $trx->transactiontraineeaddress }}</td>
+                                <td class="py-2 px-4 border-b">{{ $loop->iteration }}</td>
+                                <td>{{ $trx->transactiontraineename }}</td>
+                                <td>{{ $trx->transactiontraineegender === 'm' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                <td>{{ $trx->transactiontraineeage }} tahun</td>
+                                <td>{{ $trx->transactiontraineeaddress }}</td>
                             </tr>
                         @empty
                             <tr>
