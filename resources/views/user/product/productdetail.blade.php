@@ -128,7 +128,320 @@
     <a href="#">#Training</a>
     <a href="#">Yogyakarta</a>
    </p>
-  </section>
+  </section> 
+   
+  <main class="max-w-6xl mx-auto w-full px-6 mt-4 flex-grow">
+    <h1>Rekomendation for you</h1><br>
+   <div aria-label="Product list" class="grid grid-cols-2 sm:grid-cols-5 gap-6">
+    <!-- Product card template repeated 16 times -->
+    <a href="/productdetail">
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Black baseball cap with white New York Yankees logo on front, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4475c2da-07c9-4ee1-04a7-6b091114bd39.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    </a>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="White handbag with colorful floral design, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3e6c65ba-ba77-4b19-5ccb-b25cf8e1f255.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Blue wallet open showing card slots, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/190138ef-9185-42e7-978b-dddad8829236.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Brown woven bucket bag with leather strap, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/a3c80199-6744-4145-5d74-43a1a08ba079.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Black baseball cap with white New York Yankees logo on front, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4475c2da-07c9-4ee1-04a7-6b091114bd39.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="White handbag with colorful floral design, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3e6c65ba-ba77-4b19-5ccb-b25cf8e1f255.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Blue wallet open showing card slots, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/190138ef-9185-42e7-978b-dddad8829236.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Brown woven bucket bag with leather strap, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/a3c80199-6744-4145-5d74-43a1a08ba079.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Black baseball cap with white New York Yankees logo on front, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4475c2da-07c9-4ee1-04a7-6b091114bd39.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="White handbag with colorful floral design, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3e6c65ba-ba77-4b19-5ccb-b25cf8e1f255.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Blue wallet open showing card slots, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/190138ef-9185-42e7-978b-dddad8829236.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Brown woven bucket bag with leather strap, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/a3c80199-6744-4145-5d74-43a1a08ba079.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Black baseball cap with white New York Yankees logo on front, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4475c2da-07c9-4ee1-04a7-6b091114bd39.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="White handbag with colorful floral design, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3e6c65ba-ba77-4b19-5ccb-b25cf8e1f255.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Blue wallet open showing card slots, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/190138ef-9185-42e7-978b-dddad8829236.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+     <img alt="Brown woven bucket bag with leather strap, product image" class="rounded-lg mb-3" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/a3c80199-6744-4145-5d74-43a1a08ba079.jpg" width="200"/>
+     <p class="text-xs text-gray-400 mb-0.5">
+      accessories
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Topi Rupa Kita
+     </p>
+     <p class="font-bold text-sm mb-0.5">
+      Rp 250.000
+     </p>
+     <div class="flex items-center space-x-1 text-yellow-400 text-xs">
+      <i class="fas fa-star">
+      </i>
+      <span>
+       5.0
+      </span>
+     </div>
+    </article>
+   </div>
+  </main>
  </body>
  <x-footer></x-footer>
 </html>
