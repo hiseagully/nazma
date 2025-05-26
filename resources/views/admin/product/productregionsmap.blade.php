@@ -98,8 +98,8 @@
     </div>
 </div>
 <!-- Add Modal -->
-<div id="addModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+<div id="addModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 overflow-y-auto" style="padding-top:5vh; padding-bottom:5vh;">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
         <button onclick="closeAddModal()" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl">&times;</button>
         <h3 class="text-lg font-semibold mb-4">Add Region</h3>
         <form action="{{ route('productregionsmapadmin.store') }}" method="POST">
