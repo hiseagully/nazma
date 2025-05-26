@@ -16,9 +16,12 @@ use App\Http\Controllers\ProductCatalogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\ProductCollectionController;
+use App\Http\Controllers\ProductImagesController;
+use App\Http\Controllers\ProductController;
+use App\Models\ProductCollection;
 
 // Halaman umum
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () { return view('landingpage'); });
 Route::get('/landingpage', function () { return view('landingpage'); });
 
 // Auth routes
@@ -38,8 +41,11 @@ Route::resource('trainingregion', TrainingRegionController::class);
 Route::resource('trainingticket', TrainingTicketController::class);
 
 // Product (user)
-Route::get('/product', function () { return view('user.product.product'); });
-Route::get('/productdetail', function () { return view('user.product.productdetail'); });
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/productdetail/{id}', function ($id) {
+    $product = ProductCollection::with(['catalog', 'region'])->findOrFail($id);
+    return view('user.product.productdetail', compact('product'));
+});
 Route::get('/productcart', function () { return view('user.product.productcart'); });
 Route::get('/productdata', function () { return view('user.product.productdata'); });
 Route::get('/producttransaction', function () { return view('user.product.producttransaction'); });
@@ -97,16 +103,35 @@ Route::prefix('admin/product')->group(function () {
             'productcatalog' => 'productcatalog'
         ]
     ]);
-    //Route::get('/productcollection', [ProductCollectionController::class, 'index'])->name('productcollection.index');
-    //Route::get('/producttransaction', function() {
-    //    return view('admin.product.producttransaction');
-    //})->name('producttransaction.index');
-    //Route::get('/customerdata', function() {
-    //    return view('admin.product.customerdata');
-    //})->name('customerdata.index');
-    //Route::get('/productorder', function() {
-    //   return view('admin.product.productorder');
-    //})->name('productorder.index');
+    Route::resource('productcollection', ProductCollectionController::class, [
+        'names' => [
+            'index' => 'productcollection.index',
+            'create' => 'productcollection.create',
+            'store' => 'productcollection.store',
+            'show' => 'productcollection.show',
+            'edit' => 'productcollection.edit',
+            'update' => 'productcollection.update',
+            'destroy' => 'productcollection.destroy',
+        ],
+        'parameters' => [
+            'productcollection' => 'productcollection'
+        ]
+    ]);
+    Route::resource('productimages', ProductImagesController::class, [
+        'names' => [
+            'index' => 'productimages.index',
+            'create' => 'productimages.create',
+            'store' => 'productimages.store',
+            'show' => 'productimages.show',
+            'edit' => 'productimages.edit',
+            'update' => 'productimages.update',
+            'destroy' => 'productimages.destroy',
+        ],
+        'parameters' => [
+            'productimages' => 'productimageid'
+        ]
+    ]);
+    Route::post('productimages/{productimageid}/set-thumbnail', [\App\Http\Controllers\ProductImagesController::class, 'setThumbnail'])->name('productimages.setThumbnail');
 });
 
 // Google Auth
