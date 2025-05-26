@@ -24,6 +24,7 @@ Route::get('/landingpage', function () { return view('landingpage'); });
 // Auth routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/signup', [SignupController::class, 'create'])->name('signup');
@@ -114,7 +115,7 @@ Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallb
 Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])->name('google.signup');
 
 // Training Admin
-Route::prefix('training')->name('admin.training.')->group(function() {
+Route::prefix('admin/training')->name('admin.training.')->group(function() {
     Route::get('/', [TrainingProgramController::class, 'index'])->name('index');
     Route::post('/', [TrainingProgramController::class, 'store'])->name('store');
     Route::delete('/{id}', [TrainingProgramController::class, 'destroy'])->name('destroy');

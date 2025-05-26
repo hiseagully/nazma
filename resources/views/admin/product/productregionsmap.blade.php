@@ -131,7 +131,7 @@
         document.getElementById('editRegionId').value = id;
         document.getElementById('editRegionCode').value = code;
         document.getElementById('editRegionName').value = name;
-        document.getElementById('editForm').action = '/productregionsmapadmin/' + id;
+        document.getElementById('editForm').action = '/admin/product/productregionsmapadmin/' + id;
     }
     function closeEditModal() {
         document.getElementById('editModal').classList.add('hidden');

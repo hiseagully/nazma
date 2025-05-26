@@ -45,12 +45,12 @@
     <table class="min-w-full bg-white border border-gray-200 rounded-lg">
         <thead>
             <tr class="bg-gray-100 text-gray-700">
-                <th class="py-3 px-6 border-b text-center w-16">No</th>
-                <th class="py-3 px-6 border-b text-center">Name</th>
-                <th class="py-3 px-6 border-b text-center">Email</th>
-                <th class="py-3 px-6 border-b text-center">Phone</th>
-                <th class="py-3 px-6 border-b text-center">Role</th>
-                <th class="py-3 px-4 border-b text-center w-48">Actions</th>
+                <th class="py-3 px-6 border-b w-16">No</th>
+                <th class="py-3 px-6 border-b">Name</th>
+                <th class="py-3 px-6 border-b">Email</th>
+                <th class="py-3 px-6 border-b">Phone</th>
+                <th class="py-3 px-6 border-b">Role</th>
+                <th class="py-3 px-4 border-b w-48">Actions</th>
             </tr>
         </thead>
         <tbody>

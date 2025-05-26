@@ -145,7 +145,7 @@
         } else {
             preview.innerHTML = '<span class="text-gray-400">No image</span>';
         }
-        document.getElementById('editForm').action = '/productcatalog/' + id;
+        document.getElementById('editForm').action = '/admin/product/productcatalog/' + id;
     }
     function closeEditModal() {
         document.getElementById('editModal').classList.add('hidden');
