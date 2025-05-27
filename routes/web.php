@@ -19,6 +19,7 @@ use App\Http\Controllers\ProductCollectionController;
 use App\Http\Controllers\ProductImagesController;
 use App\Http\Controllers\ProductController;
 use App\Models\ProductCollection;
+use App\Http\Controllers\CartController;
 
 // Halaman umum
 Route::get('/', function () { return view('landingpage'); });
@@ -46,8 +47,9 @@ Route::get('/productdetail/{id}', function ($id) {
     $product = ProductCollection::with(['catalog', 'region'])->findOrFail($id);
     return view('user.product.productdetail', compact('product'));
 });
-Route::get('/productcart', function () { return view('user.product.productcart'); });
+Route::get('/productcart', [CartController::class, 'productcart']);
 Route::get('/productdata', function () { return view('user.product.productdata'); });
+Route::post('/cart/add/{productid}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/producttransaction', function () { return view('user.product.producttransaction'); });
 Route::get('/productorder', function () { return view('user.product.productorder'); });
 
@@ -177,3 +179,5 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->back()->with('success', 'Profile updated!');
     })->name('profile.update');
 });
+Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+Route::post('/cart/delete-items', [CartController::class, 'deleteItems']);

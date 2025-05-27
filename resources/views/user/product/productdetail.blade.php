@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>NaZMaLogy Product Content</title>
+  <title>NaZMaLogy Product Detail</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <x-header></x-header>
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <section class="bg-white rounded-xl p-6 max-w-md w-full flex flex-col justify-between">
+    <section class="bg-white rounded-xl p-6 max-w-md w-full flex flex-col justify-between self-start" style="height:auto; min-height:0;">
       <div>
         <div class="flex justify-between items-center w-full">
           <div class="text-left text-xs text-gray-400 mb-0.5">
@@ -54,7 +54,7 @@
         <p class="font-semibold text-base mb-4">
           ${{ $product->productpricedollar }}
         </p>
-        <div class="flex items-center justify-between text-sm border-t border-gray-300 pt-2 mb-2">
+        <div class="flex items-center justify-between text-sm pt-2 mb-2">
           <span class="font-semibold">Qty:</span>
           <div class="flex items-center space-x-4 select-none">
             <button id="qty-decrease" aria-label="Decrease quantity" class="text-lg font-bold text-gray-700 hover:text-orange-500" type="button">−</button>
@@ -62,77 +62,125 @@
             <button id="qty-increase" aria-label="Increase quantity" class="text-lg font-bold text-gray-700 hover:text-orange-500" type="button">+</button>
           </div>
         </div>
-
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            let qty = 1;
-            const qtyValue = document.getElementById('qty-value');
-            document.getElementById('qty-increase').onclick = function() {
-              qty++;
-              qtyValue.textContent = qty;
-            };
-            document.getElementById('qty-decrease').onclick = function() {
-              if (qty > 1) {
-                qty--;
-                qtyValue.textContent = qty;
-              }
-            };
-          });
-        </script>
-
         <div class="flex items-center justify-between text-sm border-t border-gray-300 pt-2 mb-6">
           <span class="font-semibold">Price:</span>
-          <span class="font-semibold">${{ $product->productpricedollar }}</span>
+          <span id="total-price" class="font-semibold">${{ $product->productpricedollar }}</span>
         </div>
       </div>
-      <div class="flex space-x-4">
-        <a href="/productcart">
-          <button class="border border-orange-500 text-orange-500 rounded-full px-6 py-2 font-semibold hover:bg-orange-50 transition" type="button">Add to cart</button>
-        </a>
-        <a href="/productdata">
-          <button class="bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full px-6 py-2 font-semibold hover:brightness-110 transition" type="button">Buy Now</button>
+      <div class="flex gap-3 w-full mt-2">
+        <form action="{{ route('cart.add', ['productid' => $product->productid]) }}" method="POST" class="w-full">
+          @csrf
+          <input type="hidden" name="quantity" id="cart-qty" value="1">
+          <button class="w-full border border-orange-500 text-orange-500 rounded-full px-6 py-2 font-semibold hover:bg-orange-50 transition" type="submit">
+            Add to cart
+          </button>
+        </form>
+        <a href="/productdata" class="w-full">
+          <button class="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full px-6 py-2 font-semibold hover:brightness-110 transition" type="button">Buy Now</button>
         </a>
       </div>
     </section>
   </main>
-
   <section class="container description-section">
-    <h3 class="description-title">Description</h3>
-    <div class="bg-white rounded-xl p-6 mb-4 shadow">
-      <p class="mb-2"><span class="font-semibold">Product Name:</span> {{ $product->productname }}</p>
-      <p class="mb-2"><span class="font-semibold">Category:</span> {{ $product->catalog->productcatalogname ?? '-' }}</p>
-      <p class="mb-2"><span class="font-semibold">Region:</span> {{ $product->region->productregionsname ?? '-' }}</p>
-      <p class="mb-2"><span class="font-semibold">Price (Rp):</span> Rp {{ number_format($product->productpricerupiah,0,',','.') }}</p>
-      <p class="mb-2"><span class="font-semibold">Price ($):</span> ${{ $product->productpricedollar }}</p>
-      <p class="mb-2"><span class="font-semibold">Weight (kg):</span> {{ $product->productweight }}</p>
-      <p class="mb-2"><span class="font-semibold">Stock:</span> {{ $product->productstock }}</p>
-      <p class="mb-2"><span class="font-semibold">Description:</span> {{ $product->productdescription }}</p>
+    <h3 class="description-title">{{ $product->productname }}</h3>
+    <div class="">
+      <p class="mb-2"><span class="font-semibold">Spesification</span></p>
+      <table class="w-full mb-4 text-sm">
+        <tbody>
+          <tr>
+            <td class="text-gray-400 font-normal py-1 pr-1 w-32 whitespace-nowrap">Category</td>
+            <td class="text-gray-400 font-normal py-1 w-2 px-0">:</td>
+            <td class="py-1">{{ $product->catalog->productcatalogname ?? '-' }}</td>
+          </tr>
+          <tr>
+            <td class="text-gray-400 font-normal py-1 pr-1 w-32 whitespace-nowrap">Product Origin</td>
+            <td class="text-gray-400 font-normal py-1 w-2 px-0">:</td>
+            <td class="py-1">{{ $product->region->productregionsname ?? '-' }}</td>
+          </tr>
+          <tr>
+            <td class="text-gray-400 font-normal py-1 pr-1 w-32 whitespace-nowrap">Price (Rp)</td>
+            <td class="text-gray-400 font-normal py-1 w-2 px-0">:</td>
+            <td class="py-1">Rp {{ number_format($product->productpricerupiah,0,',','.') }}</td>
+          </tr>
+          <tr>
+            <td class="text-gray-400 font-normal py-1 pr-1 w-32 whitespace-nowrap">Weight</td>
+            <td class="text-gray-400 font-normal py-1 w-2 px-0">:</td>
+            <td class="py-1">{{ $product->productweight }} kg</td>
+          </tr>
+          <tr>
+            <td class="text-gray-400 font-normal py-1 pr-1 w-32 whitespace-nowrap">Stock</td>
+            <td class="text-gray-400 font-normal py-1 w-2 px-0">:</td>
+            <td class="py-1">{{ $product->productstock }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="mb-2"><span class="font-semibold">Description</span><br>
+      <p class="py-1 text-sm" style="text-align: justify;">
+        {{ $product->productdescription }}
+      </p>
     </div>
-    <p class="description-text"><span class="emoji">📜</span> TAS WARNA NUSANTARA⚖️📝</p>
-    <p class="description-text">
-      Elevate your style with this chic small handbag... (truncated for brevity)
-    </p>
-    <p class="description-text">
-      <span class="emoji">📞</span> Daftar Sekarang di NaZMa Office!<br/>
-      WA: 0823-2410-2401 (Meylin) | 0813-9211-3276 (Wiwit AB)<br/>
-      <span class="emoji">📧</span> Email: itmcnazma@gmail.com<br/>
-      <span class="emoji">🌐</span> Web: www.nazmaoffice.com<br/>
-      <span class="emoji">📍</span> Alamat: Jl. Selokan Mataram No. 16, Pogung Dalangan, Sleman, Yogyakarta<br/>
-      <span class="emoji">📱</span> IG: @nazma_office | FB, YouTube, LinkedIn: NaZMa Office
-    </p>
-    <p class="description-tags">
-      <a href="#">#PelatihanKontrak</a>
-      <a href="#">#ContractDevelopment</a>
-      <a href="#">#NaZMaOffice</a>
-      <a href="#">#LegalTraining</a>
-      <a href="#">#WorkshopKontrak</a>
-      <a href="#">#KontrakBisnis</a>
-      <a href="#">#NegosiasiBisnis</a>
-      <a href="#">#HukumKontrak</a>
-      <a href="#">#BusinessLaw</a>
-      <a href="#">#Training</a>
-      <a href="#">Yogyakarta</a>
-    </p>
   </section>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let qty = 1;
+      const price = {{ $product->productpricedollar }};
+      const qtyValue = document.getElementById('qty-value');
+      const totalPrice = document.getElementById('total-price');
+      const cartQtyInput = document.getElementById('cart-qty');
+      document.getElementById('qty-increase').onclick = function() {
+        qty++;
+        qtyValue.textContent = qty;
+        totalPrice.textContent = '$' + (qty * price).toLocaleString();
+        cartQtyInput.value = qty;
+      };
+      document.getElementById('qty-decrease').onclick = function() {
+        if (qty > 1) {
+          qty--;
+          qtyValue.textContent = qty;
+          totalPrice.textContent = '$' + (qty * price).toLocaleString();
+          cartQtyInput.value = qty;
+        }
+      };
+
+      // --- Carousel Logic ---
+      const images = [
+        @foreach($images as $img)
+          '{{ asset('storage/' . $img->image_path) }}',
+        @endforeach
+      ];
+      let current = 0;
+      const carouselImage = document.getElementById('carousel-image');
+      const dots = document.querySelectorAll('.carousel-dot');
+      const nextBtn = document.getElementById('carousel-next');
+      const prevBtn = document.getElementById('carousel-prev');
+
+      function updateCarousel(idx) {
+        if (!images.length) return;
+        current = idx;
+        carouselImage.src = images[current];
+        dots.forEach((dot, i) => {
+          dot.style.background = i === current ? '#fb923c' : '#d1d5db';
+        });
+      }
+      if (dots.length) {
+        dots.forEach((dot, i) => {
+          dot.onclick = () => updateCarousel(i);
+        });
+      }
+      if (nextBtn) {
+        nextBtn.onclick = function() {
+          updateCarousel((current + 1) % images.length);
+        };
+      }
+      if (prevBtn) {
+        prevBtn.onclick = function() {
+          updateCarousel((current - 1 + images.length) % images.length);
+        };
+      }
+      // Set initial active dot
+      updateCarousel(0);
+    });
+  </script>
 </body>
+  <x-footer></x-footer>
 </html>
