@@ -36,6 +36,7 @@ Route::resource('trainingprogram', TrainingProgramController::class);
 Route::resource('trainingtransaction', TrainingTransactionController::class);
 Route::resource('trainingregion', TrainingRegionController::class);
 Route::resource('trainingticket', TrainingTicketController::class);
+Route::resource('training', TrainingProgramController::class);
 
 // Product (user)
 Route::get('/product', function () { return view('user.product.product'); });
@@ -53,11 +54,13 @@ Route::get('/profile', function () { return view('user.profile'); });
 // Training (user)
 Route::get('/training', function () { return view('user.training.training'); });
 Route::get('/trainingdetail', function () { return view('user.training.trainingdetail'); });
-Route::get('/trainingdata', function () { return view('user.training.trainingdata'); });
+Route::get('/trainingdata/{id}', [TrainingProgramController::class, 'form'])->name('trainingdata.form');
 Route::get('/trainingtransaction', function () { return view('user.training.trainingtransaction'); });
 Route::get('/trainingticket', function () { return view('user.training.trainingticket'); });
 Route::get('/trainingticketdetail', function () { return view('user.training.trainingticketdetail'); });
 Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
+Route::get('/training', [TrainingProgramController::class, 'list'])->name('training.public');
+Route::post('/training/{trainingid}/transaction', [TrainingTransactionController::class, 'store'])->name('trainingtransaction.store');
 
 // Admin dashboard Training and Product Data
 Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin'); });
@@ -66,6 +69,7 @@ Route::get('/trainingadmin', [TrainingProgramController::class, 'index']);
 Route::get('/traineeadmin', [TraineeController::class, 'index'])->name('admin.trainee.index');
 Route::get('/trainingtransactionadmin', [TrainingTransactionController::class, 'adminIndex'])->name('admin.trainingtransaction.index');
 Route::get('/trainingticketadmin', [TrainingTicketController::class, 'index'])->name('admin.trainingticket.index');
+Route::get('/trainingregion', [TrainingRegionController::class, 'index'])->name('trainingregion.index');
 
 // Product Admin
 Route::prefix('admin/product')->group(function () {
@@ -115,7 +119,7 @@ Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallb
 Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])->name('google.signup');
 
 // Training Admin
-Route::prefix('admin/training')->name('admin.training.')->group(function() {
+Route::prefix('admin/training')->name('admin.training.')->group(function () {
     Route::get('/', [TrainingProgramController::class, 'index'])->name('index');
     Route::post('/', [TrainingProgramController::class, 'store'])->name('store');
     Route::delete('/{id}', [TrainingProgramController::class, 'destroy'])->name('destroy');

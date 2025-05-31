@@ -20,7 +20,8 @@
    <section aria-label="Trainee data and payment section" class="form-payment-section">
     <div class="form-payment-container">
     <!-- Trainee Data -->
-    <form aria-labelledby="trainee-data-title" class="trainee-data-form">
+    <form aria-labelledby="trainee-data-title" class="trainee-data-form" method="POST" action="{{ route('trainingtransaction.store', $training->trainingid) }}">
+     @csrf
      <h2 id="trainee-data-title" class="form-title">
       Trainee Data
      </h2>
@@ -28,224 +29,31 @@
       <label class="form-label" for="email">
        Email
       </label>
-      <input aria-describedby="email-desc" class="form-input email-input" id="email" placeholder="" type="email"/>
+      <input aria-describedby="email-desc" class="form-input email-input" id="email" name="transactiontraineeemail" placeholder="" type="email" required/>
      </div>
      <div class="form-group">
       <label class="form-label" for="fullname">
        Full Name
       </label>
-      <input class="form-input" id="fullname" placeholder="Full Name" type="text"/>
+      <input class="form-input" id="fullname" name="transactiontraineename" placeholder="Full Name" type="text" required/>
      </div>
-     <fieldset class="form-group">
-      <legend class="form-label">
-       Date of Birth
-      </legend>
-      <div class="dob-selects">
-       <select aria-label="Day" class="dob-select">
-        <option disabled="" selected="">
-         Day
-        </option>
-        <option>
-         1
-        </option>
-        <option>
-         2
-        </option>
-        <option>
-         3
-        </option>
-        <option>
-         4
-        </option>
-        <option>
-         5
-        </option>
-        <option>
-         6
-        </option>
-        <option>
-         7
-        </option>
-        <option>
-         8
-        </option>
-        <option>
-         9
-        </option>
-        <option>
-         10
-        </option>
-        <option>
-         11
-        </option>
-        <option>
-         12
-        </option>
-        <option>
-         13
-        </option>
-        <option>
-         14
-        </option>
-        <option>
-         15
-        </option>
-        <option>
-         16
-        </option>
-        <option>
-         17
-        </option>
-        <option>
-         18
-        </option>
-        <option>
-         19
-        </option>
-        <option>
-         20
-        </option>
-        <option>
-         21
-        </option>
-        <option>
-         22
-        </option>
-        <option>
-         23
-        </option>
-        <option>
-         24
-        </option>
-        <option>
-         25
-        </option>
-        <option>
-         26
-        </option>
-        <option>
-         27
-        </option>
-        <option>
-         28
-        </option>
-        <option>
-         29
-        </option>
-        <option>
-         30
-        </option>
-        <option>
-         31
-        </option>
-       </select>
-       <select aria-label="Month" class="dob-select">
-        <option disabled="" selected="">
-         Month
-        </option>
-        <option>
-         January
-        </option>
-        <option>
-         February
-        </option>
-        <option>
-         March
-        </option>
-        <option>
-         April
-        </option>
-        <option>
-         May
-        </option>
-        <option>
-         June
-        </option>
-        <option>
-         July
-        </option>
-        <option>
-         August
-        </option>
-        <option>
-         September
-        </option>
-        <option>
-         October
-        </option>
-        <option>
-         November
-        </option>
-        <option>
-         December
-        </option>
-       </select>
-       <select aria-label="Year" class="dob-select">
-        <option disabled="" selected="">
-         Year
-        </option>
-        <option>
-         2025
-        </option>
-        <option>
-         2024
-        </option>
-        <option>
-         2023
-        </option>
-        <option>
-         2022
-        </option>
-        <option>
-         2021
-        </option>
-        <option>
-         2020
-        </option>
-        <option>
-         2019
-        </option>
-        <option>
-         2018
-        </option>
-        <option>
-         2017
-        </option>
-        <option>
-         2016
-        </option>
-        <option>
-         2015
-        </option>
-        <option>
-         2014
-        </option>
-        <option>
-         2013
-        </option>
-        <option>
-         2012
-        </option>
-        <option>
-         2011
-        </option>
-        <option>
-         2010
-        </option>
-       </select>
-      </div>
-     </fieldset>
+     <div class="form-group">
+      <label class="form-label" for="age">
+       Age
+      </label>
+      <input class="form-input" id="age" name="transactiontraineeage" type="number" min="1" required/>
+     </div>
      <fieldset class="form-group">
       <legend class="form-label">
        Gender
       </legend>
       <div class="gender-options">
        <label class="gender-label" for="male">
-        <input class="gender-radio" id="male" name="gender" type="radio" value="male"/>
+        <input class="gender-radio" id="male" name="transactiontraineegender" type="radio" value="m" required/>
         Male
        </label>
        <label class="gender-label" for="female">
-        <input class="gender-radio" id="female" name="gender" type="radio" value="female"/>
+        <input class="gender-radio" id="female" name="transactiontraineegender" type="radio" value="f" required/>
         Female
        </label>
       </div>
@@ -254,50 +62,58 @@
       <label class="form-label" for="address">
        Address
       </label>
-      <textarea class="form-textarea" id="address" placeholder="Address" rows="4"></textarea>
+      <textarea class="form-textarea" id="address" name="transactiontraineeaddress" placeholder="Address" rows="4" required></textarea>
      </div>
-    </form>
-    <!-- Payment -->
-    <aside aria-labelledby="payment-title" class="payment-aside">
-     <h2 class="form-title" id="payment-title">
-      Payment
-     </h2>
-     <div class="payment-info">
-      <img alt="Workshop Contract Development training thumbnail with a person and text on blue background" class="payment-img" height="64" src="https://storage.googleapis.com/a1aa/image/5cc832b6-99f0-4603-2d53-07e6bcdf5b36.jpg" width="64"/>
-      <div>
-       <h3 class="payment-title">
-        Workshop Contract Development
-       </h3>
-       <p class="payment-date">
-        21–22 April 2025
-       </p>
+     <!-- Payment section moved inside form for submission -->
+     <aside aria-labelledby="payment-title" class="payment-aside">
+      <h2 class="form-title" id="payment-title">
+       Payment
+      </h2>
+      <div class="payment-info">
+       <img
+        alt="{{ $training->trainingtitle }}"
+        class="payment-img"
+        height="64"
+        src="{{ asset('storage/training_images/' . $training->trainingimage) }}"
+        width="64"
+       />
+       <div>
+        <h3 class="payment-title">
+         {{ $training->trainingtitle }}
+        </h3>
+        <p class="payment-date">
+         {{ \Carbon\Carbon::parse($training->trainingschedule)->translatedFormat('d F Y') }}
+        </p>
+       </div>
       </div>
-     </div>
-     <hr class="payment-divider"/>
-     <div class="payment-total">
-      <span>
-       Total:
-      </span>
-      <span>
-       Rp 200.000
-      </span>
-     </div>
-     <div class="form-group">
-      <label class="form-label" for="payment-method">
-       Payment:
-      </label>
-      <select class="payment-select" disabled="" id="payment-method">
-       <option selected="">
-        Choose Payment
-       </option>
-      </select>
-     </div>
-     <button class="checkout-button" type="submit">
-      Checkout
-     </button>
-    </aside>
+      <hr class="payment-divider"/>
+      <div class="payment-total">
+       <span>
+        Total:
+       </span>
+       <span>
+        Rp {{ number_format($training->trainingpricerupiah, 0, ',', '.') }}
+       </span>
+      </div>
+      
+      <div class="form-group">
+       <label class="form-label" for="payment-method">
+        Payment:
+       </label>
+       <select class="payment-select" id="payment-method" name="payment_method" required>
+        <option selected disabled>
+         Choose Payment
+        </option>
+        <option value="bank">Bank Transfer</option>
+        <option value="ewallet">E-Wallet</option>
+       </select>
+      </div>
+      <button class="checkout-button" type="submit">
+       Checkout
+      </button>
+     </aside>
+    </form>
    </section>
-  </main>
   <x-footer></x-footer>
  </body>
 </html>

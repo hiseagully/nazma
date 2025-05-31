@@ -30,21 +30,21 @@
                 <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                     <thead>
                         <tr class="bg-gray-100 text-gray-700">
-                            <th class="px-4 py-2 border">No</th>
-                            <th class="px-4 py-2 border">Nama</th>
-                            <th class="px-4 py-2 border">Gender</th>
-                            <th class="px-4 py-2 border">Umur</th>
-                            <th class="px-4 py-2 border">Alamat</th>
+                            <th class="py-3 px-4 border-b text-left">No</th>
+                            <th class="py-3 px-4 border-b text-left">Nama</th>
+                            <th class="py-3 px-4 border-b text-left">Gender</th>
+                            <th class="py-3 px-4 border-b text-left">Umur</th>
+                            <th class="py-3 px-4 border-b text-left">Alamat</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($transactions as $trx)
                             <tr class="hover:bg-gray-50">
                                 <td class="py-2 px-4 border-b">{{ $loop->iteration }}</td>
-                                <td>{{ $trx->transactiontraineename }}</td>
-                                <td>{{ $trx->transactiontraineegender === 'm' ? 'Laki-laki' : 'Perempuan' }}</td>
-                                <td>{{ $trx->transactiontraineeage }} tahun</td>
-                                <td>{{ $trx->transactiontraineeaddress }}</td>
+                                <td class="py-2 px-4 border-b">{{ $trx->transactiontraineename }}</td>
+                                <td class="py-2 px-4 border-b">{{ $trx->transactiontraineegender === 'm' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                <td class="py-2 px-4 border-b">{{ $trx->transactiontraineeage }} tahun</td>
+                                <td class="py-2 px-4 border-b">{{ $trx->transactiontraineeaddress }}</td>
                             </tr>
                         @empty
                             <tr>

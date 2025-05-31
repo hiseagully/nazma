@@ -64,7 +64,7 @@
                                         $selectedStatus = session("ticket_status_{$trx->id}", $defaultStatus);
                                     @endphp
                                     <select name="status" onchange="this.form.submit()" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                                        <option value="Ongoing" {{ $selectedStatus == 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
+                                        <option value="Ongoing" {{ $selectedStatus == 'Ongoing' ? 'selected' : '' }}>Upcoming</option>
                                         <option value="Completed" {{ $selectedStatus == 'Completed' ? 'selected' : '' }}>Completed</option>
                                     </select>
                                 </form>

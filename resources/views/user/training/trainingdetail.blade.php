@@ -19,35 +19,36 @@
   <main class="container main-grid">
    <!-- Left card with image -->
    <div class="card-left">
-    <img alt="Workshop Contract Development poster with man in black suit, orange and white text and details, QR code, and date 21-22 April 2025" class="card-image" height="400" src="https://storage.googleapis.com/a1aa/image/502f71a3-b0b9-46ea-acf1-f92eec5ed9a7.jpg" width="600"/>
-    <div aria-label="More options" class="more-options">
-     <span>•</span>
-     <span>•</span>
-     <span>•</span>
-    </div>
+    @if($training->trainingimage && file_exists(public_path('storage/training_images/' . $training->trainingimage)))
+      <img alt="{{ $training->trainingtitle }}" class="card-image" height="400"
+           src="{{ asset('storage/training_images/' . $training->trainingimage) }}" width="600"/>
+    @else
+      <img alt="No Image" class="card-image" height="400"
+           src="{{ asset('images/no-image.png') }}" width="600"/>
+    @endif
    </div>
    <!-- Right card with details -->
    <div class="card-right">
     <div>
      <h2 class="title">
-      Workshop Contract Development
+      {{ $training->trainingtitle }}
      </h2>
      <ul class="details-list">
-      <li><i class="far fa-calendar-alt"></i><span>21–22 April 2025</span></li>
-      <li><i class="far fa-clock"></i><span>15.00 WIB</span></li>
-      <li><i class="fas fa-map-marker-alt"></i><span>Yogyakarta, Indonesia</span></li>
+      <li><i class="far fa-calendar-alt"></i><span>{{ \Carbon\Carbon::parse($training->trainingschedule)->translatedFormat('d F Y') }}</span></li>
+      <li><i class="far fa-clock"></i><span>{{ \Carbon\Carbon::parse($training->trainingschedule)->format('H:i') }} WIB</span></li>
+      <li><i class="fas fa-map-marker-alt"></i><span>{{ $training->traininglocation }}</span></li>
      </ul>
      <hr class="divider"/>
      <div class="price-row">
       <span>Price:</span>
       <div style="display: flex; flex-direction: column; align-items: flex-start;">
-        <span>Rp 200.000</span>
-        <span style="font-size: 0.9em; color: #888;">(USD $12,18)</span>
+        <span>Rp {{ number_format($training->trainingpricerupiah, 0, ',', '.') }}</span>
+        <span style="font-size: 0.9em; color: #888;">(USD ${{ rtrim(rtrim($training->trainingpricedollar, '0'), '.') }})</span>
       </div>
      </div>
     </div>
     <button class="btn-join" type="button">
-        <a href="/trainingdata" style="text-decoration: none; color: white;">Join Now</a>
+        <a href="{{ route('trainingdata.form', ['id' => $training->trainingid]) }}" style="text-decoration: none; color: white;">Join Now</a>
     </button>
    </div>
   </main>
@@ -57,37 +58,12 @@
     Description
    </h3>
    <p class="description-text">
-    <span class="emoji">📜</span>
-    Workshop Contract Development: Kuasai Penyusunan Kontrak Bisnis Secara Profesional ⚖️📝
-   </p>
-   <p class="description-text">
-    Kontrak bukan hanya sekadar dokumen formalitas. Ia adalah tulang punggung legal dalam setiap kesepakatan bisnis. Workshop ini dirancang untuk membekali Anda dengan pemahaman mendalam mengenai hukum kontrak dan keterampilan menyusun dokumen perjanjian yang sah, jelas, dan melindungi semua pihak.
-   </p>
-   <p class="description-text">
-    <span class="emoji">📞</span>
-    Daftar Sekarang di NaZMa Office!<br/>
-    WA: 0823-2410-2401 (Meylin) | 0813-9211-3276 (Wiwit AB)<br/>
-    <span class="emoji">📧</span>
-    Email: itmcnazma@gmail.com<br/>
-    <span class="emoji">🌐</span>
-    Web: www.nazmaoffice.com<br/>
-    <span class="emoji">📍</span>
-    Alamat: Jl. Selokan Mataram No. 16, Pogung Dalangan, Sleman, Yogyakarta<br/>
-    <span class="emoji">📱</span>
-    IG: @nazma_office | FB, YouTube, LinkedIn: NaZMa Office
+    {!! $training->trainingdescription !!}
    </p>
    <p class="description-tags">
-    <a href="#">#PelatihanKontrak</a>
-    <a href="#">#ContractDevelopment</a>
-    <a href="#">#NaZMaOffice</a>
-    <a href="#">#LegalTraining</a>
-    <a href="#">#WorkshopKontrak</a>
-    <a href="#">#KontrakBisnis</a>
-    <a href="#">#NegosiasiBisnis</a>
-    <a href="#">#HukumKontrak</a>
-    <a href="#">#BusinessLaw</a>
-    <a href="#">#Training</a>
-    <a href="#">Yogyakarta</a>
+    @foreach($training->tags ?? [] as $tag)
+      <a href="#">{{ $tag }}</a>
+    @endforeach
    </p>
   </section>
  </body>
