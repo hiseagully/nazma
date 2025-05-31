@@ -80,6 +80,9 @@
                     {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/productcollection">Products</a>
                 <a class="px-4 py-2 rounded-md transition
+                    {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    href="/admin/product/productimages">Product Images</a>
+                <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'producttransaction' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/producttransaction">Product Transaction</a>
                 <a class="px-4 py-2 rounded-md transition
