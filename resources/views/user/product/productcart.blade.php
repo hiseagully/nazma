@@ -79,7 +79,7 @@
       <p id="selectedCount" class="font-semibold text-black text-sm mb-1">
         0 Product
       </p>
-      <p class="text-black text-sm flex items-center gap-3">
+      <p class="text-black text-sm flex items-center    gap-3">
         Total
         <span class="text-orange-500 font-semibold" id="totalPrice">
         $0.00
