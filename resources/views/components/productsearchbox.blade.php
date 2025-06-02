@@ -43,6 +43,14 @@
         <i class="fas fa-search"></i>
       </button>
       <a
+        href="/product"
+        class="flex items-center space-x-1 text-white text-sm font-semibold"
+        aria-label="Go to Product List"
+      >
+        <i class="fas fa-box"></i>
+        <span>Products</span>
+      </a>
+      <a
         href="/producttransaction"
         class="flex items-center space-x-1 text-white text-sm font-semibold"
         aria-label="Go to Product Purchase"
@@ -50,10 +58,10 @@
         <i class="fas fa-exchange-alt"></i>
         <span>Purchase</span>
       </a>
-     <a
+      <a
         href="/productcart"
         class="flex items-center space-x-1 text-white text-sm font-semibold"
-        aria-label="Go to Product Purchase"
+        aria-label="Go to Product Cart"
       >
         <i class="fas fa-shopping-cart"></i>
         <span>Cart</span>
