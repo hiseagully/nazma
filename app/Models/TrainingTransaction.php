@@ -6,21 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrainingTransaction extends Model
 {
-    protected $table = 'trainingtransaction';
-    protected $primaryKey = 'trainingtransactionid';
+    protected $table = 'trainingtransaction'; // nama tabel sesuai di database
+    protected $primaryKey = 'trainingtransactionid'; // sesuaikan
+
     public $incrementing = true;
+
     protected $keyType = 'int';
 
     protected $fillable = [
-        'trainingtransactionmethod',
-        'trainingtransactionstatus',
-        'trainingtransactiondate',
-        'trainingtransactiontotal',
-        'transactiontraineegender',
-        'transactiontraineename',
-        'transactiontraineeage',
-        'transactiontraineeaddress',
-        'user_id',
         'trainingid',
         'transactiontraineeemail',
         'transactiontraineename',
@@ -28,15 +21,18 @@ class TrainingTransaction extends Model
         'transactiontraineegender',
         'transactiontraineeaddress',
         'payment_method',
+        'trainingtransactionmethod',
+        'trainingtransactionstatus',
+        'trainingtransactiondate',
+        'trainingtransactiontotal',
+        'user_id',
     ];
 
-    // Relasi ke User
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    public function user() {
+        return $this->belongsTo(User::class);
     }
-    public function training()
-    {
+
+    public function training() {
         return $this->belongsTo(TrainingProgram::class, 'trainingid', 'trainingid');
     }
 }

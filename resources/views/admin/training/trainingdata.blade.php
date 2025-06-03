@@ -94,6 +94,7 @@
         </section>
     </main>
 </div>
+
 <!-- Edit Modal -->
 <div id="editModal" class="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-30 overflow-y-auto hidden">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative mt-24 mb-8">
@@ -123,13 +124,13 @@
                 <label class="block text-sm font-semibold mb-1">Image</label>
                 <div id="currentImagePreview" class="mb-2 hidden">
                     <p class="text-sm text-gray-600 mb-1">Current Image:</p>
-                    <img id="previewImage" src="{{ asset('storage/training_images/' . $training->trainingimage) }}" alt="Current Image" class="h-32 rounded mx-auto">
+                    <img id="previewImage" src="" alt="Current Image" class="h-32 rounded mx-auto">
                 </div>
                 <input type="file" name="gambar" id="editGambar" accept="image/*" class="border rounded px-3 py-2 w-full">
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Schedule</label>
-                <input type="text" name="trainingschedule" id="editJadwal" class="border rounded px-3 py-2 w-full" placeholder="Schedule" required>
+                <input type="datetime-local" name="trainingschedule" id="editJadwal" class="border rounded px-3 py-2 w-full" placeholder="Schedule" required>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Location</label>
@@ -139,18 +140,19 @@
                 <label class="block text-sm font-semibold mb-1">Slot</label>
                 <input type="number" name="trainingslot" id="editSlot" class="border rounded px-3 py-2 w-full" placeholder="Slot" required>
             </div>
-            <div class="mb-6">
+            <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Region</label>
-                <select name="trainingregionid" class="border rounded px-3 py-2 w-full" required>
-                    <option value="">-- Choose Region --</option>
+                <select name="trainingregionid" id="editRegion" class="border rounded px-3 py-2 w-full" required>
+                    <option value="">-- Select Region --</option>
                     @foreach($regions as $region)
-                        <option value="{{ $region->trainingid }}">{{ $region->trainingregionname }}</option>
+                    <option value="{{ $region->trainingid }}">{{ $region->trainingregionname }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="text-right flex justify-end gap-3">
-                <button type="button" onclick="closeEditModal()" class="bg-gray-300 hover:bg-gray-400 rounded px-4 py-2 text-gray-700">Cancel</button>
-                <button type="submit" class="bg-[#FF7A00] hover:bg-[#e57000] rounded px-4 py-2 text-white font-semibold">Save Changes</button>
+            <div class="mt-5 text-right">
+                <button type="submit" class="bg-[#FF7A00] hover:bg-orange-600 text-white rounded px-5 py-2 font-semibold text-sm">
+                    Update
+                </button>
             </div>
         </form>
     </div>
@@ -161,106 +163,171 @@
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative mt-24 mb-8">
         <button onclick="closeAddModal()" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl">&times;</button>
         <h3 class="text-xl font-bold mb-4 text-[#FF7A00] flex items-center gap-2">Add Training</h3>
-        <form action="{{ route('admin.training.store') }}" method="POST" enctype="multipart/form-data" id="addForm">
+        <form id="addForm" method="POST" enctype="multipart/form-data" action="{{ route('trainingprogram.store') }}">
             @csrf
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Title</label>
-                <input type="text" name="trainingtitle" class="border rounded px-3 py-2 w-full" placeholder="Title" required>
+                <input type="text" name="trainingtitle" id="addJudul" class="border rounded px-3 py-2 w-full" placeholder="Title" required>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Description</label>
-                <textarea name="trainingdescription" class="border rounded px-3 py-2 w-full" placeholder="Description" required></textarea>
+                <textarea name="trainingdescription" id="addDeskripsi" class="border rounded px-3 py-2 w-full" placeholder="Description" required></textarea>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Harga (Rp)</label>
-                <input type="number" name="trainingpricerupiah" class="border rounded px-3 py-2 w-full" placeholder="Harga (Rp)" required>
+                <input type="number" name="trainingpricerupiah" id="addHargaRp" class="border rounded px-3 py-2 w-full" placeholder="Harga (Rp)" required>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Harga ($)</label>
-                <input type="number" step="0.01" name="trainingpricedollar" class="border rounded px-3 py-2 w-full" placeholder="Harga ($)" required>
+                <input type="number" step="0.01" name="trainingpricedollar" id="addHargaDollar" class="border rounded px-3 py-2 w-full" placeholder="Harga ($)" required>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Image</label>
-                <input type="file" name="gambar" accept="image/*" class="border rounded px-3 py-2 w-full" required>
+                <input type="file" name="gambar" id="addGambar" accept="image/*" class="border rounded px-3 py-2 w-full">
+                <img id="addPreviewImage" class="mt-2 h-32 rounded hidden mx-auto" alt="Preview Image">
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Schedule</label>
-                <input type="datetime-local" name="trainingschedule" class="border rounded px-3 py-2 w-full" required>
+                <input type="datetime-local" name="trainingschedule" id="addJadwal" class="border rounded px-3 py-2 w-full" placeholder="Schedule" required>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Location</label>
-                <input type="text" name="traininglocation" class="border rounded px-3 py-2 w-full" placeholder="Location" required>
+                <input type="text" name="traininglocation" id="addLokasi" class="border rounded px-3 py-2 w-full" placeholder="Location" required>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Slot</label>
-                <input type="number" name="trainingslot" class="border rounded px-3 py-2 w-full" placeholder="Slot" required>
+                <input type="number" name="trainingslot" id="addSlot" class="border rounded px-3 py-2 w-full" placeholder="Slot" required>
             </div>
             <div class="mb-3">
                 <label class="block text-sm font-semibold mb-1">Region</label>
-                <select name="trainingregionid" class="border rounded px-3 py-2 w-full" required>
-                    <option value="">-- Pilih Region --</option>
+                <select name="trainingregionid" id="addRegion" class="border rounded px-3 py-2 w-full" required>
+                    <option value="">-- Select Region --</option>
                     @foreach($regions as $region)
-                        <option value="{{ $region->trainingid }}">{{ $region->trainingregionname }}</option>
+                    <option value="{{ $region->trainingid }}">{{ $region->trainingregionname }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="text-right">
-                <button type="button" onclick="closeAddModal()" class="px-4 py-2 border rounded mr-2">Cancel</button>
-                <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">Add Training</button>
+            <div class="mt-5 text-right">
+                <button type="submit" class="bg-[#FF7A00] hover:bg-orange-600 text-white rounded px-5 py-2 font-semibold text-sm">
+                    Save
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    // Open Add Modal
-    function openAddModal() {
-        document.getElementById("addModal").classList.remove("hidden");
+    // CKEditor initialization for description textarea
+    CKEDITOR.replace('editDeskripsi');
+    CKEDITOR.replace('addDeskripsi');
+
+    function openEditModal(training) {
+        document.getElementById("editModal").classList.remove("hidden");
+
+        // Isi data form edit
+        document.getElementById("editId").value = training.trainingid;
+        document.getElementById("editJudul").value = training.trainingtitle;
+
+        // Set CKEditor data
+        if (CKEDITOR.instances['editDeskripsi']) {
+            CKEDITOR.instances['editDeskripsi'].setData(training.trainingdescription);
+        }
+
+        document.getElementById("editHargaRp").value = training.trainingpricerupiah;
+        document.getElementById("editHargaDollar").value = training.trainingpricedollar;
+        
+        // Format trainingschedule ke format yyyy-MM-ddTHH:mm untuk input datetime-local
+        if(training.trainingschedule){
+            const date = new Date(training.trainingschedule);
+            // Tambah leading zero jika perlu
+            const yyyy = date.getFullYear();
+            const mm = ('0' + (date.getMonth() + 1)).slice(-2);
+            const dd = ('0' + date.getDate()).slice(-2);
+            const hh = ('0' + date.getHours()).slice(-2);
+            const min = ('0' + date.getMinutes()).slice(-2);
+            const formattedDate = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+            document.getElementById("editJadwal").value = formattedDate;
+        } else {
+            document.getElementById("editJadwal").value = '';
+        }
+
+        document.getElementById("editLokasi").value = training.traininglocation;
+        document.getElementById("editSlot").value = training.trainingslot;
+
+        // Set select region value
+        const regionSelect = document.getElementById('editRegion');
+        if(regionSelect){
+            regionSelect.value = training.trainingregionid ?? '';
+        }
+
+        // Preview gambar current
+        const currentImagePreview = document.getElementById("currentImagePreview");
+        const previewImage = document.getElementById("previewImage");
+        if (training.trainingimage) {
+            currentImagePreview.classList.remove("hidden");
+            previewImage.src = `/storage/training_images/${training.trainingimage}`;
+        } else {
+            currentImagePreview.classList.add("hidden");
+            previewImage.src = '';
+        }
+
+        // Set form action URL, sesuaikan route update training
+        const editForm = document.getElementById('editForm');
+        editForm.action = `/admin/training/${training.trainingid}`;
     }
 
-    // Close Add Modal
+    function closeEditModal() {
+        document.getElementById("editModal").classList.add("hidden");
+    }
+
+    function openAddModal() {
+        document.getElementById("addModal").classList.remove("hidden");
+
+        // Reset form
+        const addForm = document.getElementById('addForm');
+        addForm.reset();
+
+        // Reset CKEditor data
+        if (CKEDITOR.instances['addDeskripsi']) {
+            CKEDITOR.instances['addDeskripsi'].setData('');
+        }
+
+        // Reset preview gambar add modal
+        document.getElementById('addPreviewImage').src = '';
+        document.getElementById('addPreviewImage').classList.add('hidden');
+    }
+
     function closeAddModal() {
         document.getElementById("addModal").classList.add("hidden");
     }
 
-    // Open Edit Modal
-    function openEditModal(training) {
-        document.getElementById("editModal").classList.remove("hidden");
-
-        // Isi data ke dalam form
-        document.getElementById("editId").value = training.trainingid;
-        document.getElementById("editJudul").value = training.trainingtitle;
-        document.getElementById("editDeskripsi").value = training.trainingdescription;
-        document.getElementById("editHargaRp").value = training.trainingpricerupiah;
-        document.getElementById("editHargaDollar").value = training.trainingpricedollar;
-        document.getElementById("editJadwal").value = training.trainingschedule;
-        document.getElementById("editLokasi").value = training.traininglocation;
-        document.getElementById("editSlot").value = training.trainingslot;
-
-        // Pilih region
-        const regionSelect = document.querySelector('#editForm select[name="trainingregionid"]');
-        regionSelect.value = training.trainingregionid;
-
-        // Preview image jika ada
-        const previewImage = document.getElementById("previewImage");
+    // Preview gambar saat pilih file di Edit modal
+    document.getElementById('editGambar').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const previewImage = document.getElementById('previewImage');
         const currentImagePreview = document.getElementById("currentImagePreview");
-
-        if (training.trainingimage) {
-            previewImage.src = `${window.location.origin}/storage/training_images/${training.trainingimage}`;
-            currentImagePreview.classList.remove("hidden");
+        if (file) {
+            previewImage.src = URL.createObjectURL(file);
+            currentImagePreview.classList.remove('hidden');
         } else {
-            currentImagePreview.classList.add("hidden");
+            previewImage.src = '';
+            currentImagePreview.classList.add('hidden');
         }
+    });
 
-        // Set action URL (editForm submit ke URL training yang sesuai)
-        document.getElementById("editForm").action = `/admin/training/${training.trainingid}`;
-    }
+    // Preview gambar saat pilih file di Add modal
+    document.getElementById('addGambar').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const previewImage = document.getElementById('addPreviewImage');
+        if (file) {
+            previewImage.src = URL.createObjectURL(file);
+            previewImage.classList.remove('hidden');
+        } else {
+            previewImage.src = '';
+            previewImage.classList.add('hidden');
+        }
+    });
 
-    // Close Edit Modal
-    function closeEditModal() {
-        document.getElementById("editModal").classList.add("hidden");
-    }
 </script>
-
 </body>
 </html>

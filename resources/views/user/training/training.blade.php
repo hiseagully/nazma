@@ -6,9 +6,9 @@
   <title>Training Event</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('css/training/training.css') }}">
   <x-header></x-header>
   @include('components.trainingsearchbox', ['action' => '/training/search'])
-  <link rel="stylesheet" href="{{ asset('css/training/training.css') }}">
 </head>
 
 <body class="bg-[#F5F7FA] font-[Inter,sans-serif]">

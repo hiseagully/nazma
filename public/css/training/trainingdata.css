@@ -12,6 +12,7 @@
     border-radius: 1rem;
     padding: 2rem;
     box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
+    min-width: 0;
   }
   h2.form-title {
     font-weight: 600;
@@ -138,10 +139,11 @@
     border-radius: 1rem;
     padding: 1.5rem;
     box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
-    max-width: 24rem;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    height: 70%;
+    min-width: 0;
+    height: 50%;
   }
   div.payment-info {
     display: flex;
@@ -276,6 +278,6 @@
     .trainee-data-form,
     .payment-aside {
       flex: none; /* Hapus fleksibilitas */
-      width: 100%; /* Pastikan elemen mengambil lebar penuh */
+      width: 0; /* Pastikan elemen mengambil lebar penuh */
     }
   }

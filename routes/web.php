@@ -69,6 +69,13 @@ Route::get('/trainingticketdetail', function () { return view('user.training.tra
 Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
 Route::get('/training', [TrainingProgramController::class, 'list'])->name('training.public');
 Route::post('/training/{trainingid}/transaction', [TrainingTransactionController::class, 'store'])->name('trainingtransaction.store');
+Route::post('/get-snap-token/{id}', [TrainingTransactionController::class, 'getSnapToken'])->name('get.snap.token');
+Route::post('/training/transaction/{id}', [TrainingTransactionController::class, 'store'])->name('trainingtransaction.store');
+Route::get('/trainingtransaction', [TrainingTransactionController::class, 'userIndex'])->name('trainingtransaction.index');
+Route::get('/training/transactions', [TrainingTransactionController::class, 'userIndex'])->name('trainingtransaction.index');
+Route::get('/training/payment-success', [TrainingTransactionController::class, 'paymentSuccess'])->name('payment.success');
+
+
 
 // Admin dashboard Training and Product Data
 Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin'); });
