@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TrainingRegion;
+use App\Models\TrainingProgram;
 
 class TrainingRegionController extends Controller
 {
     // Tampilkan semua data trainingregions
     public function index()
     {
-        $regions = TrainingRegion::all();
+        $trainings = TrainingProgram::orderBy('trainingid', 'desc')->get();
+        $regions = \App\Models\TrainingRegion::all(); // Ambil semua region dari tabel
         return view('admin.training.trainingregion', compact('regions'));
     }
 

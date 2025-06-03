@@ -54,7 +54,7 @@
                             <td class="py-2 px-4 border-b text-center">{{ rtrim(rtrim($trx->trainingtransactiontotal, '0'), '.') }}</td>
                             <td class="py-2 px-4 border-b">
                                 <div>
-                                    <div><b>{{ $trx->transactiontraineename }}</div>
+                                    <div>{{ $trx->transactiontraineename }}</div>
                                 </div>
                             </td>
                         </tr>

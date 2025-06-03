@@ -1,4 +1,4 @@
-body.page-body {
+  body.page-body {
     font-family: "Poppins", sans-serif;
     background-color: #f5f8ff;
     min-height: 100vh;
@@ -201,15 +201,6 @@ body.page-body {
   }
   button.checkout-button:hover {
     filter: brightness(1.1);
-  }
-  /* Footer */
-  footer.footer {
-    position: relative;
-    background-color: #2c327d;
-    color: white;
-    padding-top: 4rem;
-    padding-bottom: 1.5rem;
-    overflow: hidden;
   }
   /* Decorative shapes */
   .decor-circle {

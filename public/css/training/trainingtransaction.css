@@ -1,6 +1,12 @@
+/* Box sizing supaya padding dan border tidak nambahin lebar elemen */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* Container */
 .container {
   max-width: 1280px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
@@ -22,6 +28,7 @@
 /* Main content */
 .main-content {
   max-width: 1280px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
@@ -55,12 +62,20 @@
   margin-right: auto;
   box-sizing: border-box;
 }
+
 .section-title {
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 1.125rem; /* default = 18px */
   margin-bottom: 1.5rem;
   color: #000;
 }
+
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1rem; /* = 16px di layar kecil */
+  }
+}
+
 .transaction-item {
   display: flex;
   align-items: center;
@@ -137,6 +152,7 @@
   user-select: text;
 }
 
+/* Responsive adjustments */
 @media (max-width: 640px) {
   .transaction-img {
     display: none; /* Sembunyikan gambar */
@@ -156,15 +172,17 @@
   }
 
   .transaction-section {
-    width: 95vw;
+    width: 100%; /* Jangan pakai vw untuk menghindari overflow */
     padding: 1.5rem;
   }
 }
+
 @media (min-width: 641px) and (max-width: 1024px) {
   .transaction-section {
     width: 92vw;
   }
 }
+
 @media (min-width: 1025px) {
   .transaction-section {
     width: 90vw;

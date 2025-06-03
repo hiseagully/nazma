@@ -8,18 +8,24 @@ use App\Models\TrainingTransaction;
 class TrainingTicketController extends Controller
 {
     public function index()
-    {
-        // Ambil semua data training transaction dengan relasi yang diperlukan
-        $transactions = TrainingTransaction::with(['user', 'training.region'])->get();
+{
+    $transactions = TrainingTransaction::with(['user', 'training'])->get();
 
-        return view('admin.training.trainingticketdata', compact('transactions'));
+    foreach ($transactions as $trx) {
+        // Status default: Payment Success
+        $trx->status_display = session("ticket_status_{$trx->id}", 'Payment Success');
     }
-    public function updateStatus(Request $request, $id)
-    {
-        $transaction = TrainingTransaction::findOrFail($id);
-        $transaction->trainingtransactionstatus = $request->status;
-        $transaction->save();
 
-        return redirect()->back()->with('success', 'Status updated successfully.');
-    }
+    return view('admin.training.trainingticketdata', compact('transactions'));
+}
+
+public function updateStatus(Request $request)
+{
+    $id = $request->transaction_id;
+    $status = $request->status;
+
+    session(["ticket_status_{$id}" => $status]);
+
+    return redirect()->back()->with('success', 'Status updated successfully (session only).');
+}
 }

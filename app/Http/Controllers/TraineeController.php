@@ -9,7 +9,7 @@ class TraineeController extends Controller
 {
     public function index()
     {
-        $transactions = TrainingTransaction::where('trainingtransactionstatus', 'Success')->get();
+        $transactions = TrainingTransaction::where('trainingtransactionstatus', 'Payment Success')->get();
         return view('admin.training.traineedata', compact('transactions'));
     }
 }

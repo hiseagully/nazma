@@ -22,6 +22,12 @@ class TrainingTransaction extends Model
         'transactiontraineeaddress',
         'user_id',
         'trainingid',
+        'transactiontraineeemail',
+        'transactiontraineename',
+        'transactiontraineeage',
+        'transactiontraineegender',
+        'transactiontraineeaddress',
+        'payment_method',
     ];
 
     // Relasi ke User

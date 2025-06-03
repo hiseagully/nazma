@@ -1,108 +1,116 @@
 body {
-    font-family: 'Inter', sans-serif;
-}
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f7fc;
+      color: #000000;
+      margin: 0;
+      padding: 0;
+      padding-top: 80px;
+    }
+    /* Scroll-to-top button styling */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 5rem; /* Lebih tinggi, biar nggak nutupin footer */
+      right: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: rgba(247, 148, 29, 0.7); /* Lebih transparan */
+      border-radius: 9999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: background-color 0.3s ease;
+    }
 
-/* Scroll-to-top button styling */
-#scrollTopBtn {
-    position: fixed;
-    bottom: 5rem; /* Lebih tinggi, biar nggak nutupin footer */
-    right: 1.5rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: rgba(247, 148, 29, 0.7); /* Lebih transparan */
-    border-radius: 9999px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    transition: background-color 0.3s ease;
-}
+    #scrollTopBtn:hover {
+      background-color: rgba(217, 127, 20, 0.7); /* Hover juga transparan */
+    }
 
-#scrollTopBtn:hover {
-    background-color: rgba(217, 127, 20, 0.7); /* Hover juga transparan */
-}
+    /* Animasi hover untuk training cards */
+    article {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-/* Animasi hover untuk training cards */
-article {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    article:hover {
+      transform: translateY(-10px); /* Naik sedikit */
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Tambahkan bayangan */
+    }
 
-article:hover {
-    transform: translateY(-10px); /* Naik sedikit */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Tambahkan bayangan */
-}
+    article img {
+      width: 100%; /* Pastikan gambar memenuhi lebar card */
+      height: auto; /* Pertahankan rasio aspek */
+      border-radius: 0.5rem; /* Tambahkan border radius */
+      transition: transform 0.3s ease;
+    }
 
-article img {
-    width: 100%; /* Pastikan gambar memenuhi lebar card */
-    height: auto; /* Pertahankan rasio aspek */
-    border-radius: 0.5rem; /* Tambahkan border radius */
-    transition: transform 0.3s ease;
-}
+    article:hover img {
+      transform: scale(1.05); /* Zoom in */
+    }
 
-article:hover img {
-    transform: scale(1.05); /* Zoom in */
-}
+    article h3 {
+      transition: color 0.3s ease;
+      font-size: 1.25rem; /* Ukuran default */
+    }
 
-article h3 {
-    transition: color 0.3s ease;
-    font-size: 1.25rem; /* Ukuran default */
-}
+    article:hover h3 {
+      color: #F7941D; /* Warna oranye */
+    }
 
-article:hover h3 {
-    color: #F7941D; /* Warna oranye */
-}
+    article p {
+      font-size: 1rem; /* Ukuran default */
+    }
 
-article p {
-    font-size: 1rem; /* Ukuran default */
-}
-
-/* Default untuk layar besar */
-.training-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 kolom */
-    gap: 1.5rem;
-    margin: 2rem auto;
-    margin-bottom: 4rem; /* Tambahkan atau perbesar jarak bawah */
-}
-
-/* Untuk layar sedang (tablet) */
-@media (max-width: 1024px) {
+    /* Default untuk layar besar */
     .training-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+      gap: 1.5rem;
+      margin: 2rem auto;
+      margin-bottom: 4rem; /* Tambahkan atau perbesar jarak bawah */
+      max-width: 1120px;
+      padding: 0 1rem;
+    }
+
+    /* Untuk layar sedang (tablet) */
+    @media (max-width: 1024px) {
+      .training-grid {
         grid-template-columns: repeat(2, 1fr); /* 2 kolom */
         gap: 1rem;
+      }
     }
-}
 
-/* Untuk layar kecil (ponsel) */
-@media (max-width: 640px) {
-    .training-grid {
+    /* Untuk layar kecil (ponsel) */
+    @media (max-width: 640px) {
+      .training-grid {
         grid-template-columns: 1fr; /* 1 kolom */
         gap: 1rem;
         padding: 0 1rem; /* Tambahkan padding untuk jarak */
         margin-bottom: 3rem;
-    }
+      }
 
-    article {
+      article {
         margin: 0 auto; /* Pusatkan card */
-    }
+        max-width: 320px;
+      }
 
-    #scrollTopBtn {
+      #scrollTopBtn {
         bottom: 3rem; /* Naikkan posisi tombol */
         right: 1rem; /* Kurangi jarak dari kanan */
         width: 2rem; /* Perkecil ukuran tombol */
         height: 2rem;
-    }
+      }
 
-    article h3 {
+      article h3 {
         font-size: 1rem; /* Perkecil ukuran teks untuk layar kecil */
+      }
+
+      article p {
+        font-size: 0.875rem; /* Perkecil ukuran teks untuk layar kecil */
+      }
     }
 
-    article p {
-        font-size: 0.875rem; /* Perkecil ukuran teks untuk layar kecil */
-    }
-}
     main,
     .container {
-        padding-bottom: 4rem; /* atau margin-bottom: 8rem; */
+      padding-bottom: 4rem; /* atau margin-bottom: 8rem; */
     }

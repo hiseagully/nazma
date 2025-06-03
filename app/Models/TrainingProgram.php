@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
 class TrainingProgram extends Model
@@ -23,5 +21,8 @@ class TrainingProgram extends Model
     ];
 
     // Relasi ke TrainingRegion
-    public function region()  { return $this->belongsTo(TrainingRegion::class, 'trainingregionid', 'trainingid'); }
+    public function region()
+    {
+        return $this->belongsTo(TrainingRegion::class, 'trainingregionid', 'trainingid');
+    }
 }
