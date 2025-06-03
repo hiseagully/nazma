@@ -20,6 +20,12 @@
   <x-productsearchbox></x-productsearchbox>
   <!-- Main content -->
   <main class="flex-grow px-6 sm:px-8 lg:px-12 mt-8 max-w-5xl mx-auto w-full">
+    <div class="flex items-center mb-4">
+      <button onclick="window.history.back()" aria-label="Back" class="mr-3 text-gray-500 hover:text-orange-500 text-2xl focus:outline-none">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h1 class="text-lg font-semibold">Order</h1>
+    </div>
    <section aria-label="My Order" class="bg-white rounded-lg shadow-md border border-gray-200 p-10">
     <h2 class="font-semibold text-lg mb-6">
      My Order
@@ -133,12 +139,6 @@
       <p class="flex justify-between font-bold">
        <span>
         Total Payment:
-       </span>
-       <span>
-        $ 163
-       </span>
-      </p>
-     </div>
      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl">
       <div>
        <label class="block text-xs font-semibold mb-1 text-gray-900" for="noResi">

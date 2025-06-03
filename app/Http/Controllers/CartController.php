@@ -48,6 +48,9 @@ class CartController extends Controller
 
     public function productcart()
     {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
         $cart = Carts::where('user_id', Auth::user()->user_id)->with(['items.product'])->first();
         return view('user.product.productcart', compact('cart'));
     }

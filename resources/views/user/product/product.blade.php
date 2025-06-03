@@ -39,7 +39,7 @@
             <span>5.0</span>
           </div>
         </div>
-        <p class="font-bold text-sm mb-0.5">
+        <p class="font-bold text-sm mb-0.5 line-clamp-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
           {{ $product->productname }}
         </p>
         <p class="font-semibold text-sm mb-0.5">$

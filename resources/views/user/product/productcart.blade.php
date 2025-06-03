@@ -18,18 +18,16 @@
 <x-productsearchbox></x-productsearchbox>
 <body class="body-bg flex flex-col min-h-[calc(100vh-144px)] px-6 md:px-0">
 <main class="cart-container">
-    <div class="flex justify-between items-center mb-1">
-      <h2 class="font-semibold text-lg text-black">
-      Cart
-      </h2>
-      <label class="flex items-center text-black text-sm cursor-pointer select-none" for="selectAll">
-      <input class="w-5 h-5 border border-gray-300 rounded-full checked:bg-white checked:border-gray-300 checked:ring-0 focus:ring-0" id="selectAll" type="checkbox"/>
-      <span class="ml-2">
-        Select All
-      </span>
-      </label>
-    </div>
-    <div class="cart-items-grid"> 
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <h2 class="font-semibold text-lg text-black ml-0">Cart</h2>
+        </div>
+        <label class="flex items-center text-black text-sm cursor-pointer select-none mr-2" for="selectAll">
+          <input class="w-5 h-5 border border-gray-300 rounded-full checked:bg-white checked:border-gray-300 checked:ring-0 focus:ring-0" id="selectAll" type="checkbox"/>
+          <span class="ml-2">Select All</span>
+        </label>
+      </div>
+      <div class="cart-items-grid"> 
       @if($cart && $cart->items->count())
         @php $total = 0; @endphp
         @foreach($cart->items as $item)
@@ -73,7 +71,6 @@
         <div class="text-gray-500">Cart is empty.</div>
       @endif
     </div>
-
     <div class="flex justify-between items-center">
       <div>
       <p id="selectedCount" class="font-semibold text-black text-sm mb-1">
@@ -223,6 +220,32 @@
           alert('Failed to delete item(s)');
         }
       });
+    });
+    // Checkout: simpan produk yang dichecklist ke localStorage sebelum redirect
+    document.querySelector('button.bg-gradient-to-r').addEventListener('click', function(e) {
+      const selectedIds = Array.from(document.querySelectorAll('input[name="productSelect[]"]:checked')).map(cb => cb.value);
+      if (selectedIds.length === 0) {
+        alert('Please select at least one product to checkout.');
+        e.preventDefault();
+        return false;
+      }
+      // Ambil data produk terpilih
+      const selectedProducts = selectedIds.map(id => {
+        const item = itemData[id];
+        const card = document.getElementById('product'+id)?.closest('.cart-item');
+        return {
+          id,
+          name: card?.querySelector('.cart-item-name')?.textContent?.trim() || '',
+          category: card?.querySelector('.cart-item-category')?.textContent?.trim() || '',
+          image: card?.querySelector('img')?.getAttribute('src') || '',
+          qty: item?.qty || 1,
+          subtotal: (item?.price * item?.qty).toFixed(2)
+        };
+      });
+      localStorage.setItem('selectedCartItems', JSON.stringify(selectedProducts));
+      // Redirect manual agar data pasti tersimpan
+      window.location.href = '/productdata';
+      e.preventDefault();
     });
     updateAllUI();
   });

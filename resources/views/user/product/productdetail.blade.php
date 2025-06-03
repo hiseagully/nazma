@@ -76,7 +76,7 @@
           </button>
         </form>
         <a href="/productdata" class="w-full">
-          <button class="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full px-6 py-2 font-semibold hover:brightness-110 transition" type="button">Buy Now</button>
+          <button id="buy-now-btn" class="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full px-6 py-2 font-semibold hover:brightness-110 transition" type="button">Buy Now</button>
         </a>
       </div>
     </section>
@@ -124,6 +124,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       let qty = 1;
       const price = {{ $product->productpricedollar }};
+      const priceRupiah = {{ $product->productpricerupiah }};
       const qtyValue = document.getElementById('qty-value');
       const totalPrice = document.getElementById('total-price');
       const cartQtyInput = document.getElementById('cart-qty');
@@ -141,6 +142,24 @@
           cartQtyInput.value = qty;
         }
       };
+
+      // BUY NOW: simpan data produk ke localStorage dan redirect
+      const buyNowBtn = document.getElementById('buy-now-btn');
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', function() {
+          const productData = {
+            id: {{ $product->productid }},
+            name: @json($product->productname),
+            image: @json(count($images) ? asset('storage/' . $images[0]->image_path) : asset('images/noimage.png')),
+            category: @json($product->catalog->productcatalogname ?? '-'),
+            productpricedollar: {{ $product->productpricedollar }},
+            productpricerupiah: {{ $product->productpricerupiah }},
+            qty: qty
+          };
+          localStorage.setItem('selectedCartItems', JSON.stringify([productData]));
+          window.location.href = '/productdata';
+        });
+      }
 
       // --- Carousel Logic ---
       const images = [

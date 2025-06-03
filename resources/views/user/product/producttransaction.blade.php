@@ -19,7 +19,13 @@
  <x-productsearchbox></x-productsearchbox>
  <body class="bg-[#F9FAFF] min-h-screen flex flex-col">
 <!-- Purchase Section -->
-<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-0 mt-8 sm:mt-10 mb-20 w-full">
+<main class="max-w-6xl mx-auto w-full px-6 mt-4 flex-grow">
+  <div class="flex items-center mb-4">
+    <button onclick="window.history.back()" aria-label="Back" class="mr-3 text-gray-500 hover:text-orange-500 text-2xl focus:outline-none">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <h1 class="text-lg font-semibold">Product Transaction</h1>
+  </div>
    <section class="bg-white rounded-xl shadow-md p-6 sm:p-8" style="min-height: 320px">
     <h2 class="font-semibold text-black text-lg mb-6 select-none">
      Purchase
