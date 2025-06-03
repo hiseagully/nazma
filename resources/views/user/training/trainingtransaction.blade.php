@@ -29,6 +29,16 @@
           <p class="transaction-status {{ strtolower($transaction->trainingtransactionstatus) }}">
             Status: {{ $transaction->trainingtransactionstatus }}
           </p>
+
+          @if (strtolower($transaction->trainingtransactionstatus) === 'pending')
+            <button
+              class="pay-button bg-orange-500 text-white px-4 py-2 mt-2 rounded hover:bg-orange-600"
+              data-transaction-id="{{ $transaction->trainingtransactionid }}"
+              data-snap-token="{{ $transaction->snap_token }}" {{-- pastikan kamu sudah punya tokennya --}}
+            >
+              Pay Now
+            </button>
+          @endif
           <p>Transaction ID: {{ $transaction->trainingtransactionid }}</p>
         </div>
         <div class="transaction-meta">
@@ -42,6 +52,31 @@
 
     </section>
   </main>
+  <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+
+  <script>
+    document.querySelectorAll('.pay-button').forEach(button => {
+      button.addEventListener('click', function () {
+        const snapToken = this.getAttribute('data-snap-token');
+        window.snap.pay(snapToken, {
+          onSuccess: function(result){
+            alert("Payment success!"); // Bisa arahkan ke redirect atau reload
+            location.reload();
+          },
+          onPending: function(result){
+            alert("Waiting for payment...");
+          },
+          onError: function(result){
+            alert("Payment failed.");
+          },
+          onClose: function(){
+            alert('You closed the popup without finishing the payment.');
+          }
+        });
+      });
+    });
+  </script>
+
   <x-footer></x-footer>
 </body>
 </html>

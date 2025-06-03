@@ -1,283 +1,208 @@
-  body.page-body {
-    font-family: "Poppins", sans-serif;
-    background-color: #f5f8ff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  /* Trainee Data Form */
-  form.trainee-data-form {
-    flex: 2; /* Form mengambil lebih banyak ruang */
-    background-color: white;
-    border-radius: 1rem;
-    padding: 2rem;
-    box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
-    min-width: 0;
-  }
-  h2.form-title {
-    font-weight: 600;
-    font-size: 1.125rem;
-    color: black;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid #d1d5db;
-    padding-bottom: 0.5rem;
-  }
-  div.form-group {
-    margin-bottom: 1.5rem;
-  }
-  label.form-label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: black;
-    margin-bottom: 0.25rem;
-  }
-  input.form-input {
-    width: 100%;
-    border-radius: 0.375rem;
-    border: 1px solid #d1d5db;
-    padding: 0.625rem 1rem;
-    font-size: 0.875rem;
-    color: #9ca3af;
-    outline-offset: 2px;
-  }
-  input.form-input:focus {
-    outline: none;
-    border-color: #f7941d;
-    box-shadow: 0 0 0 2px #f7941d;
-    color: black;
-  }
-  input.email-input {
-    background-color: #f9fafb;
-    border-color: #e5e7eb;
-    color: transparent;
-    caret-color: black;
-  }
-  input.email-input::placeholder {
-    color: transparent;
-  }
-  input.email-input:focus {
-    color: black;
-  }
-  /* Date of Birth selects */
-  fieldset.form-group {
-    margin-bottom: 1.5rem;
-    border: none;
-    padding: 0;
-  }
-  legend.form-label {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: black;
-    margin-bottom: 0.25rem;
-  }
-  div.dob-selects {
-    display: flex;
-    gap: 0.75rem;
-    max-width: 20rem;
-  }
-  select.dob-select {
-    flex-grow: 1;
-    border-radius: 0.375rem;
-    border: 1px solid #d1d5db;
-    padding: 0.625rem 0.75rem;
-    font-size: 0.875rem;
-    color: #9ca3af;
-    background-color: white;
-    outline-offset: 2px;
-    cursor: pointer;
-  }
-  select.dob-select:focus {
-    outline: none;
-    border-color: #f7941d;
-    box-shadow: 0 0 0 2px #f7941d;
-    color: black;
-  }
-  /* Gender */
-  div.gender-options {
-    display: flex;
-    gap: 1rem;
-    max-width: 16rem;
-  }
-  label.gender-label {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 0.375rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    user-select: none;
-    font-size: 0.875rem;
-    color: black;
-  }
-  input.gender-radio {
-    margin-right: 0.5rem;
-    accent-color: #f7941d;
-  }
-  /* Address textarea */
-  textarea.form-textarea {
-    width: 100%;
-    border-radius: 0.375rem;
-    border: 1px solid #d1d5db;
-    padding: 0.625rem 1rem;
-    font-size: 0.875rem;
-    color: #9ca3af;
-    resize: none;
-    outline-offset: 2px;
-  }
-  textarea.form-textarea:focus {
-    outline: none;
-    border-color: #f7941d;
-    box-shadow: 0 0 0 2px #f7941d;
-    color: black;
-  }
-  /* Payment aside */
-  aside.payment-aside {
-    flex: 1; /* Payment section mengambil lebih sedikit ruang */
-    background-color: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 0;
-    height: 50%;
-  }
-  div.payment-info {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    align-items: flex-start;
-  }
-  img.payment-img {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 0.375rem;
-    object-fit: cover;
-    flex-shrink: 0;
-  }
-  h3.payment-title {
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: black;
-    line-height: 1.25rem;
-  }
-  p.payment-date {
-    font-size: 0.75rem;
-    color: rgba(0, 0, 0, 0.8);
-    margin-top: 0.25rem;
-  }
-  hr.payment-divider {
-    border-color: #d1d5db;
-    margin-bottom: 1rem;
-  }
-  div.payment-total {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 600;
-    color: black;
-    margin-bottom: 0.5rem;
-  }
-  select.payment-select {
-    width: 100%;
-    border-radius: 0.375rem;
-    border: 1px solid #d1d5db;
-    padding: 0.625rem 1rem;
-    font-size: 0.875rem;
-    color: #9ca3af;
-    background-color: #f9fafb;
-    cursor: not-allowed;
-  }
-  button.checkout-button {
-    width: 100%;
-    background: linear-gradient(to right, #f7941d, #f76b1c);
-    color: white;
-    font-weight: 600;
-    padding: 0.75rem 0;
-    border-radius: 9999px;
-    border: none;
-    cursor: pointer;
-    transition: filter 0.2s ease;
-  }
-  button.checkout-button:hover {
-    filter: brightness(1.1);
-  }
-  /* Decorative shapes */
-  .decor-circle {
-    position: absolute;
-    border-radius: 9999px;
-  }
-  .top-left-yellow {
-    top: 0;
-    left: 0;
-    width: 5rem;
-    height: 5rem;
-    background-color: #f7941d;
-    transform: translate(-50%, -50%);
-  }
-  .top-left-white {
-    top: 2.5rem;
-    left: 2.5rem;
-    width: 3rem;
-    height: 3rem;
-    background-color: white;
-  }
-  .top-left-blue {
-    position: absolute;
-    top: 0;
-    left: 4rem;
-    width: 3rem;
-    height: 8rem;
-    background-color: #0096c7;
-    transform-origin: bottom left;
-    transform: rotate(45deg);
-  }
-  .bottom-right-yellow {
-    bottom: 0;
-    right: 0;
-    width: 5rem;
-    height: 5rem;
-    background-color: #f7941d;
-    transform: translate(50%, 50%);
-  }
-  .bottom-right-white {
-    bottom: 2.5rem;
-    right: 2.5rem;
-    width: 3rem;
-    height: 3rem;
-    background-color: white;
-  }
-  .bottom-right-blue {
-    position: absolute;
-    bottom: 0;
-    right: 4rem;
-    width: 3rem;
-    height: 8rem;
-    background-color: #0096c7;
-    transform-origin: top right;
-    transform: rotate(-45deg);
-  }
+/* ===================================================
+   Global Styles
+   =================================================== */
 
-  .form-payment-container {
-    display: flex; /* Gunakan Flexbox untuk menyusun elemen secara horizontal */
-    gap: 2rem; /* Tambahkan jarak antar elemen */
-    max-width: 1120px; /* Sesuaikan dengan lebar container utama */
-    margin: 0 auto; /* Pusatkan container */
-    padding: 1rem;
-    box-sizing: border-box;
-  }
+/* 1.  Full‑page light‑blue background */
+body.page-body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f8ff;         /* light indigo */
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem 1rem;                /* space from viewport edges */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;           /* align items at top, not center */
+}
 
-  @media (max-width: 768px) {
-    .form-payment-container {
-      flex-direction: column; /* Susun elemen secara vertikal */
-      gap: 1rem; /* Kurangi jarak antar elemen */
-    }
+/* 2.  Two‑column wrapper (form + payment) */
+.form-payment-container {
+  display: flex;
+  flex-wrap: wrap;                   /* stack on xs screens */
+  gap: 2rem;
+  max-width: 1120px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 1rem;
+}
 
-    .trainee-data-form,
-    .payment-aside {
-      flex: none; /* Hapus fleksibilitas */
-      width: 0; /* Pastikan elemen mengambil lebar penuh */
-    }
-  }
+/* ===================================================
+   Trainee Data – Left Card
+   =================================================== */
+
+.card-left {
+  flex: 2 1 0%;                      /* grow 2x faster than right */
+  min-width: 300px;
+  background-color: #fff;
+  padding: 1.75rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,.05);
+  box-sizing: border-box;
+}
+
+h2.form-title {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;                /* 20px – a bit larger */
+  color: #000;
+  border-bottom: 1px solid #d1d5db;
+}
+
+/* --- Form elements --------------------------------------------------- */
+
+div.form-group { margin-bottom: 1.5rem; }
+
+label.form-label {
+  display: block;
+  margin-bottom: .25rem;
+  font-weight: 600;
+  font-size: .875rem;                /* 14px */
+  color: #000;
+}
+
+input.form-input,
+textarea.form-textarea {
+  width: 100%;
+  padding: .625rem 1rem;             /* 10px 16px */
+  font-size: .875rem;
+  color: #9ca3af;
+  border: 1px solid #d1d5db;
+  border-radius: .375rem;
+  outline-offset: 2px;
+  resize: none;
+}
+
+input.form-input:focus,
+textarea.form-textarea:focus {
+  color: #000;
+  border-color: #f7941d;
+  box-shadow: 0 0 0 2px #f7941d;
+  outline: none;
+}
+
+/*  Email (masked / read‑only appearance)  */
+input.email-input {
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+  color: transparent;         /* hide value until focus */
+  caret-color: #000;
+}
+input.email-input::placeholder { color: transparent; }
+input.email-input:focus { color: #000; }
+
+/* --- Gender options -------------------------------------------------- */
+
+div.gender-options {
+  display: flex;
+  gap: 1rem;
+  max-width: 16rem;
+}
+
+label.gender-label {
+  flex: 1 1 0%;
+  display: flex;
+  align-items: center;
+  padding: .5rem 1rem;
+  font-size: .875rem;
+  color: #000;
+  border: 1px solid #d1d5db;
+  border-radius: .375rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+input.gender-radio {
+  margin-right: .5rem;
+  accent-color: #f7941d;
+}
+
+/* ===================================================
+   Payment – Right Card
+   =================================================== */
+
+.card-right {
+  flex: 1 1 0%;
+  min-width: 250px;
+  background-color: #fff;            /* give the card its own bg */
+  padding: 1.75rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,.05);
+  box-sizing: border-box;
+  height: 60%;
+}
+
+/* Payment inner layout */
+
+.payment-info {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.payment-img {
+  flex-shrink: 0;
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: .375rem;
+}
+
+.payment-title {
+  font-weight: 600;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  color: #000;
+}
+
+.payment-date {
+  margin-top: .25rem;
+  font-size: .75rem;
+  color: rgba(0,0,0,.8);
+}
+
+.payment-divider {
+  margin: 1rem 0;
+  border: none;
+  border-top: 1px solid #d1d5db;
+}
+
+.payment-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: .75rem;
+}
+
+/* Select (disabled look) */
+select.payment-select {
+  width: 100%;
+  padding: .625rem 1rem;
+  font-size: .875rem;
+  color: #9ca3af;
+  border: 1px solid #d1d5db;
+  border-radius: .375rem;
+  background-color: #f9fafb;
+  cursor: not-allowed;
+}
+
+/* Checkout button */
+button.checkout-button {
+  width: 100%;
+  padding: .75rem 0;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(to right,#f7941d,#f76b1c);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: filter .2s ease;
+}
+
+button.checkout-button:hover { filter: brightness(1.1); }
+
+/*  Decorative shapes if ever needed */
+.decor-circle { position: absolute; border-radius: 9999px; }

@@ -15,7 +15,6 @@ class TrainingTransaction extends Model
 
     protected $fillable = [
         'trainingid',
-        'transactiontraineeemail',
         'transactiontraineename',
         'transactiontraineeage',
         'transactiontraineegender',

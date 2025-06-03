@@ -10,8 +10,11 @@ return new class extends Migration
     {
         Schema::create('productcollection', function (Blueprint $table) {
             $table->id('productid');
+
+            // foreign key harus sesuai dengan kolom 'id' di tabel referensi
             $table->unsignedBigInteger('productcatalogid');
             $table->unsignedBigInteger('productregionsid');
+
             $table->string('productname');
             $table->text('productdescription')->nullable();
             $table->decimal('productpricerupiah', 15, 2)->nullable();
@@ -20,15 +23,15 @@ return new class extends Migration
             $table->integer('productstock')->default(0);
             $table->timestamps();
 
-            // Foreign key ke tabel productcatalog (kolom: productcatalogid)
+            // ASUMSI: primary key di 'productcatalog' adalah kolom 'id'
             $table->foreign('productcatalogid')
-                ->references('productcatalogid')
+                ->references('id') // <--- pastikan ini sesuai
                 ->on('productcatalog')
                 ->onDelete('cascade');
 
-            // Foreign key ke tabel productregionsmap (kolom: productregionsid)
+            // ASUMSI: primary key di 'productregionsmap' adalah kolom 'id'
             $table->foreign('productregionsid')
-                ->references('productregionsid')
+                ->references('id') // <--- pastikan ini sesuai
                 ->on('productregionsmap')
                 ->onDelete('cascade');
         });
@@ -36,6 +39,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('productcollection');
     }
 };
