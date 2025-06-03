@@ -20,6 +20,7 @@ use App\Http\Controllers\ProductImagesController;
 use App\Http\Controllers\ProductController;
 use App\Models\ProductCollection;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductTransactionController;
 
 // Halaman umum
 Route::get('/', function () { return view('landingpage'); });
@@ -192,3 +193,10 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 Route::post('/cart/delete-items', [CartController::class, 'deleteItems']);
+Route::post('/checkout', [ProductTransactionController::class, 'store'])->name('checkout.store');
+Route::get('/transaction/{id}', [ProductTransactionController::class, 'show'])->name('transaction.show');
+
+// RajaOngkir API endpoints
+Route::get('/api/provinces', [\App\Http\Controllers\OngkirController::class, 'getProvinces']);
+Route::post('/api/cities', [\App\Http\Controllers\OngkirController::class, 'getCities']);
+Route::post('/api/ongkir', [\App\Http\Controllers\OngkirController::class, 'getOngkir']);

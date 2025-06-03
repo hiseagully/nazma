@@ -229,21 +229,24 @@
         e.preventDefault();
         return false;
       }
-      // Ambil data produk terpilih
+      // Ambil data produk terpilih lengkap dari Blade
       const selectedProducts = selectedIds.map(id => {
         const item = itemData[id];
-        const card = document.getElementById('product'+id)?.closest('.cart-item');
+        const cartItem = @json($cart->items->keyBy('id'));
+        const product = cartItem[id] && cartItem[id].product ? cartItem[id].product : null;
         return {
-          id,
-          name: card?.querySelector('.cart-item-name')?.textContent?.trim() || '',
-          category: card?.querySelector('.cart-item-category')?.textContent?.trim() || '',
-          image: card?.querySelector('img')?.getAttribute('src') || '',
+          id: product ? product.productid : id,
+          name: product ? product.productname : '',
+          category: product && product.catalog ? product.catalog.productcatalogname : '',
+          image: product && product.images && product.images.length && product.images.find(img => img.is_thumbnail) ?
+            '/storage/' + product.images.find(img => img.is_thumbnail).image_path : '/images/noimage.png',
+          productpricedollar: product ? product.productpricedollar : 0,
+          productpricerupiah: product ? product.productpricerupiah : 0,
           qty: item?.qty || 1,
           subtotal: (item?.price * item?.qty).toFixed(2)
         };
       });
       localStorage.setItem('selectedCartItems', JSON.stringify(selectedProducts));
-      // Redirect manual agar data pasti tersimpan
       window.location.href = '/productdata';
       e.preventDefault();
     });

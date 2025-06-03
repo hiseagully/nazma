@@ -5,6 +5,7 @@
     <title>NaZMaLogy Profile</title>
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
   </head>
   <body class="profile-page">
     <x-header></x-header>
@@ -52,6 +53,20 @@
                 <label class="form-label">New Password</label>
                 <input type="password" name="user_password" class="form-input" placeholder="Leave blank if not changing">
               </div>
+              <div class="form-group">
+                <label class="form-label">Provinsi</label>
+                <select id="profile_province_id" name="profile_province_id" class="form-input" required>
+                  <option value="">Pilih Provinsi</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Kota/Kabupaten</label>
+                <select id="profile_city_id" name="profile_city_id" class="form-input" required>
+                  <option value="">Pilih Kota/Kabupaten</option>
+                </select>
+                <input type="hidden" id="profile_province_name" name="profile_province_name">
+                <input type="hidden" id="profile_city_name" name="profile_city_name">
+              </div>
               <div class="form-actions mt-6 flex justify-end gap-2">
                 <button type="button" onclick="closeEditProfileModal()" class="btn-update bg-gray-200 hover:bg-gray-300 text-gray-800">Cancel</button>
                 <button type="submit" class="btn-update bg-blue-500 hover:bg-blue-600 text-white">Save</button>
@@ -62,12 +77,85 @@
       </div>
     </main>
     <script>
-      function openEditProfileModal() {
-        document.getElementById('editProfileModal').style.display = 'flex';
-      }
-      function closeEditProfileModal() {
-        document.getElementById('editProfileModal').style.display = 'none';
-      }
+      document.addEventListener('DOMContentLoaded', function() {
+        function openEditProfileModal() {
+          document.getElementById('editProfileModal').style.display = 'flex';
+          loadProfileProvinces();
+        }
+        function closeEditProfileModal() {
+          document.getElementById('editProfileModal').style.display = 'none';
+        }
+        // --- RAJAONGKIR ADDRESS PROFILE ---
+        let provincesData = [];
+        function loadProvincesProfile() {
+          fetch('/api/provinces')
+            .then(res => {
+              if (!res.ok) throw new Error('Gagal fetch provinces');
+              return res.json();
+            })
+            .then(data => {
+              provincesData = data.rajaongkir.results;
+              if (!provincesData || provincesData.length === 0) {
+                console.error('Provinces kosong:', data);
+                alert('Gagal memuat data provinsi.');
+                return;
+              }
+              // Isi dropdown provinsi (opsional, jika ingin tampilkan select provinsi)
+              // Ambil provinsi pertama sebagai default
+              const firstProvinceId = provincesData[0].province_id;
+              loadCitiesProfile(firstProvinceId);
+              document.getElementById('province_id_profile').value = firstProvinceId;
+              document.getElementById('province_name_profile').value = provincesData[0].province;
+            })
+            .catch(err => {
+              console.error('Error fetch provinces:', err);
+              alert('Gagal memuat data provinsi. Cek koneksi atau hubungi admin.');
+            });
+        }
+        function loadCitiesProfile(provinceId) {
+          fetch('/api/cities', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({province_id: provinceId})
+          })
+          .then(res => {
+            if (!res.ok) throw new Error('Gagal fetch cities');
+            return res.json();
+          })
+          .then(data => {
+            if (!data.rajaongkir || !data.rajaongkir.results) {
+              console.error('Cities kosong:', data);
+              alert('Gagal memuat data kota.');
+              return;
+            }
+            let cityOptions = '<option value="">Pilih Kabupaten/Kota</option>';
+            data.rajaongkir.results.forEach(city => {
+              cityOptions += `<option value="${city.city_id}" data-city-name="${city.type} ${city.city_name}" data-province-id="${city.province_id}" data-province-name="${city.province}">${city.type} ${city.city_name}, ${city.province}</option>`;
+            });
+            document.getElementById('city_id_profile').innerHTML = cityOptions;
+          })
+          .catch(err => {
+            console.error('Error fetch cities:', err);
+            alert('Gagal memuat data kota. Cek koneksi atau hubungi admin.');
+          });
+        }
+        if (document.getElementById('profile_province_id')) {
+          document.getElementById('profile_province_id').addEventListener('change', function() {
+            loadProfileCities(this.value);
+          });
+        }
+        if (document.getElementById('profile_city_id')) {
+          document.getElementById('profile_city_id').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            document.getElementById('profile_city_name').value = selectedOption.getAttribute('data-city-name') || '';
+            document.getElementById('profile_province_id').value = selectedOption.getAttribute('data-province-id') || '';
+            document.getElementById('profile_province_name').value = selectedOption.getAttribute('data-province-name') || '';
+          });
+        }
+      });
     </script>
   </body>
 </html>
