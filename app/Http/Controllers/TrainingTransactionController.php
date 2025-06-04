@@ -48,10 +48,10 @@ class TrainingTransactionController extends Controller
         ]);
 
         if ($request->payment_method === 'midtrans') {
-            Config::$serverKey = config('midtrans.server_key');
-            Config::$isProduction = config('midtrans.is_production');
-            Config::$isSanitized = config('midtrans.is_sanitized');
-            Config::$is3ds = config('midtrans.is_3ds');
+            Config::$serverKey = config('midtrans.training.server_key');
+            Config::$isProduction = config('midtrans.training.is_production');
+            Config::$isSanitized = config('midtrans.training.is_sanitized');
+            Config::$is3ds = config('midtrans.training.is_3ds');
 
             $params = [
                 'transaction_details' => [

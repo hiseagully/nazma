@@ -116,78 +116,98 @@
         <span>Total Payment:</span>
         <span id="total-payment">$ 0.00</span>
       </div>
-      <a href="/producttransaction">
-        <button id="checkout-btn" class="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold py-3 rounded-full hover:brightness-110 transition" type="button">Checkout</button>
-      </a>
+      <button id="checkout-btn" class="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold py-3 rounded-full hover:brightness-110 transition" type="button">Checkout</button>
+      <button id="pay-button" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-full mt-3">Bayar dengan Midtrans</button>
     </section>
    </section>
   </main>
   <x-footer></x-footer>
+  <!-- Snap Midtrans script harus di luar blok <script> agar tidak nested -->
+  <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.product.client_key') }}"></script>
  </body>
 </html>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Ambil produk terpilih dari localStorage
-  const selected = localStorage.getItem('selectedCartItems');
   let currencySymbol = '$';
   let isID = false;
-  // Fungsi untuk update simbol mata uang
+
+  function updateTotals() {
+    try {
+      console.log('[updateTotals] called');
+      const products = JSON.parse(localStorage.getItem('selectedCartItems') || '[]');
+      console.log('[updateTotals] localStorage.selectedCartItems:', products);
+      const paymentList = document.getElementById('payment-product-list');
+      if (!paymentList) {
+        console.error('[updateTotals] ERROR: payment-product-list element NOT FOUND!');
+        alert('Terjadi error: payment-product-list tidak ditemukan di halaman.');
+        return;
+      }
+      let total = 0;
+      paymentList.innerHTML = '';
+      if (!products.length) {
+        paymentList.innerHTML = '<div class="text-red-500 text-center py-6">Tidak ada produk yang dipilih.<br>Silakan kembali ke cart dan pilih produk terlebih dahulu.</div>';
+        alert('Tidak ada produk yang dipilih! Silakan kembali ke cart dan pilih produk.');
+        console.log('[updateTotals] Rendered products: NONE');
+      } else {
+        products.forEach((item, idx) => {
+          let unitPrice = isID ? (item.productpricerupiah || 0) : (item.productpricedollar || 0);
+          unitPrice = parseFloat(unitPrice) || 0;
+          const qty = parseFloat(item.qty || 1);
+          const subtotal = unitPrice * qty;
+          function formatPrice(val) {
+            return val % 1 === 0 ? val.toLocaleString(undefined, {maximumFractionDigits:0}) : val.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+          }
+          paymentList.innerHTML += `
+            <div class="flex gap-4 items-center py-3">
+              <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0"/>
+              <div class="flex-1 min-w-0 flex flex-col">
+                <span class="text-xs text-gray-500">${item.category}</span>
+                <span class="font-semibold text-sm truncate whitespace-nowrap overflow-hidden block" title="${item.name}">${item.name}</span>
+                <span class="text-xs text-gray-600">Qty: ${item.qty}</span>
+              </div>
+              <div class="flex flex-col items-end min-w-[90px]">
+                <span class="font-semibold text-sm whitespace-nowrap"><span class="currency-symbol">${currencySymbol}</span> ${formatPrice(unitPrice)}</span>
+                <span class="text-xs text-gray-500 whitespace-nowrap">Subtotal: <span class="currency-symbol">${currencySymbol}</span> ${formatPrice(subtotal)}</span>
+              </div>
+            </div>
+            <hr class="border-gray-300 m-0" />
+          `;
+          total += subtotal;
+        });
+        console.log('[updateTotals] Rendered products:', products.length);
+      }
+      const totalPurchase = document.getElementById('total-purchase');
+      if (totalPurchase) totalPurchase.innerHTML = `<span class="currency-symbol">${currencySymbol}</span> ` + (total % 1 === 0 ? total.toLocaleString(undefined, {maximumFractionDigits:0}) : total.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}));
+      const totalPayment = document.getElementById('total-payment');
+      let shipping = isID ? 15000 : 3;
+      const totalWithShipping = total + shipping;
+      if (totalPayment) totalPayment.innerHTML = `<span class="currency-symbol">${currencySymbol}</span> ` + (totalWithShipping % 1 === 0 ? totalWithShipping.toLocaleString(undefined, {maximumFractionDigits:0}) : totalWithShipping.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}));
+      console.log('[updateTotals] END');
+    } catch(e) {
+      console.error('updateTotals error:', e);
+    }
+  }
+
   function updateCurrencySymbol() {
     const countrySelect = document.getElementById('recipient-country');
     isID = countrySelect && countrySelect.value === 'ID';
     currencySymbol = isID ? 'Rp' : '$';
-    // Update semua .currency-symbol
     document.querySelectorAll('.currency-symbol').forEach(el => {
       el.textContent = currencySymbol;
     });
-    // Update total
     updateTotals();
   }
-  // Render produk dan total
-  function updateTotals() {
-    const products = selected ? JSON.parse(selected) : [];
-    let total = 0;
-    const paymentList = document.getElementById('payment-product-list');
-    if (paymentList) {
-      paymentList.innerHTML = '';
-      products.forEach((item, idx) => {
-        // Pilih harga sesuai country
-        let unitPrice = isID ? (item.productpricerupiah || 0) : (item.productpricedollar || 0);
-        unitPrice = parseFloat(unitPrice) || 0;
-        const qty = parseFloat(item.qty || 1);
-        const subtotal = unitPrice * qty;
-        // Format harga tanpa ,00 jika bulat
-        function formatPrice(val) {
-          return val % 1 === 0 ? val.toLocaleString(undefined, {maximumFractionDigits:0}) : val.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
-        }
-        paymentList.innerHTML += `
-          <div class="flex gap-4 items-center py-3">
-            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0"/>
-            <div class="flex-1 min-w-0 flex flex-col">
-              <span class="text-xs text-gray-500">${item.category}</span>
-              <span class="font-semibold text-sm truncate whitespace-nowrap overflow-hidden block" title="${item.name}">${item.name}</span>
-              <span class="text-xs text-gray-600">Qty: ${item.qty}</span>
-            </div>
-            <div class="flex flex-col items-end min-w-[90px]">
-              <span class="font-semibold text-sm whitespace-nowrap"><span class="currency-symbol">${currencySymbol}</span> ${formatPrice(unitPrice)}</span>
-              <span class="text-xs text-gray-500 whitespace-nowrap">Subtotal: <span class="currency-symbol">${currencySymbol}</span> ${formatPrice(subtotal)}</span>
-            </div>
-          </div>
-          <hr class="border-gray-300 m-0" />
-        `;
-        total += subtotal;
-      });
-    }
-    // Update total purchase dan total payment
-    const totalPurchase = document.getElementById('total-purchase');
-    if (totalPurchase) totalPurchase.innerHTML = `<span class="currency-symbol">${currencySymbol}</span> ` + (total % 1 === 0 ? total.toLocaleString(undefined, {maximumFractionDigits:0}) : total.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}));
-    const totalPayment = document.getElementById('total-payment');
-    let shipping = isID ? 15000 : 3;
-    const totalWithShipping = total + shipping;
-    if (totalPayment) totalPayment.innerHTML = `<span class="currency-symbol">${currencySymbol}</span> ` + (totalWithShipping % 1 === 0 ? totalWithShipping.toLocaleString(undefined, {maximumFractionDigits:0}) : totalWithShipping.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}));
-  }
+
   // Inisialisasi awal
   updateCurrencySymbol();
+
+  // Pastikan updateTotals juga dipanggil saat kembali ke tab
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+      updateTotals();
+    }
+  });
+
   // Toggle address fields by country & update currency
   const indoGroup = document.getElementById('address-indonesia-group');
   const intlGroup = document.getElementById('address-international-group');
@@ -209,12 +229,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set default simbol saat load
     updateCurrencySymbol();
   }
-  // Validasi form saat klik Checkout
+  // Checkout AJAX + Snap Midtrans
   const checkoutBtn = document.getElementById('checkout-btn');
   if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', function(e) {
+    checkoutBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      // Validasi manual (bisa tambahkan validasi lain sesuai kebutuhan)
       let valid = true;
-      // Phone
       const phone = document.getElementById('recipient-phone');
       const phoneError = document.getElementById('phone-error');
       if (!phone.value.trim()) {
@@ -266,12 +287,77 @@ document.addEventListener('DOMContentLoaded', function() {
         fulladdress.classList.remove('border-red-500');
         fulladdressError.classList.add('hidden');
       }
-      if (!valid) {
-        e.preventDefault();
+      if (!valid) return;
+      // Ambil produk dari localStorage
+      const products = JSON.parse(localStorage.getItem('selectedCartItems') || '[]');
+      if (!products.length) {
+        alert('Tidak ada produk yang dipilih!');
         return;
       }
-      // Jika valid, redirect
-      window.location.href = '/producttransaction';
+      // Ambil data form
+      const data = {
+        user_id: {{ Auth::id() ?? 'null' }},
+        email: "{{ Auth::user()->user_email ?? Auth::user()->email }}",
+        name: "{{ Auth::user()->user_name ?? Auth::user()->name }}",
+        phone: phone.value,
+        country: document.getElementById('recipient-country').value,
+        province_id: document.getElementById('province_id').value,
+        city_id: document.getElementById('city_id').value,
+        district_id: '',
+        country_name: '',
+        city_name: document.getElementById('city_name').value,
+        postal_code: '',
+        address: document.getElementById('recipient-fulladdress').value,
+        shipping_courier: document.getElementById('courier').value,
+        shipping_cost: document.getElementById('shipping_cost_input').value,
+        payment_method: 'midtrans',
+        payment_gateway: 'midtrans',
+        payment_status: 'pending',
+        total_price: 0,
+        products: []
+      };
+      // Hitung total dan siapkan products
+      let total = 0;
+      products.forEach(item => {
+        let price = data.country === 'ID' ? (item.productpricerupiah || 0) : (item.productpricedollar || 0);
+        price = parseFloat(price) || 0;
+        const qty = parseInt(item.qty || 1);
+        const subtotal = price * qty;
+        total += subtotal;
+        data.products.push({
+          id: item.id,
+          name: item.name,
+          price: price,
+          qty: qty,
+          subtotal: subtotal
+        });
+      });
+      data.total_price = total + parseFloat(data.shipping_cost || 0);
+      // Kirim ke backend
+      try {
+        const res = await fetch('/checkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success && result.snap_token) {
+          window.snap.pay(result.snap_token, {
+            onSuccess: function(result){ alert('Pembayaran sukses!'); window.location.reload(); },
+            onPending: function(result){ alert('Pembayaran pending!'); window.location.reload(); },
+            onError: function(result){ alert('Pembayaran gagal!'); },
+            onClose: function(){ alert('Kamu menutup popup tanpa menyelesaikan pembayaran'); }
+          });
+        } else {
+          alert('Gagal membuat transaksi. Cek data dan coba lagi.');
+        }
+      } catch (err) {
+        alert('Terjadi error saat checkout.');
+        console.error(err);
+      }
     });
   }
   // --- RAJAONGKIR ADDRESS & ONGKIR ---
@@ -389,7 +475,82 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     getOngkir();
   });
+  // Snap Midtrans
+  let snapToken = @json($snapToken ?? null);
+  document.getElementById('pay-button').onclick = function() {
+    if (snapToken) {
+      window.snap.pay(snapToken, {
+        onSuccess: function(result){ alert('Pembayaran sukses!'); window.location.reload(); },
+        onPending: function(result){ alert('Pembayaran pending!'); window.location.reload(); },
+        onError: function(result){ alert('Pembayaran gagal!'); },
+        onClose: function(){ alert('Kamu menutup popup tanpa menyelesaikan pembayaran'); }
+      });
+    } else {
+      alert('Token pembayaran belum tersedia. Silakan isi data checkout dan klik Checkout terlebih dahulu.');
+    }
+  };
+  // --- Tambahkan event listener visibilitychange agar updateTotals selalu dipanggil saat kembali ke tab ---
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+      try { updateTotals(); } catch(e) { console.error('updateTotals error:', e); }
+    }
+  });
+  // Tambahkan try-catch di updateTotals untuk debug error
+  function updateTotals() {
+    try {
+      // Ambil ulang produk dari localStorage setiap kali updateTotals dipanggil
+      const products = JSON.parse(localStorage.getItem('selectedCartItems') || '[]');
+      let total = 0;
+      const paymentList = document.getElementById('payment-product-list');
+      if (paymentList) {
+        paymentList.innerHTML = '';
+        products.forEach((item, idx) => {
+          let unitPrice = isID ? (item.productpricerupiah || 0) : (item.productpricedollar || 0);
+          unitPrice = parseFloat(unitPrice) || 0;
+          const qty = parseFloat(item.qty || 1);
+          const subtotal = unitPrice * qty;
+          // Format harga tanpa ,00 jika bulat
+          function formatPrice(val) {
+            return val % 1 === 0 ? val.toLocaleString(undefined, {maximumFractionDigits:0}) : val.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+          }
+          paymentList.innerHTML += `
+            <div class="flex gap-4 items-center py-3">
+              <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover flex-shrink-0"/>
+              <div class="flex-1 min-w-0 flex flex-col">
+                <span class="text-xs text-gray-500">${item.category}</span>
+                <span class="font-semibold text-sm truncate whitespace-nowrap overflow-hidden block" title="${item.name}">${item.name}</span>
+                <span class="text-xs text-gray-600">Qty: ${item.qty}</span>
+              </div>
+              <div class="flex flex-col items-end min-w-[90px]">
+                <span class="font-semibold text-sm whitespace-nowrap"><span class="currency-symbol">${currencySymbol}</span> ${formatPrice(unitPrice)}</span>
+                <span class="text-xs text-gray-500 whitespace-nowrap">Subtotal: <span class="currency-symbol">${currencySymbol}</span> ${formatPrice(subtotal)}</span>
+              </div>
+            </div>
+            <hr class="border-gray-300 m-0" />
+          `;
+          total += subtotal;
+        });
+      }
+      // Update total purchase dan total payment
+      const totalPurchase = document.getElementById('total-purchase');
+      if (totalPurchase) totalPurchase.innerHTML = `<span class="currency-symbol">${currencySymbol}</span> ` + (total % 1 === 0 ? total.toLocaleString(undefined, {maximumFractionDigits:0}) : total.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}));
+      const totalPayment = document.getElementById('total-payment');
+      let shipping = isID ? 15000 : 3;
+      const totalWithShipping = total + shipping;
+      if (totalPayment) totalPayment.innerHTML = `<span class="currency-symbol">${currencySymbol}</span> ` + (totalWithShipping % 1 === 0 ? totalWithShipping.toLocaleString(undefined, {maximumFractionDigits:0}) : totalWithShipping.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}));
+    } catch(e) {
+      console.error('updateTotals error:', e);
+    }
+  }
   // ...existing code...
-});
+function updateTotals() {
+  try {
+    // ...existing code...
+  } catch(e) {
+    console.error('updateTotals error:', e);
+  }
+}
+// PANGGIL updateTotals() DI SINI!
+updateTotals();
+// ...existing code...
 </script>
-
