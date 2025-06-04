@@ -96,47 +96,27 @@
 
   <!-- AJAX for Midtrans payment -->
   <script>
-    document.getElementById('submitBtn').addEventListener('click', function (e) {
-      e.preventDefault();
+  document.querySelectorAll('.pay-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
 
-      const form = document.getElementById('trainingForm');
-      const formData = new FormData(form);
-
-      fetch(form.action, {
-        method: 'POST',
-        headers: {
-          'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.snap_token) {
-          snap.pay(data.snap_token, {
-            onSuccess: function (result) {
-              window.location.href = "{{ route('payment.success') }}";
-            },
-            onPending: function (result) {
-              window.location.href = "{{ route('payment.success') }}";
-            },
-            onError: function (result) {
-              alert('Payment failed.');
-              console.error(result);
-            },
-            onClose: function () {
-              alert('You closed the payment popup.');
-            }
-          });
-        } else {
-          alert('Snap token not found.');
-          console.log(data);
-        }
-      })
-      .catch(error => {
-        console.error('Error during payment:', error);
-        alert('An error occurred. Please try again.');
-      });
+      fetch(`/snap/token/${id}`)                 // ← GET
+        .then(r => r.json())
+        .then(data => {
+          if (data.snap_token) {
+            window.snap.pay(data.snap_token, {
+              onSuccess() { location.reload(); },
+              onPending() { location.reload(); },
+              onError()   { alert('Payment failed'); },
+              onClose()   { /* user closed popup */ }
+            });
+          } else {
+            alert(data.error ?? 'Snap token missing');
+          }
+        })
+        .catch(() => alert('Network error – try again.'));
     });
+  });
   </script>
   <x-footer></x-footer>
 </body>

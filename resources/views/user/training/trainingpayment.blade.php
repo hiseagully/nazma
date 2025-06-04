@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Payment</title>
-    <script type="text/javascript"
-        src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <title>Training Payment</title>
+    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
 </head>
 <body>
-    <h1>Processing Payment...</h1>
+    <h1>Payment for Transaction #{{ $transaction->id }}</h1>
+    <button id="pay-button">Bayar Sekarang</button>
 
-    <script type="text/javascript">
+   <script>
         snap.pay('{{ $snapToken }}', {
-            onSuccess: function(result){
-                window.location.href = "{{ route('payment.success') }}";
+            onSuccess: function(result) {
+            alert('Payment success!');
+            // redirect atau reload halaman sesuai kebutuhan
             },
-            onPending: function(result){
-                window.location.href = "{{ route('payment.success') }}";
+            onPending: function(result) {
+            alert('Payment pending.');
             },
-            onError: function(result){
-                alert("Payment Failed!");
-                console.log(result);
-            },
-            onClose: function() {
-                alert('Payment popup closed without completing payment');
+            onError: function(result) {
+            alert('Payment error.');
             }
         });
     </script>
