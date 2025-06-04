@@ -19,7 +19,6 @@ class TrainingTransaction extends Model
         'transactiontraineeage',
         'transactiontraineegender',
         'transactiontraineeaddress',
-        'payment_method',
         'trainingtransactionmethod',
         'trainingtransactionstatus',
         'trainingtransactiondate',
@@ -28,7 +27,7 @@ class TrainingTransaction extends Model
     ];
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     public function training() {

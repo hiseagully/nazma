@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\TrainingTransaction;
 use App\Models\TrainingProgram;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Midtrans\Snap;
 use Midtrans\Config;
+use Midtrans\Notification;
 
 class TrainingTransactionController extends Controller
 {
-    /* =========================================================
-       KONFIGURASI MIDTRANS – panggil sekali di constructor
-       ========================================================= */
     public function __construct()
     {
         Config::$serverKey    = config('midtrans.server_key');
@@ -23,17 +21,17 @@ class TrainingTransactionController extends Controller
     }
 
     /* =========================================================
-       LIST ADMIN / USER
-       ========================================================= */
+       INDEX
+    ========================================================= */
 
-    // Admin lihat trainee yg sudah sukses
+    // Admin lihat trainee yang berhasil daftar
     public function traineeIndex()
     {
         $transactions = TrainingTransaction::where('trainingtransactionstatus', 'Success')->get();
         return view('admin.training.traineedata', compact('transactions'));
     }
 
-    // Admin lihat SEMUA transaksi
+    // Admin lihat semua transaksi
     public function adminIndex()
     {
         $transactions = TrainingTransaction::with(['user', 'training.region'])
@@ -43,120 +41,175 @@ class TrainingTransactionController extends Controller
         return view('admin.training.trainingtransactiondata', compact('transactions'));
     }
 
-    // User (login) lihat transaksi dirinya
+    // User lihat transaksinya sendiri
     public function userIndex()
     {
-        $transactions = $this->withSnapToken(
-            TrainingTransaction::where('user_id', auth()->id())->get()
-        );
-
-        return view('user.training.trainingtransaction', compact('transactions'));
-    }
-
-    // Endpoint umum kalau dipakai di luar konteks login tertentu
-    public function index()
-    {
-        $transactions = $this->withSnapToken(
-            TrainingTransaction::with(['user', 'training.region'])
-                ->orderByDesc('trainingtransactiondate')
-                ->get()
-        );
+        $transactions = TrainingTransaction::where('user_id', Auth::user()->user_id)
+            ->orderByDesc('trainingtransactiondate')
+            ->get();
 
         return view('user.training.trainingtransaction', compact('transactions'));
     }
 
     /* =========================================================
-       STORE – membuat transaksi + (jika midtrans) token Snap
-       ========================================================= */
+       STORE TRANSAKSI
+    ========================================================= */
+
     public function store(Request $request, $trainingid)
     {
-        $training = TrainingProgram::findOrFail($trainingid);
-
-        // Ambil email user yang login
-        $userEmail = auth()->user()->user_email;
-
-        // Simpan transaksi, pakai email dari user login
-        $transaction = TrainingTransaction::create([
-            'trainingid'                   => $trainingid,
-            'transactiontraineename'       => $request->transactiontraineename,
-            'transactiontraineeemail'      => auth()->user()->user_email,
-            'transactiontraineeage'        => $request->transactiontraineeage,
-            'transactiontraineegender'     => $request->transactiontraineegender,
-            'transactiontraineeaddress'    => $request->transactiontraineeaddress,
-            'payment_method'               => $request->payment_method,
-            'trainingtransactionmethod'    => $request->payment_method,
-            'trainingtransactionstatus'    => 'Pending',
-            'trainingtransactiondate'      => now(),
-            'trainingtransactiontotal'     => $training->trainingpricerupiah,
-            'user_id'                      => auth()->user()->user_id,
+        // Validasi data dari form
+        $validated = $request->validate([
+            'transactiontraineeemail' => 'required|email',
+            'transactiontraineename' => 'required|string',
+            'transactiontraineeage' => 'required|integer',
+            'transactiontraineegender' => 'required|in:m,f',
+            'transactiontraineeaddress' => 'required|string',
+            // etc
         ]);
 
-        if ($request->payment_method === 'midtrans') {
-            $orderId = 'TRX-' . $transaction->trainingtransactionid . '-' . Str::uuid();
+        // Ambil data training dari DB
+        $training = TrainingProgram::findOrFail($trainingid);
 
-            $snapToken = $this->generateSnapToken($transaction, $training, $orderId);
+        $orderId = 'ORDER-' . time();
+        $grossAmount = $training->trainingpricerupiah; // harga training dari DB
 
-            $transaction->update([
-                'midtrans_order_id' => $orderId,
-                'snap_token'        => $snapToken,
-            ]);
+        // Konfigurasi Midtrans
+        \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
+        \Midtrans\Config::$isProduction = config('services.midtrans.isProduction');
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
 
-            return response()->json(['snap_token' => $snapToken]);
+        $params = [
+            'transaction_details' => [
+                'order_id' => $orderId,
+                'gross_amount' => (float)$grossAmount,
+            ],
+            'customer_details' => [
+                'first_name' => $validated['transactiontraineename'],
+                'email' => $validated['transactiontraineeemail'],
+            ],
+        ];
+
+        try {
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+        } catch (\Exception $e) {
+            return back()->withErrors('Midtrans error: ' . $e->getMessage());
         }
 
-        return redirect()->route('trainingtransaction.index');
+        // Simpan transaksi di DB (opsional)
+        $transaction = TrainingTransaction::create([
+            'trainingtransactionmethod' => 'midtrans',
+            'trainingtransactionstatus' => 'pending',
+            'trainingtransactiondate' => now(),
+            'trainingtransactiontotal' => $grossAmount,
+            'transactiontraineegender' => $validated['transactiontraineegender'],
+            'transactiontraineename' => $validated['transactiontraineename'],
+            'transactiontraineeage' => $validated['transactiontraineeage'],
+            'transactiontraineeaddress' => $validated['transactiontraineeaddress'],
+            'user_id' => auth()->id(),
+            'trainingid' => $trainingid,
+            // Tambahkan order_id jika kamu punya kolom untuk itu
+        ]);
+
+        // Kirim token dan data ke view pembayaran
+        return view('user.training.trainingpayment', compact('snapToken', 'orderId', 'grossAmount'));
     }
 
     /* =========================================================
-       CALLBACK / REDIRECT SUKSES MIDTRANS
-       ========================================================= */
+       HALAMAN BAYAR
+    ========================================================= */
+
+    public function pay($id)
+    {
+        $transaction = TrainingTransaction::findOrFail($id);
+
+        // Buat parameter payment ke Midtrans (sesuaikan dengan kebutuhan)
+        $params = [
+            'transaction_details' => [
+                'order_id' => $transaction->id, // kalau kamu nggak mau pakai order_id bisa pakai id atau custom
+                'gross_amount' => $transaction->total_amount,
+            ],
+            'customer_details' => [
+                'first_name' => $transaction->user->name,
+                'email' => $transaction->user->email,
+                // tambahkan data lain jika perlu
+            ],
+        ];
+
+        // Generate Snap token
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        // Kirim snap token ke view
+        return view('trainingpayment', compact('transaction', 'snapToken'));
+    }
+
+    /* =========================================================
+       GET SNAP TOKEN
+    ========================================================= */
+
+    public function getSnapToken($id)
+    {
+        $transaction = TrainingTransaction::find($id);
+
+        $params = [
+            'transaction_details' => [
+            'order_id' => 'TRX-' . $transaction->trainingtransactionid,
+            'gross_amount' => (float) $transaction->trainingtransactiontotal,
+        ],
+        'customer_details' => [
+            'first_name' => $transaction->transactiontraineename,
+            'email' => $transaction->user->user_email, 
+        ],
+            'enabled_payments' => ['credit_card', 'gopay', 'bank_transfer'],
+            'vtweb' => [],
+        ];
+
+        try {
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+            return response()->json(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /* =========================================================
+       CALLBACK / PAYMENT SUCCESS REDIRECT
+    ========================================================= */
+
     public function paymentSuccess()
     {
         return redirect()->route('trainingtransaction.index')->with('success', 'Payment success!');
     }
 
     /* =========================================================
-       HELPER PRIVATE
-       ========================================================= */
+       MIDTRANS WEBHOOK
+    ========================================================= */
 
-    /** Tambahkan Snap-token ke setiap transaksi yang masih Pending dan belum punya token */
-    private function withSnapToken($transactions)
+    public function handleNotification(Request $request)
     {
-        foreach ($transactions as $tx) {
-            if (
-                strtolower($tx->trainingtransactionstatus) === 'pending' &&
-                empty($tx->snap_token)
-            ) {
-                $training = $tx->training;    // relasi TrainingProgram
-                $orderId  = 'TRX-' . $tx->trainingtransactionid . '-' . Str::uuid();
-                $tx->snap_token = $this->generateSnapToken($tx, $training, $orderId);
-                $tx->midtrans_order_id = $orderId;
-                $tx->save();
-            }
+        $notif = new Notification();
+
+        $tx = TrainingTransaction::where('trainingtransactionid', $notif->order_id)->first();
+
+        if (!$tx) {
+            return response()->json(['message' => 'Transaction not found'], 404);
         }
-        return $transactions;
-    }
 
-    /** Generate Snap-token */
-    private function generateSnapToken(TrainingTransaction $tx, TrainingProgram $training, string $orderId): string
-    {
-        $params = [
-            'transaction_details' => [
-                'order_id'     => $orderId,
-                'gross_amount' => $training->trainingpricerupiah,
-            ],
-            'customer_details'   => [
-                'first_name' => $tx->transactiontraineename,
-                'email'      => $tx->transactiontraineeemail,
-            ],
-            'item_details'       => [[
-                'id'       => $training->trainingid,
-                'price'    => $training->trainingpricerupiah,
-                'quantity' => 1,
-                'name'     => $training->trainingtitle,
-            ]],
-        ];
+        switch ($notif->transaction_status) {
+            case 'settlement':
+            case 'capture':
+                $tx->trainingtransactionstatus = 'Success';
+                break;
+            case 'expire':
+            case 'cancel':
+                $tx->trainingtransactionstatus = 'Cancel';
+                break;
+            case 'pending':
+            default:
+                $tx->trainingtransactionstatus = 'Pending';
+        }
 
-        return Snap::getSnapToken($params);
+        $tx->save();
+        return response()->json(['message' => 'OK']);
     }
 }

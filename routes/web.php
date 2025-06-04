@@ -68,12 +68,11 @@ Route::get('/trainingticket', function () { return view('user.training.trainingt
 Route::get('/trainingticketdetail', function () { return view('user.training.trainingticketdetail'); });
 Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
 Route::get('/training', [TrainingProgramController::class, 'list'])->name('training.public');
-Route::post('/training/{trainingid}/transaction', [TrainingTransactionController::class, 'store'])->name('trainingtransaction.store');
 Route::post('/get-snap-token/{id}', [TrainingTransactionController::class, 'getSnapToken'])->name('get.snap.token');
 Route::post('/training/transaction/{id}', [TrainingTransactionController::class, 'store'])->name('trainingtransaction.store');
 Route::get('/trainingtransaction', [TrainingTransactionController::class, 'userIndex'])->name('trainingtransaction.index');
-Route::get('/training/transactions', [TrainingTransactionController::class, 'userIndex'])->name('trainingtransaction.index');
 Route::get('/training/payment-success', [TrainingTransactionController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/training/transaction/pay/{id}', [TrainingTransactionController::class, 'pay'])->name('trainingtransaction.pay');
 
 
 
@@ -192,3 +191,8 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 Route::post('/cart/delete-items', [CartController::class, 'deleteItems']);
+
+/* =====================  MIDTRANS  ===================== */
+
+Route::middleware(['auth'])->get('/snap/token/{transaction}', [TrainingTransactionController::class, 'getSnapToken'])->name('snap.token');
+Route::post('/midtrans/notification', [TrainingTransactionController::class, 'handleNotification'])->name('midtrans.notification');
