@@ -91,6 +91,29 @@
     </button>
    </div>
   </main>
+@php
+$cartItemsArray = [];
+foreach($cart->items as $item) {
+    $product = $item->product;
+    $catalog = $product && $product->catalog ? $product->catalog->productcatalogname : '';
+    $images = $product && $product->images ? $product->images->map(function($img) {
+        return [
+            'image_path' => $img->image_path,
+            'is_thumbnail' => $img->is_thumbnail
+        ];
+    })->toArray() : [];
+    $thumb = collect($images)->firstWhere('is_thumbnail', 1);
+    $cartItemsArray[$item->id] = [
+        'id' => $product ? $product->productid : $item->id,
+        'name' => $product ? $product->productname : '',
+        'category' => $catalog,
+        'image' => $thumb ? '/storage/' . $thumb['image_path'] : '/images/noimage.png',
+        'productpricedollar' => $product ? $product->productpricedollar : 0,
+        'productpricerupiah' => $product ? $product->productpricerupiah : 0,
+        'qty' => $item->quantity,
+    ];
+}
+@endphp
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const selectAll = document.getElementById('selectAll');
@@ -222,6 +245,7 @@
       });
     });
     // Checkout: simpan produk yang dichecklist ke localStorage sebelum redirect
+    const cartItems = @json($cartItemsArray);
     document.querySelector('button.bg-gradient-to-r').addEventListener('click', function(e) {
       const selectedIds = Array.from(document.querySelectorAll('input[name="productSelect[]"]:checked')).map(cb => cb.value);
       if (selectedIds.length === 0) {
@@ -229,22 +253,28 @@
         e.preventDefault();
         return false;
       }
-      // Ambil data produk terpilih
       const selectedProducts = selectedIds.map(id => {
         const item = itemData[id];
-        const card = document.getElementById('product'+id)?.closest('.cart-item');
+        const product = cartItems[id];
         return {
-          id,
-          name: card?.querySelector('.cart-item-name')?.textContent?.trim() || '',
-          category: card?.querySelector('.cart-item-category')?.textContent?.trim() || '',
-          image: card?.querySelector('img')?.getAttribute('src') || '',
+          id: product ? product.id : id,
+          name: product ? product.name : '',
+          category: product ? product.category : '',
+          image: product ? product.image : '/images/noimage.png',
+          productpricedollar: product ? product.productpricedollar : 0,
+          productpricerupiah: product ? product.productpricerupiah : 0,
           qty: item?.qty || 1,
           subtotal: (item?.price * item?.qty).toFixed(2)
         };
       });
+      // Debug log
+      console.log('selectedCartItems (before setItem):', selectedProducts);
       localStorage.setItem('selectedCartItems', JSON.stringify(selectedProducts));
-      // Redirect manual agar data pasti tersimpan
-      window.location.href = '/productdata';
+      // Pastikan redirect setelah data tersimpan
+      setTimeout(function() {
+        console.log('selectedCartItems (after setItem):', localStorage.getItem('selectedCartItems'));
+        window.location.href = '/productdata';
+      }, 100);
       e.preventDefault();
     });
     updateAllUI();
