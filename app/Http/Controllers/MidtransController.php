@@ -9,34 +9,40 @@ use App\Models\TrainingTransaction;
 
 class MidtransController extends Controller
 {
-    public function pay(Request $request)
+    public function pay(Request $request, $id)
     {
-        // Konfigurasi midtrans
         Config::$serverKey = config('services.midtrans.serverKey');
         Config::$isProduction = config('services.midtrans.isProduction');
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
-        // Data transaksi
-        $orderId = 'ORDER-' . time();
-        $grossAmount = $request->input('amount'); // harga dari training
+        // Ambil data transaksi dari DB berdasarkan ID transaksi
+        $transaction = TrainingTransaction::find($id);
+
+        if (!$transaction) {
+            return response()->json(['error' => 'Transaksi tidak ditemukan'], 404);
+        }
+
+        $orderId = 'ORDER-' . $transaction->trainingtransactionid;  // bisa juga pake id transaksi
+        $grossAmount = $transaction->trainingtransactiontotal; // pakai total harga dari DB
 
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => $grossAmount,
+                'gross_amount' => (float)$grossAmount,
             ],
             'customer_details' => [
-                'first_name' => $request->input('name'),
-                'email' => $request->input('email'),
+                'first_name' => $request->input('name', 'Trainee'),
+                'email' => $request->input('email', 'email@example.com'),
             ],
         ];
 
-        // Buat Snap Token
         $snapToken = Snap::getSnapToken($params);
 
         return view('midtrans.checkout', compact('snapToken', 'orderId', 'grossAmount'));
     }
+
+
 
     public function callback(Request $request)
     {

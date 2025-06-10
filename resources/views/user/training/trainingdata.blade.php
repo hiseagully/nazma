@@ -13,53 +13,63 @@
 </head>
 
 <body class="page-body">
-  <!-- Form and payment container -->
   <section aria-label="Trainee data and payment section" class="form-payment-section">
     <div class="form-payment-container">
-      <!-- Trainee Data -->
-      <form id="trainingForm" method="POST" action="{{ route('trainingtransaction.store', $training->trainingid) }}" class="trainee-data-form">
-        @csrf
-        <input type="hidden" name="payment_method" value="midtrans">
+      <div class="card-left">
+        <!-- Trainee Data -->
+        <form id="trainingForm" method="POST" action="{{ route('trainingtransaction.store', $training->trainingid) }}" class="trainee-data-form">
+          @csrf
+          <input type="hidden" name="payment_method" value="midtrans">
 
-        <h2 class="form-title">Trainee Data</h2>
+          <h2 class="form-title">Trainee Data</h2>
 
-        <!-- Email -->
-        <div class="form-group">
-          <label class="form-label" for="email">Email</label>
-          <input class="form-input" id="email" name="transactiontraineeemail" type="email" required>
-        </div>
+          <!-- Email -->
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+              <input 
+                class="form-input" 
+                id="email" 
+                name="transactiontraineeemail" 
+                type="email" 
+                value="{{ Auth::check() ? Auth::user()->user_email : '' }}" 
+                readonly
+                required
+              >
+          </div>
 
-        <!-- Full Name -->
-        <div class="form-group">
-          <label class="form-label" for="fullname">Full Name</label>
-          <input class="form-input" id="fullname" name="transactiontraineename" type="text" required>
-        </div>
+          <!-- Full Name -->
+          <div class="form-group">
+            <label class="form-label" for="fullname">Full Name</label>
+            <input class="form-input" id="fullname" name="transactiontraineename" type="text" required>
+          </div>
 
-        <!-- Age -->
-        <div class="form-group">
-          <label class="form-label" for="age">Age</label>
-          <input class="form-input" id="age" name="transactiontraineeage" type="number" min="1" required>
-        </div>
+          <!-- Age -->
+          <div class="form-group">
+            <label class="form-label" for="age">Age</label>
+            <input class="form-input" id="age" name="transactiontraineeage" type="number" min="1" required>
+          </div>
 
-        <!-- Gender -->
-        <fieldset class="form-group">
-          <legend class="form-label">Gender</legend>
-          <label><input type="radio" name="transactiontraineegender" value="m" required> Male</label>
-          <label><input type="radio" name="transactiontraineegender" value="f" required> Female</label>
-        </fieldset>
+          <!-- Gender -->
+          <fieldset class="form-group">
+            <legend class="form-label">Gender</legend>
+            <label><input type="radio" name="transactiontraineegender" value="m" required> Male</label>
+            <label><input type="radio" name="transactiontraineegender" value="f" required> Female</label>
+          </fieldset>
 
-        <!-- Address -->
-        <div class="form-group">
-          <label class="form-label" for="address">Address</label>
-          <textarea class="form-textarea" id="address" name="transactiontraineeaddress" rows="4" required></textarea>
-        </div>
+          <!-- Address -->
+          <div class="form-group">
+            <label class="form-label" for="address">Address</label>
+            <textarea class="form-textarea" id="address" name="transactiontraineeaddress" rows="4" required></textarea>
+          </div>
+      </div> <!-- end card-left -->
 
+      <div class="card-right">
         <!-- Payment Section -->
         <aside class="payment-aside">
           <h2 class="form-title">Payment</h2>
 
           <div class="payment-info">
-            <img src="{{ asset('storage/training_images/' . $training->trainingimage) }}" width="64" height="64" />
+            <img src="{{ asset('storage/training_images/' . $training->trainingimage) }}" width="64" height="64" class="payment-img" />
             <div>
               <h3 class="payment-title">{{ $training->trainingtitle }}</h3>
               <p class="payment-date">{{ \Carbon\Carbon::parse($training->trainingschedule)->translatedFormat('d F Y') }}</p>
@@ -76,8 +86,9 @@
           <!-- Checkout Button -->
           <button id="submitBtn" class="checkout-button" type="submit">Checkout</button>
         </aside>
-      </form>
-    </div>
+      </div> <!-- end card-right -->
+      </form> <!-- close form AFTER card-right, because form wraps both left and right -->
+    </div> <!-- end form-payment-container -->
   </section>
 
   <!-- Midtrans Snap.js -->
@@ -85,47 +96,28 @@
 
   <!-- AJAX for Midtrans payment -->
   <script>
-    document.getElementById('submitBtn').addEventListener('click', function (e) {
-      e.preventDefault();
+  document.querySelectorAll('.pay-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
 
-      const form = document.getElementById('trainingForm');
-      const formData = new FormData(form);
-
-      fetch(form.action, {
-        method: 'POST',
-        headers: {
-          'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.snap_token) {
-          snap.pay(data.snap_token, {
-            onSuccess: function (result) {
-              window.location.href = "{{ route('payment.success') }}";
-            },
-            onPending: function (result) {
-              window.location.href = "{{ route('payment.success') }}";
-            },
-            onError: function (result) {
-              alert('Payment failed.');
-              console.error(result);
-            },
-            onClose: function () {
-              alert('You closed the payment popup.');
-            }
-          });
-        } else {
-          alert('Snap token not found.');
-          console.log(data);
-        }
-      })
-      .catch(error => {
-        console.error('Error during payment:', error);
-        alert('An error occurred. Please try again.');
-      });
+      fetch(`/snap/token/${id}`)                 // ← GET
+        .then(r => r.json())
+        .then(data => {
+          if (data.snap_token) {
+            window.snap.pay(data.snap_token, {
+              onSuccess() { location.reload(); },
+              onPending() { location.reload(); },
+              onError()   { alert('Payment failed'); },
+              onClose()   { /* user closed popup */ }
+            });
+          } else {
+            alert(data.error ?? 'Snap token missing');
+          }
+        })
+        .catch(() => alert('Network error – try again.'));
     });
+  });
   </script>
+  <x-footer></x-footer>
 </body>
 </html>
