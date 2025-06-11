@@ -41,11 +41,11 @@
     >
       <a
         href="/training"
-        aria-label="Grid view icon"
+        aria-label="Filter icon"
         class="text-white text-lg flex items-center justify-center flex-shrink-0"
         type="button"
       >
-        <i class="fas fa-th-large"></i>
+        <i class="fas fa-filter"></i>
       </a>
       <input
         class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black min-w-0"

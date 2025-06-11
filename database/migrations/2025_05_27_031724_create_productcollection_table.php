@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('productcollection', function (Blueprint $table) {
             $table->id('productid');
 
-            // foreign key harus sesuai dengan kolom 'id' di tabel referensi
+            // foreign key harus sesuai dengan kolom di tabel referensi
             $table->unsignedBigInteger('productcatalogid');
             $table->unsignedBigInteger('productregionsid');
 
@@ -23,15 +23,15 @@ return new class extends Migration
             $table->integer('productstock')->default(0);
             $table->timestamps();
 
-            // ASUMSI: primary key di 'productcatalog' adalah kolom 'id'
+            // foreign key ke kolom 'productcatalogid' di productcatalog
             $table->foreign('productcatalogid')
-                ->references('id') // <--- pastikan ini sesuai
+                ->references('productcatalogid')
                 ->on('productcatalog')
                 ->onDelete('cascade');
 
-            // ASUMSI: primary key di 'productregionsmap' adalah kolom 'id'
+            // foreign key ke kolom 'productregionsid' di productregionsmap
             $table->foreign('productregionsid')
-                ->references('id') // <--- pastikan ini sesuai
+                ->references('productregionsid')
                 ->on('productregionsmap')
                 ->onDelete('cascade');
         });

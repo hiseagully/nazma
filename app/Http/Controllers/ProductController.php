@@ -16,4 +16,12 @@ class ProductController extends Controller
         }])->get();
         return view('user.product.product', compact('products'));
     }
+    public function search(Request $request)
+    {
+    $keyword = $request->query('q');
+    $products = \App\Models\ProductCollection::where('productname', 'like', "%{$keyword}%")->get();
+
+    // Jika ingin return JSON (untuk AJAX)
+    return response()->json($products);
+    }
 }
