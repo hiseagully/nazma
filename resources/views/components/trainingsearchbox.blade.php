@@ -52,6 +52,8 @@
         placeholder="Find the training you want"
         type="text"
         aria-label="Search training"
+        id="search-input"
+        autocomplete="off"
       />
       <button
         aria-label="Search"
@@ -121,5 +123,66 @@
       </a>
     </div>
   </div>
+
+  <script>
+    const allTrainings = window.allTrainings || [];
+    const searchInput = document.getElementById('search-input');
+    const trainingList = document.getElementById('eventGrid');
+    const searchEmpty = document.getElementById('search-empty');
+    // Tambahkan loading
+    let searchLoading = document.getElementById('search-loading');
+    if (!searchLoading) {
+      searchLoading = document.createElement('span');
+      searchLoading.id = 'search-loading';
+      searchLoading.className = 'text-orange-500 ml-2';
+      searchLoading.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+      // Tempel loading spinner setelah input search
+      searchInput.parentNode.insertBefore(searchLoading, searchInput.nextSibling);
+    }
+    searchLoading.classList.add('hidden');
+
+    function renderTrainings(trainings, keyword = '') {
+      let html = '';
+      trainings.forEach(training => {
+        html += `
+        <article class="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer select-none" tabindex="0" role="listitem" aria-label="${training.trainingtitle}, ${training.trainingschedule}, ${training.regionname ?? '-'}">
+          <img src="${training.trainingimage ? '/storage/training_images/' + training.trainingimage : '/images/noimage.png'}" alt="${training.trainingtitle}" class="w-full h-[180px] object-cover rounded-t-xl" width="300" height="180" loading="lazy" />
+          <a href="/trainingdetail/${training.trainingid}">
+            <div class="p-3">
+              <h3 class="text-sm font-semibold leading-tight">${highlightKeyword(training.trainingtitle, keyword)}</h3>
+              <p class="text-xs text-gray-400 mt-1">${training.trainingschedule}</p>
+              <p class="text-xs text-gray-400 mt-1 text-right">${training.regionname ?? '-'}</p>
+            </div>
+          </a>
+        </article>
+        `;
+      });
+      trainingList.innerHTML = html;
+    }
+
+    function highlightKeyword(text, keyword) {
+      if (!keyword) return text;
+      const re = new RegExp(`(${keyword.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(re, '<span class="bg-yellow-200">$1</span>');
+    }
+
+    searchInput.addEventListener('input', function() {
+      const keyword = this.value.trim().toLowerCase();
+      searchLoading.classList.remove('hidden');
+      setTimeout(() => {
+        let filtered = allTrainings;
+        if (keyword) {
+          filtered = allTrainings.filter(t => (t.trainingtitle || '').toLowerCase().includes(keyword));
+        }
+        renderTrainings(filtered, keyword);
+        if (searchEmpty) searchEmpty.classList.toggle('hidden', filtered.length > 0);
+        searchLoading.classList.add('hidden');
+      }, 300); // simulasi loading 300ms
+    });
+
+    // Tampilkan semua training saat load awal
+    renderTrainings(allTrainings);
+    if (searchEmpty) searchEmpty.classList.add('hidden');
+  </script>
 </body>
 </html>
