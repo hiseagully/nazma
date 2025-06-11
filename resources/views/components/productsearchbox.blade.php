@@ -26,15 +26,14 @@
       role="search"
       aria-label="product search and actions"
     >
-      <a
-        href="/product"
-        aria-label="Grid view icon"
+      <button
+        aria-label="Filter"
         class="text-white text-lg flex items-center justify-center"
         type="button"
       >
-        <i class="fas fa-th-large"></i>
-      </a>
-      <input class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black" placeholder="Find the product you want" type="text"/>
+        <i class="fas fa-filter"></i>
+      </button>
+      <input class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black" placeholder="Find the product you want" type="text" data-product-search id="search-input" autocomplete="off"/>
       <button
         aria-label="Search"
         class="text-[#F7941D] bg-white rounded-full p-2 hover:bg-gray-100"
