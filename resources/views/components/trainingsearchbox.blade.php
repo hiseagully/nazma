@@ -33,20 +33,20 @@
 </head>
 <body class="bg-[#F5F7FA]">
   <!-- Search Component -->
-  <div class="flex justify-center mt-6 px-4">
+  <div class="w-full max-w-5xl mx-auto px-4 pt-6">
     <div
-      class="flex items-center bg-[#F7941D] rounded-full w-full max-w-5xl px-6 py-2 space-x-4 relative"
+      class="flex items-center bg-[#F7941D] rounded-full w-full px-6 py-2 space-x-4 relative"
       role="search"
       aria-label="training search and actions"
     >
-      <a
-        href="/training"
-        aria-label="Filter icon"
+      <button
+        aria-label="Filter"
         class="text-white text-lg flex items-center justify-center flex-shrink-0"
         type="button"
+        id="open-filter-modal"
       >
         <i class="fas fa-filter"></i>
-      </a>
+      </button>
       <input
         class="flex-grow rounded-full py-2 px-4 text-sm font-semibold placeholder-gray-400 focus:outline-none bg-white text-black min-w-0"
         placeholder="Find the training you want"
@@ -124,65 +124,81 @@
     </div>
   </div>
 
+  <!-- Modal Filter -->
+<div id="filter-modal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
+  <div class="w-full max-w-lg bg-white rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.15)] p-8 relative">
+    <button id="close-filter" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 class="text-lg mb-6 font-normal">Filter</h2>
+    <hr class="border-t border-gray-300 mb-6" />
+    <form id="filter-form">
+      <div class="mb-8">
+        <label for="lokasi" class="block text-base font-normal mb-4 text-black">Lokasi</label>
+        <div id="lokasi" class="grid grid-cols-3 gap-x-6 gap-y-4 max-w-full w-full">
+          @php
+            $regions = \App\Models\TrainingRegion::all()->sortBy('trainingregionname')->values();
+          @endphp
+          @foreach($regions as $region)
+            <button type="button" class="bg-gray-100 rounded-xl py-3 px-6 text-center text-black font-normal text-sm filter-location">{{ $region->trainingregionname }}</button>
+          @endforeach
+        </div>
+        <div class="mt-4 text-center text-gray-300 text-sm font-normal flex justify-center items-center space-x-1 select-none cursor-default">
+          <span>See all</span>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+      </div>
+      <div class="flex justify-end space-x-6">
+        <button type="reset" class="text-orange-500 font-normal text-sm px-10 py-3 rounded-full border-2 border-orange-500 hover:bg-orange-50 transition-colors">Reset</button>
+        <button type="submit" class="text-white font-normal text-sm px-10 py-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 transition-colors">Set</button>
+      </div>
+    </form>
+  </div>
+</div>
+
   <script>
-    const allTrainings = window.allTrainings || [];
-    const searchInput = document.getElementById('search-input');
-    const trainingList = document.getElementById('eventGrid');
-    const searchEmpty = document.getElementById('search-empty');
-    // Tambahkan loading
-    let searchLoading = document.getElementById('search-loading');
-    if (!searchLoading) {
-      searchLoading = document.createElement('span');
-      searchLoading.id = 'search-loading';
-      searchLoading.className = 'text-orange-500 ml-2';
-      searchLoading.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-      // Tempel loading spinner setelah input search
-      searchInput.parentNode.insertBefore(searchLoading, searchInput.nextSibling);
+    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('open-filter-modal').onclick = function() {
+      document.getElementById('filter-modal').classList.remove('hidden');
+    };
+    document.getElementById('close-filter').onclick = function() {
+      document.getElementById('filter-modal').classList.add('hidden');
+    };
+    document.getElementById('filter-modal').onclick = function(e) {
+      if (e.target === this) this.classList.add('hidden');
+    };
+    // Toggle single select location, allow unselect, style sama seperti productsearchbox
+    function toggleLocation(btn) {
+      const allBtns = document.querySelectorAll('.filter-location');
+      if (btn.classList.contains('bg-orange-100')) {
+        btn.classList.remove('bg-orange-100', 'border', 'border-orange-400', 'text-orange-600', 'font-semibold');
+      } else {
+        allBtns.forEach(b => b.classList.remove('bg-orange-100', 'border', 'border-orange-400', 'text-orange-600', 'font-semibold'));
+        btn.classList.add('bg-orange-100', 'border', 'border-orange-400', 'text-orange-600', 'font-semibold');
+      }
     }
-    searchLoading.classList.add('hidden');
-
-    function renderTrainings(trainings, keyword = '') {
-      let html = '';
-      trainings.forEach(training => {
-        html += `
-        <article class="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer select-none" tabindex="0" role="listitem" aria-label="${training.trainingtitle}, ${training.trainingschedule}, ${training.regionname ?? '-'}">
-          <img src="${training.trainingimage ? '/storage/training_images/' + training.trainingimage : '/images/noimage.png'}" alt="${training.trainingtitle}" class="w-full h-[180px] object-cover rounded-t-xl" width="300" height="180" loading="lazy" />
-          <a href="/trainingdetail/${training.trainingid}">
-            <div class="p-3">
-              <h3 class="text-sm font-semibold leading-tight">${highlightKeyword(training.trainingtitle, keyword)}</h3>
-              <p class="text-xs text-gray-400 mt-1">${training.trainingschedule}</p>
-              <p class="text-xs text-gray-400 mt-1 text-right">${training.regionname ?? '-'}</p>
-            </div>
-          </a>
-        </article>
-        `;
-      });
-      trainingList.innerHTML = html;
-    }
-
-    function highlightKeyword(text, keyword) {
-      if (!keyword) return text;
-      const re = new RegExp(`(${keyword.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')})`, 'gi');
-      return text.replace(re, '<span class="bg-yellow-200">$1</span>');
-    }
-
-    searchInput.addEventListener('input', function() {
-      const keyword = this.value.trim().toLowerCase();
-      searchLoading.classList.remove('hidden');
-      setTimeout(() => {
-        let filtered = allTrainings;
-        if (keyword) {
-          filtered = allTrainings.filter(t => (t.trainingtitle || '').toLowerCase().includes(keyword));
-        }
-        renderTrainings(filtered, keyword);
-        if (searchEmpty) searchEmpty.classList.toggle('hidden', filtered.length > 0);
-        searchLoading.classList.add('hidden');
-      }, 300); // simulasi loading 300ms
+    document.querySelectorAll('.filter-location').forEach(btn => {
+      btn.addEventListener('click', function() { toggleLocation(this); });
     });
-
-    // Tampilkan semua training saat load awal
-    renderTrainings(allTrainings);
-    if (searchEmpty) searchEmpty.classList.add('hidden');
+    // Reset button: hilangkan semua select
+    document.getElementById('filter-form').addEventListener('reset', function() {
+      setTimeout(() => {
+        document.querySelectorAll('.filter-location').forEach(b => b.classList.remove('bg-orange-100', 'border', 'border-orange-400', 'text-orange-600', 'font-semibold'));
+      }, 10);
+    });
+    // Submit filter: trigger filter-location event ke halaman utama
+    document.getElementById('filter-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('filter-modal').classList.add('hidden');
+      const selectedLocBtn = document.querySelector('.filter-location.bg-orange-100');
+      if (selectedLocBtn) {
+        const location = selectedLocBtn.textContent.trim();
+        window.dispatchEvent(new CustomEvent('filter-location', { detail: { location } }));
+      } else {
+        window.dispatchEvent(new CustomEvent('filter-location', { detail: { location: null } }));
+      }
+    });
+  });
   </script>
 </body>
 </html>

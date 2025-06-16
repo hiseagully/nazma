@@ -86,7 +86,7 @@
         </span>
       </p>
       </div>
-    <button class="bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold rounded-full px-8 py-3 hover:brightness-110 transition">
+    <button id="checkout-btn" class="bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold rounded-full px-8 py-3 hover:brightness-110 transition">
      Checkout
     </button>
    </div>
@@ -246,7 +246,7 @@ foreach($cart->items as $item) {
     });
     // Checkout: simpan produk yang dichecklist ke localStorage sebelum redirect
     const cartItems = @json($cartItemsArray);
-    document.querySelector('button.bg-gradient-to-r').addEventListener('click', function(e) {
+    document.getElementById('checkout-btn').addEventListener('click', function(e) {
       const selectedIds = Array.from(document.querySelectorAll('input[name="productSelect[]"]:checked')).map(cb => cb.value);
       if (selectedIds.length === 0) {
         alert('Please select at least one product to checkout.');
@@ -267,15 +267,8 @@ foreach($cart->items as $item) {
           subtotal: (item?.price * item?.qty).toFixed(2)
         };
       });
-      // Debug log
-      console.log('selectedCartItems (before setItem):', selectedProducts);
       localStorage.setItem('selectedCartItems', JSON.stringify(selectedProducts));
-      // Pastikan redirect setelah data tersimpan
-      setTimeout(function() {
-        console.log('selectedCartItems (after setItem):', localStorage.getItem('selectedCartItems'));
-        window.location.href = '/productdata';
-      }, 100);
-      e.preventDefault();
+      window.location.href = '/productdata';
     });
     updateAllUI();
   });
