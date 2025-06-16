@@ -202,11 +202,33 @@
         document.querySelectorAll('.filter-category').forEach(b => b.classList.remove('bg-orange-100', 'border', 'border-orange-400', 'text-orange-600', 'font-semibold'));
       }, 10);
     });
-    // (Opsional) Tambahkan event pada tombol Set jika ingin trigger filter produk
+    // Submit filter: trigger filter-category event ke halaman utama
     document.getElementById('filter-form').addEventListener('submit', function(e) {
       e.preventDefault();
       document.getElementById('filter-modal').classList.add('hidden');
-      // Lanjutkan trigger filter produk di halaman utama jika perlu
+      // Ambil kategori yang dipilih
+      const selectedCatBtn = document.querySelector('.filter-category.bg-orange-100');
+      if (selectedCatBtn) {
+        const category = selectedCatBtn.dataset.value;
+        window.dispatchEvent(new CustomEvent('filter-category', { detail: { category } }));
+      } else {
+        // Jika tidak ada kategori terpilih, tampilkan semua produk
+        window.dispatchEvent(new CustomEvent('filter-category', { detail: { category: null } }));
+      }
+    });
+    // Submit filter: trigger filter-location event ke halaman utama
+    document.getElementById('filter-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('filter-modal').classList.add('hidden');
+      // Ambil kategori yang dipilih
+      const selectedCatBtn = document.querySelector('.filter-location.bg-orange-100');
+      if (selectedCatBtn) {
+        const location = selectedCatBtn.dataset.value;
+        window.dispatchEvent(new CustomEvent('filter-location', { detail: { location } }));
+      } else {
+        // Jika tidak ada kategori terpilih, tampilkan semua produk
+        window.dispatchEvent(new CustomEvent('filter-location', { detail: { location: null } }));
+      }
     });
   </script>
 </body>

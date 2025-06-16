@@ -48,6 +48,11 @@
         <p class="font-semibold text-sm mb-0.5">$
           {{ $product->productpricedollar }}
         </p>
+        <div class="w-full flex justify-end">
+          <span class="text-xs text-gray-400 font-normal">
+            {{ $product->region->productregionsname ?? '-' }}
+          </span>
+        </div>
       </article>
     </a>
     @endforeach
@@ -65,6 +70,7 @@
                 ? asset('storage/' . $p->images->where('is_thumbnail', true)->first()->image_path)
                 : asset('images/noimage.png'),
             'catalogname' => $p->catalog->productcatalogname ?? '-',
+            'productregionsname' => $p->region->productregionsname ?? '-',
         ];
     })->values()->toArray();
 @endphp
@@ -76,6 +82,78 @@
     const searchEmpty = document.getElementById('search-empty');
     let lastKeyword = '';
     let lastRequest = null;
+
+    // --- Gabungan filter kategori & lokasi ---
+    let selectedCategory = null;
+    let selectedLocation = null;
+
+    function applyFilters() {
+      let filtered = allProducts;
+      if (selectedCategory) {
+        filtered = filtered.filter(p => p.catalogname === selectedCategory);
+      }
+      if (selectedLocation) {
+        filtered = filtered.filter(p => p.productregionsname === selectedLocation);
+      }
+      let html = '';
+      if (selectedCategory) {
+        html += `<div class=\"col-span-full font-bold text-base text-[#f58220] mb-2 mt-2\">${selectedCategory}</div>`;
+      }
+      if (selectedLocation) {
+        html += `<div class=\"col-span-full font-bold text-base text-[#f58220] mb-2 mt-2\">${selectedLocation}</div>`;
+      }
+      if (filtered.length > 0) {
+        filtered.forEach(product => {
+          html += renderProductCard(product);
+        });
+      } else {
+        html += `<div class=\"col-span-full text-center text-gray-400 text-base mb-2 mt-2\">No product / No selected products</div>`;
+      }
+      productList.innerHTML = html;
+      searchEmpty.classList.add('hidden');
+      productList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Event listener untuk filter kategori
+    window.addEventListener('filter-category', function(e) {
+      selectedCategory = e.detail && e.detail.category;
+      applyFilters();
+    });
+    // Event listener untuk filter location
+    window.addEventListener('filter-location', function(e) {
+      selectedLocation = e.detail && e.detail.location;
+      applyFilters();
+    });
+
+    function renderProductCard(product) {
+      return `
+      <a href="/productdetail/${product.productid}">
+        <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
+          <img alt="${product.productname}" class="rounded-lg mb-3" height="200" loading="lazy" src="${product.thumbnail ? product.thumbnail : '/images/noimage.png'}" width="200"/>
+          <div class="flex justify-between items-center w-full">
+            <div class="text-left text-xs text-gray-400 mb-0.5">
+              ${product.catalogname ?? '-'}
+            </div>
+            <div class="flex justify-end items-center space-x-1 text-yellow-400 text-xs text-right">
+              <i class="fas fa-star"></i>
+              <span>5.0</span>
+            </div>
+          </div>
+          <p class="font-bold text-sm mb-0.5 line-clamp-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+            ${product.productname}
+          </p>
+          <p class="font-semibold text-sm mb-0.5">$
+            ${product.productpricedollar}
+          </p>
+          <div class="w-full flex justify-end">
+            <span class="text-xs text-gray-400 font-normal">
+              ${product.productregionsname ?? '-'}
+            </span>
+          </div>
+        </article>
+      </a>
+      `;
+    }
 
     searchInput.addEventListener('input', function() {
       const keyword = this.value.trim();

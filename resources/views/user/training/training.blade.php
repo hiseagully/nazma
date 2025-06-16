@@ -10,7 +10,7 @@
   <x-header></x-header>
 </head>
 
-<body class="bg-[#F5F7FA] font-[Inter,sans-serif]">
+<body class="bg-[#F5F7FA] font-[Inter,sans-serif] min-h-screen">
   @php
     $jsonTrainings = $trainings->map(function($t) {
       return [
@@ -32,6 +32,7 @@
       let searchLoading = document.getElementById('search-loading');
       let searchEmpty = document.getElementById('search-empty');
       let lastKeyword = '';
+      let selectedLocation = null;
       if (!searchLoading) {
         searchLoading = document.createElement('span');
         searchLoading.id = 'search-loading';
@@ -47,48 +48,59 @@
       }
       function renderTrainings(list, keyword = '') {
         let html = '';
-        list.forEach(training => {
-          html += `
-          <article class="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer select-none" tabindex="0" role="listitem" aria-label="${training.trainingtitle}, ${training.trainingschedule}, ${training.regionname ?? '-'}">
-            <img src="${training.trainingimage ? '/storage/training_images/' + training.trainingimage : '/images/noimage.png'}" alt="${training.trainingtitle}" class="w-full h-[180px] object-cover rounded-t-xl" width="300" height="180" loading="lazy" />
-            <a href="/trainingdetail/${training.trainingid}">
-              <div class="p-3">
-                <h3 class="text-sm font-semibold leading-tight">${highlightKeyword(training.trainingtitle, keyword)}</h3>
-                <p class="text-xs text-gray-400 mt-1">${training.trainingschedule}</p>
-                <p class="text-xs text-gray-400 mt-1 text-right">${training.regionname ?? '-'}</p>
-              </div>
-            </a>
-          </article>
-          `;
-        });
+        if (list.length > 0) {
+          list.forEach(training => {
+            html += `
+            <article class="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer select-none" tabindex="0" role="listitem" aria-label="${training.trainingtitle}, ${training.trainingschedule}, ${training.regionname ?? '-'}">
+              <img src="${training.trainingimage ? '/storage/training_images/' + training.trainingimage : '/images/noimage.png'}" alt="${training.trainingtitle}" class="w-full h-[180px] object-cover rounded-t-xl" width="300" height="180" loading="lazy" />
+              <a href="/trainingdetail/${training.trainingid}">
+                <div class="p-3">
+                  <h3 class="text-sm font-semibold leading-tight">${highlightKeyword(training.trainingtitle, keyword)}</h3>
+                  <p class="text-xs text-gray-400 mt-1">${training.trainingschedule}</p>
+                  <p class="text-xs text-gray-400 mt-1 text-right">${training.regionname ?? '-'}</p>
+                </div>
+              </a>
+            </article>
+            `;
+          });
+        } else {
+          html = `<div class=\"col-span-full text-center text-gray-400 text-base mb-2 mt-2\">No product / No selected products</div>`;
+        }
         eventGrid.innerHTML = html;
       }
+      window.addEventListener('filter-location', function(e) {
+        selectedLocation = e.detail && e.detail.location;
+        applyFilters();
+      });
+      function applyFilters() {
+        let filtered = allTrainings;
+        const keyword = searchInput.value.trim().toLowerCase();
+        if (selectedLocation) {
+          filtered = filtered.filter(t => t.regionname === selectedLocation);
+        }
+        if (keyword) {
+          filtered = filtered.filter(t => (t.trainingtitle || '').toLowerCase().includes(keyword));
+        }
+        renderTrainings(filtered, keyword);
+        if (searchEmpty) searchEmpty.classList.toggle('hidden', filtered.length > 0);
+      }
       searchInput.addEventListener('input', function() {
-        const keyword = this.value.trim().toLowerCase();
-        if (keyword === lastKeyword) return;
-        lastKeyword = keyword;
+        lastKeyword = this.value.trim().toLowerCase();
         searchLoading.classList.remove('hidden');
         setTimeout(() => {
-          let filtered = allTrainings;
-          if (keyword) {
-            // Urutkan: match di atas, sisanya di bawah
-            const match = allTrainings.filter(t => (t.trainingtitle || '').toLowerCase().includes(keyword));
-            const notMatch = allTrainings.filter(t => !(t.trainingtitle || '').toLowerCase().includes(keyword));
-            filtered = [...match, ...notMatch];
-          }
-          renderTrainings(filtered.filter(t => !keyword || (t.trainingtitle || '').toLowerCase().includes(keyword)), keyword);
-          if (searchEmpty) searchEmpty.classList.toggle('hidden', filtered.length > 0 && (keyword ? filtered.some(t => (t.trainingtitle || '').toLowerCase().includes(keyword)) : true));
+          applyFilters();
           searchLoading.classList.add('hidden');
         }, 300);
       });
       // Tampilkan semua training saat load awal
-      renderTrainings(allTrainings);
+      applyFilters();
       if (searchEmpty) searchEmpty.classList.add('hidden');
     });
   </script>
 
-  @include('components.trainingsearchbox', ['action' => '/training/search'])
-
+  <div class="w-full max-w-5xl mx-auto pt-6 px-4">
+    @include('components.trainingsearchbox', ['action' => '/training/search'])
+  </div>
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
     <h2 class="text-[#F7941D] font-semibold text-lg mb-4 select-none">Event</h2>
 
