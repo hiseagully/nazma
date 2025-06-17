@@ -37,6 +37,23 @@
     <!-- Content area -->
     <section class="flex-1 p-6">
      <!-- Tabel User dengan aksi Edit dan Hapus -->
+     @php
+    $user = Auth::user();
+    // Ambil provinsi dan kota dari district_name jika ada
+    $province = $user->district_name ? trim(explode(',', $user->district_name)[0]) : '-';
+    $city = $user->district_name ? trim(explode(',', $user->district_name)[1] ?? '-') : '-';
+   @endphp
+     <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 max-w-lg">
+      <h3 class="font-semibold mb-3 text-lg">Customer Data</h3>
+      <div class="mb-2"><strong>Email</strong><br>{{ $user->user_email ?? '-' }}</div>
+      <div class="mb-2"><strong>Name</strong><br>{{ $user->user_name ?? '-' }}</div>
+      <div class="mb-2"><strong>Phone Number</strong><br>{{ $user->user_phone ?? '-' }}</div>
+      <div class="mb-2"><strong>Country</strong><br>{{ $user->country_name ?? '-' }}</div>
+      <div class="mb-2"><strong>International</strong><br>{{ $user->country_code && $user->country_code != 'ID' ? 'Yes' : 'No' }}</div>
+      <div class="mb-2"><strong>Provinsi</strong><br>{{ $province }}</div>
+      <div class="mb-2"><strong>Kabupaten/Kota</strong><br>{{ $city }}</div>
+      <div class="mb-2"><strong>Full Address</strong><br>{{ $user->full_address ?? '-' }}</div>
+     </div>
      <div class="overflow-x-auto">
       <table class="min-w-full bg-white border border-gray-200 rounded-lg">
        <thead>

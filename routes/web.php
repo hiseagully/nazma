@@ -179,6 +179,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 // Profile update
 Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
     Route::put('/profile', function (Illuminate\Http\Request $request) {
         $user = \App\Models\User::find(Auth::id());
         $request->validate([
@@ -197,6 +199,12 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 Route::post('/cart/delete-items', [CartController::class, 'deleteItems']);
+
+/* =====================  RAJA ONGKIR  ===================== */
+
+Route::get('/api/provinces', [App\Http\Controllers\RajaOngkirController::class, 'getProvinces']);
+Route::get('/api/cities', [App\Http\Controllers\RajaOngkirController::class, 'getCities']);
+Route::post('/api/check-shipping', [App\Http\Controllers\ShippingController::class, 'checkShipping']);
 
 /* =====================  MIDTRANS  ===================== */
 
