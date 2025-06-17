@@ -20,10 +20,14 @@ use App\Http\Controllers\ProductImagesController;
 use App\Http\Controllers\ProductController;
 use App\Models\ProductCollection;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\ProductTransactionController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductOrderController;
 
 // Halaman umum
-Route::get('/', function () { return view('landingpage'); });
-Route::get('/landingpage', function () { return view('landingpage'); });
+Route::get('/', [LandingPageController::class, 'index'])->name('landingpage');
 
 // Auth routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -60,14 +64,13 @@ Route::get('/loginadmin', function () { return view('admin.loginadmin'); });
 Route::get('/profile', function () { return view('user.profile'); });
 
 // Training (user)
-Route::get('/training', function () { return view('user.training.training'); });
+Route::get('/training', [TrainingProgramController::class, 'list'])->name('training.public');
 Route::get('/trainingdetail', function () { return view('user.training.trainingdetail'); });
 Route::get('/trainingdata/{id}', [TrainingProgramController::class, 'form'])->name('trainingdata.form');
 Route::get('/trainingtransaction', function () { return view('user.training.trainingtransaction'); });
 Route::get('/trainingticket', function () { return view('user.training.trainingticket'); });
 Route::get('/trainingticketdetail', function () { return view('user.training.trainingticketdetail'); });
 Route::get('/training/search', [TrainingController::class, 'search'])->name('training.search');
-Route::get('/training', [TrainingProgramController::class, 'list'])->name('training.public');
 Route::post('/get-snap-token/{id}', [TrainingTransactionController::class, 'getSnapToken'])->name('get.snap.token');
 Route::post('/training/transaction/{id}', [TrainingTransactionController::class, 'store'])->name('trainingtransaction.store');
 Route::get('/trainingtransaction', [TrainingTransactionController::class, 'userIndex'])->name('trainingtransaction.index');
@@ -77,8 +80,8 @@ Route::get('/training/transaction/pay/{id}', [TrainingTransactionController::cla
 
 
 // Admin dashboard Training and Product Data
-Route::get('/dashboardadmin', function () { return view('admin.dashboardadmin'); });
-Route::get('/admin/userdata', function () { return view('admin.userdata'); })->name('admin.userdata');
+Route::get('/dashboardadmin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/admin/userdata', [UserController::class, 'adminIndex'])->name('admin.userdata');
 Route::get('/trainingadmin', [TrainingProgramController::class, 'index']);
 Route::get('/traineeadmin', [TraineeController::class, 'index'])->name('admin.trainee.index');
 Route::get('/trainingtransactionadmin', [TrainingTransactionController::class, 'adminIndex'])->name('admin.trainingtransaction.index');
@@ -144,6 +147,9 @@ Route::prefix('admin/product')->group(function () {
         ]
     ]);
     Route::post('productimages/{productimageid}/set-thumbnail', [\App\Http\Controllers\ProductImagesController::class, 'setThumbnail'])->name('productimages.setThumbnail');
+    Route::get('producttransactionadmin', [ProductTransactionController::class, 'index'])->name('producttransactionadmin.index');
+    Route::get('customerdata', [CustomerController::class, 'index'])->name('customerdata.index');
+    Route::get('productorder', [ProductOrderController::class, 'index'])->name('productorder.index');
 });
 
 // Google Auth
@@ -153,10 +159,10 @@ Route::get('/auth/google/signup', [GoogleController::class, 'redirectToGoogle'])
 
 // Training Admin
 Route::prefix('admin/training')->name('admin.training.')->group(function () {
-    Route::get('/', [TrainingProgramController::class, 'index'])->name('index');
-    Route::post('/', [TrainingProgramController::class, 'store'])->name('store');
-    Route::delete('/{id}', [TrainingProgramController::class, 'destroy'])->name('destroy');
-    Route::put('/{id}', [TrainingProgramController::class, 'update'])->name('update');
+Route::get('/', [TrainingProgramController::class, 'index'])->name('index');
+Route::post('/', [TrainingProgramController::class, 'store'])->name('store');
+Route::delete('/{id}', [TrainingProgramController::class, 'destroy'])->name('destroy');
+Route::put('/{id}', [TrainingProgramController::class, 'update'])->name('update');
 });
 Route::prefix('trainingregion')->name('admin.trainingregion.')->group(function() {
 Route::get('/', [TrainingRegionController::class, 'index'])->name('index');
@@ -174,7 +180,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // Profile update
 Route::middleware(['auth'])->group(function () {
     Route::put('/profile', function (Illuminate\Http\Request $request) {
-        $user = Auth::user();
+        $user = \App\Models\User::find(Auth::id());
         $request->validate([
             'user_name' => 'required|string|max:255',
             'user_phone' => 'required|string|max:20',
@@ -199,3 +205,7 @@ Route::post('/midtrans/notification', [TrainingTransactionController::class, 'ha
 
 //search
 Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
+// Admin User Management
+Route::get('/admin/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
+Route::put('/admin/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
+Route::delete('/admin/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');

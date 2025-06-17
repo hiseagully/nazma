@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
     <style>
         body { font-family: "Poppins", sans-serif; }
+        button, form button {
+            text-decoration: none !important;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -25,7 +28,6 @@
         <section class="flex-1 p-6">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-semibold">Product Catalog</h2>
-                <!-- Tombol Add Product -->
                 <button onclick="openAddModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded text-sm">
                     + Add Product
                 </button>
@@ -52,20 +54,22 @@
                                     <span class="text-gray-400">No image</span>
                                 @endif
                             </td>
-                            <td class="py-2 px-4 border-b flex justify-center gap-2 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm flex items-center"
-                                    onclick="openEditModal({{ $product->productcatalogid }}, '{{ addslashes($product->productcatalogname) }}', '{{ addslashes($product->productcatalogimage) }}')"
-                                >
-                                    <i class="fas fa-edit mr-1"></i> Edit
-                                </button>
-                                <form action="{{ route('productcatalog.destroy', ['productcatalog' => $product->productcatalogid]) }}" method="POST" onsubmit="return confirm('Delete this product?')" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center">
-                                        <i class="fas fa-trash mr-1"></i> Delete
+                            <td class="py-2 px-4 border-b text-center">
+                                <div class="flex justify-center gap-2">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm flex items-center no-underline"
+                                        onclick="openEditModal({{ $product->productcatalogid }}, '{{ addslashes($product->productcatalogname) }}', '{{ addslashes($product->productcatalogimage) }}')"
+                                    >
+                                        <i class="fas fa-edit mr-1"></i> Edit
                                     </button>
-                                </form>
+                                    <form action="{{ route('productcatalog.destroy', ['productcatalog' => $product->productcatalogid]) }}" method="POST" onsubmit="return confirm('Delete this product?')" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center no-underline">
+                                            <i class="fas fa-trash mr-1"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty
@@ -79,6 +83,7 @@
         </section>
     </main>
 </div>
+
 <!-- Edit Modal -->
 <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
@@ -105,6 +110,7 @@
         </form>
     </div>
 </div>
+
 <!-- Add Modal -->
 <div id="addModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 hidden">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
@@ -127,6 +133,7 @@
         </form>
     </div>
 </div>
+
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
@@ -138,7 +145,6 @@
         document.getElementById('editModal').classList.remove('hidden');
         document.getElementById('editProductId').value = id;
         document.getElementById('editProductName').value = name;
-        // Show current image preview
         var preview = document.getElementById('editImagePreview');
         if(image) {
             preview.innerHTML = '<img src="' + (image.startsWith('http') ? image : '/storage/' + image) + '" class="h-12 rounded"/>';
