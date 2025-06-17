@@ -11,7 +11,11 @@ class ProductRegionsMapController extends Controller
     public function index()
     {
         $regions = ProductRegionsMap::all();
-        return view('admin.product.productregionsmap', compact('regions'));
+        return view('admin.product.productregionsmap', [
+            'regions' => $regions,
+            'activeMenu' => 'product',
+            'activeSubMenu' => 'productregionsmap',
+        ]);
     }
 
     // Simpan data baru

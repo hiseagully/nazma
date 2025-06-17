@@ -38,6 +38,9 @@
                 class="ml-8 mt-2 flex flex-col space-y-1 text-base {{ ($activeMenu ?? '') === 'training' ? '' : 'hidden' }}"
             >
                 <a class="px-4 py-2 rounded-md transition
+                    {{ ($activeSubMenu ?? '') === 'trainingregion' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    href="/trainingregion">Training Region</a>
+                <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'training' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/trainingadmin">Training</a>
                 <a class="px-4 py-2 rounded-md transition
@@ -49,9 +52,7 @@
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'trainee' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/traineeadmin">Trainee</a>
-                <a class="px-4 py-2 rounded-md transition
-                    {{ ($activeSubMenu ?? '') === 'trainingregion' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
-                    href="/trainingregion">Training Region</a>
+                
             </nav>
         </div>
         <!-- Product Dropdown -->
@@ -77,14 +78,14 @@
                     {{ ($activeSubMenu ?? '') === 'productcatalog' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/productcatalog">Product Catalog</a>
                 <a class="px-4 py-2 rounded-md transition
-                    {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    {{ ($activeSubMenu ?? '') === 'productcollection' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/productcollection">Products</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'products' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/productimages">Product Images</a>
                 <a class="px-4 py-2 rounded-md transition
-                    {{ ($activeSubMenu ?? '') === 'producttransaction' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
-                    href="/admin/product/producttransaction">Product Transaction</a>
+                    {{ ($activeSubMenu ?? '') === 'producttransactionadmin' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
+                    href="/admin/product/producttransactionadmin">Product Transaction</a>
                 <a class="px-4 py-2 rounded-md transition
                     {{ ($activeSubMenu ?? '') === 'customer' ? 'bg-[#FFF3E6] text-[#FF7A00]' : 'hover:bg-[#FFF3E6] hover:text-[#FF7A00]' }}"
                     href="/admin/product/customerdata">Customer</a>

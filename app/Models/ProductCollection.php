@@ -38,5 +38,9 @@ class ProductCollection extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
+    
+    public function thumbnailImage()
+    {
+        return $this->hasOne(ProductImages::class, 'productid', 'productid')->where('is_thumbnail', true);
     }
 }

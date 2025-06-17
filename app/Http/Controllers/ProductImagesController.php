@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProductImages;
+use Illuminate\Support\Facades\Storage;
 
 class ProductImagesController extends Controller
 {
@@ -11,7 +12,12 @@ class ProductImagesController extends Controller
     {
         $images = ProductImages::with('product')->get();
         $products = \App\Models\ProductCollection::all();
-        return view('admin.product.productimages', compact('images', 'products'));
+        return view('admin.product.productimages', [
+            'images' => $images,
+            'products' => $products,
+            'activeMenu' => 'product',
+            'activeSubMenu' => 'products', // sesuai sidebar: 'products' untuk Product Images
+        ]);
     }
 
     public function store(Request $request)
@@ -38,7 +44,7 @@ class ProductImagesController extends Controller
     {
         $image = ProductImages::findOrFail($id);
         if ($image->image_path) {
-            \Storage::disk('public')->delete($image->image_path);
+            Storage::disk('public')->delete($image->image_path);
         }
         $image->delete();
         return redirect()->back()->with('success', 'Image deleted!');

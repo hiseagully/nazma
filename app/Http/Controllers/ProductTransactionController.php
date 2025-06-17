@@ -92,4 +92,16 @@ class ProductTransactionController extends Controller
         $transaction = ProductTransaction::findOrFail($id);
         return view('user.product.transaction_detail', compact('transaction'));
     }
+
+    public function index()
+    {
+        // Ganti dengan model dan relasi yang sesuai jika perlu
+        $transactions = \App\Models\ProductTransaction::all();
+
+        return view('admin.product.producttransactiondata', [
+            'transactions' => $transactions,
+            'activeMenu' => 'product',
+            'activeSubMenu' => 'producttransactionadmin',
+        ]);
+    }
 }
