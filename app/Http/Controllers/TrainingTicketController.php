@@ -24,8 +24,10 @@ public function updateStatus(Request $request)
     $id = $request->transaction_id;
     $status = $request->status;
 
-    session(["ticket_status_{$id}" => $status]);
+    $transaction = \App\Models\TrainingTransaction::findOrFail($id);
+    $transaction->status = $status;
+    $transaction->save();
 
-    return redirect()->back()->with('success', 'Status updated successfully (session only).');
+    return redirect()->route('admin.trainingticket.index')->with('success', 'Status updated successfully!');
 }
-}
+};

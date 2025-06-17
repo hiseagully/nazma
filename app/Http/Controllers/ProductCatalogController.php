@@ -10,7 +10,11 @@ class ProductCatalogController extends Controller
     public function index()
     {
         $productcatalogs = ProductCatalog::all();
-        return view('admin.product.productcatalog', compact('productcatalogs'));
+        return view('admin.product.productcatalog', [
+            'productcatalogs' => $productcatalogs,
+            'activeMenu' => 'product',
+            'activeSubMenu' => 'productcatalog',
+        ]);
     }
 
     public function store(Request $request)

@@ -142,97 +142,10 @@
   </main>
 
   <script>
-    // Data for training and products
-    const trainingData = [
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        date: "21-22 April 2025",
-        location: "D.I.Yogyakarta",
-        url: "/trainingdetail",
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        date: "21-22 April 2025",
-        location: "D.I.Yogyakarta",
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        date: "21-22 April 2025",
-        location: "D.I.Yogyakarta",
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        date: "21-22 April 2025",
-        location: "D.I.Yogyakarta",
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        date: "21-22 April 2025",
-        location: "D.I.Yogyakarta",
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        date: "21-22 April 2025",
-        location: "D.I.Yogyakarta",
-      },
-    ];
-
-    const productData = [
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        price: "$ 80",
-        category: "Aksesoris",
-        disabled: false,
-        url: "/productdetail",
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        price: "$ 80",
-        category: "Aksesoris",
-        disabled: false,
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        price: "$ 80",
-        category: "Aksesoris",
-        disabled: false,
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        price: "$ 80",
-        category: "Aksesoris",
-        disabled: false,
-      },
-      {
-        img: "https://storage.googleapis.com/a1aa/image/b4405c90-f201-4169-6cb3-1f6fe794ab3a.jpg",
-        alt: "Workshop Contract Development poster with a man in black shirt",
-        title: "Training: Contract Development",
-        price: "$ 80",
-        category: "Aksesoris",
-        disabled: false,
-      },
-    ];
-
+    const trainingData = @json($trainings);
+    const productData = @json($products);
+</script>
+  <script>
     // Carousel state and rendering
     function renderCarousel(containerId, dotsId, data, itemsPerPage, isProduct = false) {
       const container = document.getElementById(containerId);
@@ -328,5 +241,6 @@
     });
   </script>
   <x-footer></x-footer>
+  <x-whatsapp></x-whatsapp>
 </body>
 </html>

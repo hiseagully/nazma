@@ -121,7 +121,7 @@
     <nav class="hidden md:flex">
       <ul class="nav-menu">
         <li class="nav-item">
-          <a href="/landingpage" class="nav-link {{ Request::is('landingpage') ? 'active' : '' }}">Home</a>
+          <a href="/" class="nav-link {{ Request::is('landingpage') ? 'active' : '' }}">Home</a>
         </li>
         <li class="nav-item">
           <a href="/training" class="nav-link {{ Request::is('training', 'trainingdetail', 'trainingdata', 'trainingtransaction', 'trainingticket', 'trainingticketdetail') ? 'active' : '' }}">Training</a>
@@ -149,7 +149,7 @@
       <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
         <ul class="py-2">
           <li>
-            <a href="/landingpage" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Home</a>
+            <a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Home</a>
           </li>
           <li>
             <a href="/training" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Training</a>

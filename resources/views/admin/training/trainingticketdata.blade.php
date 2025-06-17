@@ -30,11 +30,9 @@
                 <h2 class="text-xl font-semibold">Training Ticket Management</h2>
             </div>
 
-            @if (session('success'))
-                <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <div id="success-alert" class="hidden mb-4 p-4 bg-green-100 text-green-700 rounded">
+                Status updated successfully.
+            </div>
 
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-gray-200 rounded-lg">
@@ -46,26 +44,23 @@
                             <th class="py-3 px-4 border-b text-left">Status</th>
                             <th class="py-3 px-4 border-b text-left">Trainee</th>
                             <th class="py-3 px-4 border-b text-left">Transaction Date</th>
-                            <th class="py-3 px-4 border-b text-left">Detail</th>
+                            <th class="py-3 px-4 border-b text-left">User</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($transactions as $trx)
-                        <tr class="hover:bg-gray-50">
+                        <tr id="status-{{ $trx->id }}" class="hover:bg-gray-50">
                             <td class="py-2 px-4 border-b">{{ $loop->iteration }}</td>
                             <td class="py-2 px-4 border-b">{{ $trx->training->trainingtitle ?? '-' }}</td>
                             <td class="py-2 px-4 border-b">{{ $trx->trainingtransactiondate }}</td> 
                             <td class="py-2 px-4 border-b">
-                                <form action="{{ route('admin.trainingticket.updatestatus') }}" method="POST">
+                                <form id="status-form-{{ $trx->id }}">
                                     @csrf
                                     <input type="hidden" name="transaction_id" value="{{ $trx->id }}">
-                                    @php
-                                        $defaultStatus = 'Payment Success';
-                                        $selectedStatus = session("ticket_status_{$trx->id}", $defaultStatus);
-                                    @endphp
-                                    <select name="status" onchange="this.form.submit()" class="border border-gray-300 rounded px-2 py-1 text-sm">
-                                        <option value="Ongoing" {{ $selectedStatus == 'Ongoing' ? 'selected' : '' }}>Upcoming</option>
-                                        <option value="Completed" {{ $selectedStatus == 'Completed' ? 'selected' : '' }}>Completed</option>
+                                    <select name="status" onchange="updateStatus(event, {{ $trx->id }})"
+                                            class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                        <option value="Ongoing" {{ $trx->status == 'Ongoing' ? 'selected' : '' }}>Upcoming</option>
+                                        <option value="Completed" {{ $trx->status == 'Completed' ? 'selected' : '' }}>Completed</option>
                                     </select>
                                 </form>
                             </td>
@@ -90,6 +85,8 @@
         </section>
     </main>
 </div>
+
+<!-- Script AJAX -->
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
@@ -97,7 +94,36 @@
         sidebar.classList.toggle("-translate-x-full");
         backdrop.classList.toggle("hidden");
     }
+
+    function updateStatus(event, id) {
+        event.preventDefault();
+        const form = document.getElementById('status-form-' + id);
+        const formData = new FormData(form);
+
+        fetch("{{ route('admin.trainingticket.updatestatus') }}", {
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to update');
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('success-alert').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('success-alert').classList.add('hidden');
+            }, 3000);
+        })
+        .catch(error => {
+            alert("Update failed");
+            console.error(error);
+        });
+    }
 </script>
+
 <x-footer></x-footer>
 </body>
 </html>

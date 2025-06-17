@@ -16,9 +16,17 @@
    body {
     font-family: "Poppins", sans-serif;
    }
+   .dashboard-card {
+    transition: box-shadow 0.2s, transform 0.2s;
+   }
+   .dashboard-card:hover {
+    box-shadow: 0 8px 32px 0 rgba(255, 122, 0, 0.1),
+     0 1.5px 4px 0 rgba(0, 0, 0, 0.04);
+    transform: translateY(-4px) scale(1.03);
+   }
   </style>
  </head>
- <body class="bg-white text-gray-900">
+ <body class="bg-[#f8fafc] text-gray-900">
   <div class="flex min-h-screen border border-gray-200">
    <!-- Sidebar backdrop for mobile -->
    <div
@@ -36,47 +44,64 @@
     @include('components.adminnavbar')
     <!-- Content area -->
     <section class="flex-1 p-6">
-
-    </section>
-    <main class="flex-1 p-8">
-     <h1 class="text-2xl font-bold mb-6">Admin Dashboard</h1>
-     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+     <h1 class="text-2xl font-bold mb-8">Admin Dashboard</h1>
+     <!-- Baris 1: 3 Card -->
+     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       <!-- Card: Total Products -->
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-       <h2 class="text-lg font-semibold mb-2">Total Products</h2>
-       <div class="text-4xl font-bold text-orange-500 mb-2">120</div>
-       <div class="w-full h-32">
-        <canvas id="productsChart"></canvas>
+      <div class="dashboard-card bg-gradient-to-br from-orange-100 to-orange-50 rounded-xl shadow p-6 flex flex-col items-center">
+       <div class="bg-orange-500 text-white rounded-full p-3 mb-3">
+        <i class="fas fa-box text-2xl"></i>
+       </div>
+       <h2 class="text-base font-semibold mb-1 text-gray-700">Total Products</h2>
+       <div class="text-3xl font-bold text-orange-500 mb-1">
+        {{ $totalProducts }}
        </div>
       </div>
-      <!-- Card: Total Orders -->
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-       <h2 class="text-lg font-semibold mb-2">Total Orders</h2>
-       <div class="text-4xl font-bold text-orange-500 mb-2">75</div>
-       <div class="w-full h-32">
-        <canvas id="ordersChart"></canvas>
+      <!-- Card: Total Trainings -->
+      <div class="dashboard-card bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl shadow p-6 flex flex-col items-center">
+       <div class="bg-blue-500 text-white rounded-full p-3 mb-3">
+        <i class="fas fa-chalkboard-teacher text-2xl"></i>
+       </div>
+       <h2 class="text-base font-semibold mb-1 text-gray-700">Total Trainings</h2>
+       <div class="text-3xl font-bold text-blue-500 mb-1">
+        {{ $totalTrainings }}
        </div>
       </div>
-     </div>
-     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
       <!-- Card: Total Customers -->
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-       <h2 class="text-lg font-semibold mb-2">Total Customers</h2>
-       <div class="text-4xl font-bold text-orange-500 mb-2">42</div>
-       <div class="w-full h-32">
-        <canvas id="customersChart"></canvas>
+      <div class="dashboard-card bg-gradient-to-br from-green-100 to-green-50 rounded-xl shadow p-6 flex flex-col items-center">
+       <div class="bg-green-500 text-white rounded-full p-3 mb-3">
+        <i class="fas fa-users text-2xl"></i>
        </div>
-      </div>
-      <!-- Card: Total Regions -->
-      <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-       <h2 class="text-lg font-semibold mb-2">Total Regions</h2>
-       <div class="text-4xl font-bold text-orange-500 mb-2">8</div>
-       <div class="w-full h-32">
-        <canvas id="regionsChart"></canvas>
+       <h2 class="text-base font-semibold mb-1 text-gray-700">Total Customers</h2>
+       <div class="text-3xl font-bold text-green-500 mb-1">
+        {{ $totalCustomers }}
        </div>
       </div>
      </div>
-    </main>
+     <!-- Baris 2: 2 Card -->
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <!-- Card: Total Regions -->
+      <div class="dashboard-card bg-gradient-to-br from-purple-100 to-purple-50 rounded-xl shadow p-6 flex flex-col items-center">
+       <div class="bg-purple-500 text-white rounded-full p-3 mb-3">
+        <i class="fas fa-map-marker-alt text-2xl"></i>
+       </div>
+       <h2 class="text-base font-semibold mb-1 text-gray-700">Total Regions</h2>
+       <div class="text-3xl font-bold text-purple-500 mb-1">
+        {{ $totalRegions }}
+       </div>
+      </div>
+      <!-- Card: Total Product Categories -->
+      <div class="dashboard-card bg-gradient-to-br from-pink-100 to-pink-50 rounded-xl shadow p-6 flex flex-col items-center">
+       <div class="bg-pink-500 text-white rounded-full p-3 mb-3">
+        <i class="fas fa-tags text-2xl"></i>
+       </div>
+       <h2 class="text-base font-semibold mb-1 text-gray-700">Total Product Categories</h2>
+       <div class="text-3xl font-bold text-pink-500 mb-1">
+        {{ $productCategories->count() }}
+       </div>
+      </div>
+     </div>
+    </section>
    </main>
   </div>
   <script>
@@ -103,30 +128,15 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-   // Statis data
+   // Data dari backend
    const productsChart = new Chart(document.getElementById('productsChart'), {
     type: 'bar',
     data: {
-     labels: ['Aksesoris', 'Fashion', 'Kerajinan', 'Lainnya'],
+     labels: {!! json_encode(array_keys($productsByCategory->toArray())) !!},
      datasets: [{
       label: 'Jumlah',
-      data: [40, 30, 25, 25],
+      data: {!! json_encode(array_values($productsByCategory->toArray())) !!},
       backgroundColor: '#FFB366',
-     }]
-    },
-    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-   });
-   const ordersChart = new Chart(document.getElementById('ordersChart'), {
-    type: 'line',
-    data: {
-     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-     datasets: [{
-      label: 'Order',
-      data: [10, 15, 20, 18, 12],
-      borderColor: '#FF7A00',
-      backgroundColor: 'rgba(255,122,0,0.1)',
-      fill: true,
-      tension: 0.4
      }]
     },
     options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
@@ -134,20 +144,33 @@
    const customersChart = new Chart(document.getElementById('customersChart'), {
     type: 'doughnut',
     data: {
-     labels: ['Aktif', 'Nonaktif'],
+     labels: {!! json_encode(array_keys($customersStatus)) !!},
      datasets: [{
-      data: [30, 12],
+      data: {!! json_encode(array_values($customersStatus)) !!},
       backgroundColor: ['#FFB366', '#FFE0CC'],
      }]
     },
     options: { plugins: { legend: { position: 'bottom' } } }
    });
+   // Regions chart kecil (di atas)
    const regionsChart = new Chart(document.getElementById('regionsChart'), {
     type: 'pie',
     data: {
-     labels: ['Jawa', 'Sumatera', 'Kalimantan', 'Sulawesi'],
+     labels: {!! json_encode(array_keys($regionsByIsland->toArray())) !!},
      datasets: [{
-      data: [3, 2, 2, 1],
+      data: {!! json_encode(array_values($regionsByIsland->toArray())) !!},
+      backgroundColor: ['#FFB366', '#FF7A00', '#FFE0CC', '#FFD6A0'],
+     }]
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
+   });
+   // Regions chart besar (di samping Product Categories)
+   const regionsChartBig = new Chart(document.getElementById('regionsChartBig'), {
+    type: 'pie',
+    data: {
+     labels: {!! json_encode(array_keys($regionsByIsland->toArray())) !!},
+     datasets: [{
+      data: {!! json_encode(array_values($regionsByIsland->toArray())) !!},
       backgroundColor: ['#FFB366', '#FF7A00', '#FFE0CC', '#FFD6A0'],
      }]
     },

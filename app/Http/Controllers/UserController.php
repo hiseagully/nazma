@@ -40,10 +40,42 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan!');
     }
 
+    // Tampilkan form edit user
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.edituser', compact('user'));
+    }
+
+    // Update user
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $data = $request->validate([
+            'user_name' => 'required|string|max:255',
+            'user_email' => 'required|email',
+            'user_phone' => 'nullable|string|max:20',
+            'role' => 'required|string',
+        ]);
+        $user->update($data);
+        return redirect()->route('admin.userdata')->with('success', 'User updated!');
+    }
+
     // Hapus user
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
-        return redirect()->route('users.index')->with('success', 'User berhasil dihapus!');
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.userdata')->with('success', 'User deleted!');
+    }
+
+    // Tampilkan semua user untuk admin
+    public function adminIndex()
+    {
+        $users = User::all();
+        return view('admin.userdata', [
+            'users' => $users,
+            'activeMenu' => 'users', // <-- ini penting
+        ]);
     }
 }

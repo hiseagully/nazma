@@ -35,4 +35,9 @@ class ProductCollection extends Model
     {
         return $this->hasMany(\App\Models\ProductImages::class, 'productid', 'productid');
     }
+    
+    public function thumbnailImage()
+    {
+        return $this->hasOne(ProductImages::class, 'productid', 'productid')->where('is_thumbnail', true);
+    }
 }
