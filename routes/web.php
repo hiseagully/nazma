@@ -173,24 +173,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 // Profile update
 Route::middleware(['auth'])->group(function () {
-    Route::put('/profile', function (Illuminate\Http\Request $request) {
-        $user = Auth::user();
-        $request->validate([
-            'user_name' => 'required|string|max:255',
-            'user_phone' => 'required|string|max:20',
-            'user_password' => 'nullable|string|min:8',
-        ]);
-        $user->user_name = $request->user_name;
-        $user->user_phone = $request->user_phone;
-        if ($request->filled('user_password')) {
-            $user->user_password = Hash::make($request->user_password);
-        }
-        $user->save();
-        return redirect()->back()->with('success', 'Profile updated!');
-    })->name('profile.update');
+    Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
 });
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 Route::post('/cart/delete-items', [CartController::class, 'deleteItems']);
+
+/* =====================  RAJA ONGKIR  ===================== */
+
+Route::get('/api/provinces', [App\Http\Controllers\RajaOngkirController::class, 'getProvinces']);
+Route::get('/api/cities', [App\Http\Controllers\RajaOngkirController::class, 'getCities']);
+Route::post('/api/check-shipping', [App\Http\Controllers\ShippingController::class, 'checkShipping']);
 
 /* =====================  MIDTRANS  ===================== */
 

@@ -6,8 +6,6 @@
   <title>
    NaZMaLogy Product Data
   </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet"/>
   <x-header></x-header>
@@ -19,62 +17,64 @@
    <section aria-label="Trainee data and payment section" class="form-payment-section">
     <div class="form-payment-container">
     <!-- Trainee Data -->
+    @php
+        $user = Auth::user();
+        $province = $user->district_name ? trim(explode(',', $user->district_name)[0]) : '';
+        $city = $user->district_name ? trim(explode(',', $user->district_name)[1] ?? '') : '';
+    @endphp
     <form aria-labelledby="trainee-data-title" class="trainee-data-form" id="trainee-form">
      <h2 id="trainee-data-title" class="form-title">
       Recipient Data
      </h2>
      <div class="form-group">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-input bg-gray-100" value="{{ Auth::user()->user_email ?? Auth::user()->email }}" readonly>
+                <input type="email" class="form-input bg-gray-100" value="{{ $user->user_email ?? $user->email }}" readonly>
               </div>
      <div class="form-group">
       <label class="form-label">Name</label>
-      <input type="text" class="form-input bg-gray-100" value="{{ Auth::user()->user_name ?? Auth::user()->name }}" readonly>
+      <input type="text" class="form-input bg-gray-100" value="{{ $user->user_name ?? $user->name }}" readonly>
      </div>
      <div class="form-group">
       <label class="form-label" for="recipient-phone">
        Phone Number
       </label>
-      <input type="tel" class="form-input" id="recipient-phone" name="recipient_phone" placeholder="08xxxxxxxxxx" required>
-      <div id="phone-error" class="text-red-500 text-xs mt-1 hidden">Phone number is required</div>
+      <input type="tel" class="form-input bg-gray-100" id="recipient-phone" name="recipient_phone" value="{{ $user->user_phone }}" readonly>
      </div>
      <div class="form-group">
       <label class="form-label" for="recipient-country">Country</label>
       <select class="form-input text-sm font-normal w-full border border-gray-300 rounded-md py-3 px-4 placeholder:text-gray-300 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" id="recipient-country" name="recipient_country" required>
-        <option value="" disabled>Select Country</option>
-        <option value="ID">Indonesia</option>
-        <option value="INTL" selected>International</option>
+        <option value="">Select Country</option>
+        <option value="ID" data-country-name="Indonesia" {{ $user->country_code == 'ID' ? 'selected' : '' }}>Indonesia</option>
+        <option value="INTL" data-country-name="International" {{ $user->country_code && $user->country_code != 'ID' ? 'selected' : '' }}>International</option>
       </select>
      </div>
      <div class="form-group" id="address-indonesia-group">
-      <label class="form-label">Provinsi</label>
-      <select id="province_id_select" name="province_id_select" class="form-input mb-2" required>
-        <option value="">Pilih Provinsi</option>
-      </select>
-      <label class="form-label mt-2">Kabupaten/Kota</label>
-      <select id="city_id" name="city_id" class="form-input" required>
-        <option value="">Pilih Kabupaten/Kota</option>
-      </select>
-      <input type="hidden" id="province_id" name="province_id">
-      <input type="hidden" id="province_name" name="province_name">
-      <input type="hidden" id="city_name" name="city_name">
-      <div id="address-error" class="text-red-500 text-xs mt-1 hidden">Address is required</div>
-     </div>
-     <div class="form-group hidden" id="address-international-group">
-      <label class="form-label" for="recipient-country-list">Country</label>
-      <select class="form-input text-sm font-normal w-full border border-gray-300 rounded-md py-3 px-4 placeholder:text-gray-300 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" id="recipient-country-list" name="recipient_country_list">
-        <option value="" disabled selected>Select Country</option>
-        <!-- Opsi negara dunia via JS -->
-      </select>
-      <label class="form-label mt-2" for="recipient-city">City</label>
-      <input type="text" class="form-input" id="recipient-city" name="recipient_city" placeholder="City" />
+      <label class="form-label">Province</label>
+      <input type="text" class="form-input bg-gray-100" value="{{ $province }}" readonly>
+      <label class="form-label mt-2">City</label>
+      <input type="text" class="form-input bg-gray-100" value="{{ $city }}" readonly>
      </div>
      <div class="form-group">
       <label class="form-label" for="recipient-fulladdress">
        Full Address
       </label>
-      <textarea class="form-textarea" id="recipient-fulladdress" name="recipient_fulladdress" placeholder="Street, RT/RW, Building, etc" rows="3" required></textarea>
-      <div id="fulladdress-error" class="text-red-500 text-xs mt-1 hidden">Full address is required</div>
+      <textarea class="form-textarea bg-gray-100" id="recipient-fulladdress" name="recipient_fulladdress" readonly>{{ $user->full_address }}</textarea>
+     </div>
+     <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded">
+      <div class="mb-2 font-semibold text-sm text-gray-700">Sender Address (Admin)</div>
+      <div class="text-xs text-gray-700">
+        {{ $admin_name ?? '-' }}<br>
+        {{ $admin_full_address ?? '-' }}<br>
+        {{ $admin_district_name ?? '-' }}<br>
+        {{ $admin_country_name ?? '-' }}
+      </div>
+      <div class="mt-3 mb-2 font-semibold text-sm text-gray-700">Recipient Address (You)</div>
+      <div class="text-xs text-gray-700">
+        {{ $user->user_name ?? '-' }}<br>
+        {{ $user->full_address ?? '-' }}<br>
+        {{ $user->district_name ?? '-' }}<br>
+        {{ $user->country_name ?? '-' }}
+      </div>
      </div>
     </form>
     
@@ -142,12 +142,16 @@
         </div>
         <div>
           <label class="block font-semibold mb-1" for="courier">Courier:</label>
-          <select aria-required="true" class="w-full border border-gray-300 rounded-md py-3 px-4 text-sm placeholder:text-gray-300 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" id="courier">
-            <option class="text-gray-300" disabled selected>Choose Courier</option>
+          <select aria-required="true" class="w-full border border-gray-300 rounded-md py-3 px-4 text-sm placeholder:text-gray-300 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" id="courier" name="courier" required>
+            <option class="text-gray-300" value="" disabled selected>Choose Courier</option>
             <option value="jne">JNE</option>
             <option value="pos">POS Indonesia</option>
             <option value="tiki">TIKI</option>
           </select>
+          <button type="button" id="check-shipping" class="mt-2 text-xs px-3 py-1 rounded bg-orange-400 text-white hover:bg-orange-500 focus:outline-none" style="font-size: 12px;">
+            Check Shipping Cost
+          </button>
+          <div id="shipping-result" class="mt-2"></div>
         </div>
         <div>
           <label class="block font-semibold mb-1">Ongkir:</label>
@@ -164,5 +168,53 @@
    </section>
   </main>
   <x-footer></x-footer>
+  <script>
+document.getElementById('check-shipping').addEventListener('click', function() {
+    const origin = '{{ $admin_city_id ?? '' }}'; // city_id admin, dari backend
+    const destination = '{{ $user->district_code ?? '' }}'; // city_id user login
+    const weight_kg = {{ $total_weight_kg ?? 1 }}; // berat total dari backend (kg)
+    const weight = weight_kg * 1000; // konversi ke gram
+    const courier = document.getElementById('courier').value;
+
+    if (!courier) {
+        alert('Please select a courier!');
+        return;
+    }
+
+    fetch('/api/check-shipping', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            origin: origin,
+            destination: destination,
+            weight: weight,
+            courier: courier
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        let html = '';
+        if (data.rajaongkir && data.rajaongkir.results.length > 0) {
+            const services = data.rajaongkir.results[0].costs;
+            html += '<label class="form-label">Shipping Options</label>';
+            html += '<select name="shipping_service" class="form-input">';
+            services.forEach(service => {
+                const cost = service.cost[0].value;
+                html += `<option value="${service.service}|${cost}">${service.service} - Rp${cost.toLocaleString()} (${service.description})</option>`;
+            });
+            html += '</select>';
+        } else {
+            html = '<div class="text-red-500">No shipping options found.</div>';
+        }
+        document.getElementById('shipping-result').innerHTML = html;
+    })
+    .catch(() => {
+        document.getElementById('shipping-result').innerHTML = '<div class="text-red-500">Failed to get shipping cost.</div>';
+    });
+});
+</script>
  </body>
 </html>
