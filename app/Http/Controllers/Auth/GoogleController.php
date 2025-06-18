@@ -33,7 +33,7 @@ class GoogleController extends Controller
 
             // Jika user berhasil dibuat/ditemukan, redirect ke landingpage
             if ($user) {
-                return redirect('/landingpage')->with('success', 'Sign up with Google successful! Welcome!');
+                return redirect('/')->with('success', 'Sign up with Google successful! Welcome!');
             } else {
                 return redirect('/signup')->with('error', 'Failed to sign up with Google.');
             }

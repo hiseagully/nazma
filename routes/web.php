@@ -53,7 +53,7 @@ Route::get('/productdetail/{id}', function ($id) {
     return view('user.product.productdetail', compact('product'));
 });
 Route::get('/productcart', [CartController::class, 'productcart']);
-Route::get('/productdata', function () { return view('user.product.productdata'); });
+Route::get('/productdata', [ProductCollectionController::class, 'productdata'])->name('productdata');
 Route::post('/cart/add/{productid}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/producttransaction', function () { return view('user.product.producttransaction'); });
 Route::get('/productorder', function () { return view('user.product.productorder'); });
@@ -197,6 +197,12 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->back()->with('success', 'Profile updated!');
     })->name('profile.update');
 });
+// Hapus route profile lama yang function langsung
+// Route::get('/profile', function () { return view('user.profile'); });
+
+// Profile user sendiri
+Route::get('/profile', [UserController::class, 'editProfile'])->name('profile.edit');
+Route::post('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 Route::post('/cart/delete-items', [CartController::class, 'deleteItems']);
 
@@ -217,3 +223,4 @@ Route::get('/product/search', [ProductController::class, 'search'])->name('produ
 Route::get('/admin/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
 Route::put('/admin/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
 Route::delete('/admin/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+

@@ -253,22 +253,9 @@ foreach($cart->items as $item) {
         e.preventDefault();
         return false;
       }
-      const selectedProducts = selectedIds.map(id => {
-        const item = itemData[id];
-        const product = cartItems[id];
-        return {
-          id: product ? product.id : id,
-          name: product ? product.name : '',
-          category: product ? product.category : '',
-          image: product ? product.image : '/images/noimage.png',
-          productpricedollar: product ? product.productpricedollar : 0,
-          productpricerupiah: product ? product.productpricerupiah : 0,
-          qty: item?.qty || 1,
-          subtotal: (item?.price * item?.qty).toFixed(2)
-        };
-      });
-      localStorage.setItem('selectedCartItems', JSON.stringify(selectedProducts));
-      window.location.href = '/productdata';
+      // Ambil productid asli dari cartItems sesuai id item cart yang dichecklist
+      const params = selectedIds.map(id => 'productids[]=' + encodeURIComponent(cartItems[id].id)).join('&');
+      window.location.href = '/productdata?' + params;
     });
     updateAllUI();
   });
