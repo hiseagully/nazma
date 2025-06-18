@@ -10,7 +10,11 @@ class ProductCollectionController extends Controller
     public function index()
     {
         $products = ProductCollection::with(['catalog', 'region'])->get();
-        return view('admin.product.productcollection', compact('products'));
+        return view('admin.product.productcollection', [
+            'products' => $products,
+            'activeMenu' => 'product', 
+            'activeSubMenu' => 'productcollection',
+        ]);
     }
 
     public function create()

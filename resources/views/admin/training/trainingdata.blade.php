@@ -73,7 +73,18 @@
                                 <div class="flex justify-center items-center gap-2">
                                     <button
                                         class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm flex items-center"
-                                        onclick='openEditModal(@json($training))'
+                                        onclick="openEditModal({
+                                            trainingid: {{ $training->trainingid }},
+                                            trainingtitle: {{ json_encode($training->trainingtitle) }},
+                                            trainingdescription: {{ json_encode($training->trainingdescription) }},
+                                            trainingpricerupiah: {{ $training->trainingpricerupiah }},
+                                            trainingpricedollar: {{ $training->trainingpricedollar }},
+                                            trainingimage: {{ json_encode($training->trainingimage) }},
+                                            trainingschedule: {{ json_encode($training->trainingschedule) }},
+                                            traininglocation: {{ json_encode($training->traininglocation) }},
+                                            trainingslot: {{ $training->trainingslot }},
+                                            trainingregionid: {{ $training->trainingregionid ?? 'null' }}
+                                        })"
                                     >
                                         <i class="fas fa-edit mr-1"></i> Edit
                                     </button>
@@ -217,67 +228,202 @@
 </div>
 
 <script>
-    // CKEditor initialization for description textarea
-    CKEDITOR.replace('editDeskripsi');
-    CKEDITOR.replace('addDeskripsi');
+    let editCKEditorReady = false;
+    let addCKEditorReady = false;
 
+    // Initialize CKEditor for edit modal
+    CKEDITOR.replace('editDeskripsi', {
+        height: 120,
+        removePlugins: 'elementspath',
+        resize_enabled: false
+    });
+
+    // Initialize CKEditor for add modal
+    CKEDITOR.replace('addDeskripsi', {
+        height: 120,
+        removePlugins: 'elementspath',
+        resize_enabled: false
+    });
+
+    // Check when CKEditor instances are ready
+    CKEDITOR.instances['editDeskripsi'].on('instanceReady', function() {
+        editCKEditorReady = true;
+        console.log('Edit CKEditor ready');
+    });
+
+    CKEDITOR.instances['addDeskripsi'].on('instanceReady', function() {
+        addCKEditorReady = true;
+        console.log('Add CKEditor ready');
+    });
+
+    // Helper function to set CKEditor data
+    function setEditCKEditorData(data) {
+        const instance = CKEDITOR.instances['editDeskripsi'];
+        if (instance) {
+            if (instance.status === 'ready') {
+                instance.setData(data || '');
+                console.log('CKEditor data set immediately:', data);
+            } else {
+                instance.on('instanceReady', function() {
+                    instance.setData(data || '');
+                    console.log('CKEditor data set after ready:', data);
+                });
+            }
+        }
+    }
+
+    // Function to format date for datetime-local input
+    function formatDateForInput(dateString) {
+        console.log('Original date string:', dateString);
+        
+        if (!dateString) return '';
+        
+        try {
+            // Handle different date formats
+            let date;
+            if (dateString.includes('T')) {
+                // ISO format: 2024-01-15T10:30:00
+                date = new Date(dateString);
+            } else if (dateString.includes(' ')) {
+                // MySQL format: 2024-01-15 10:30:00
+                date = new Date(dateString.replace(' ', 'T'));
+            } else {
+                date = new Date(dateString);
+            }
+            
+            if (isNaN(date.getTime())) {
+                console.error('Invalid date:', dateString);
+                return '';
+            }
+            
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            
+            const formatted = `${year}-${month}-${day}T${hours}:${minutes}`;
+            console.log('Formatted date:', formatted);
+            return formatted;
+        } catch (error) {
+            console.error('Error formatting date:', error);
+            return '';
+        }
+    }
+
+    // Modal Edit
     function openEditModal(training) {
+        console.log('=== OPENING EDIT MODAL ===');
+        console.log('Full training data:', training);
+        
+        // Show modal
         document.getElementById("editModal").classList.remove("hidden");
 
-        // Isi data form edit
-        document.getElementById("editId").value = training.trainingid;
-        document.getElementById("editJudul").value = training.trainingtitle;
+        // Fill basic form fields
+        document.getElementById("editId").value = training.trainingid || '';
+        document.getElementById("editJudul").value = training.trainingtitle || '';
+        document.getElementById("editDeskripsi").value = training.trainingdescription || '';
+        document.getElementById("editHargaRp").value = training.trainingpricerupiah || '';
+        document.getElementById("editHargaDollar").value = training.trainingpricedollar || '';
+        document.getElementById("editLokasi").value = training.traininglocation || '';
+        document.getElementById("editSlot").value = training.trainingslot || '';
 
-        // Set CKEditor data
-        if (CKEDITOR.instances['editDeskripsi']) {
-            CKEDITOR.instances['editDeskripsi'].setData(training.trainingdescription);
-        }
+        console.log('Basic fields filled');
 
-        document.getElementById("editHargaRp").value = training.trainingpricerupiah;
-        document.getElementById("editHargaDollar").value = training.trainingpricedollar;
-        
-        // Format trainingschedule ke format yyyy-MM-ddTHH:mm untuk input datetime-local
-        if(training.trainingschedule){
-            const date = new Date(training.trainingschedule);
-            // Tambah leading zero jika perlu
-            const yyyy = date.getFullYear();
-            const mm = ('0' + (date.getMonth() + 1)).slice(-2);
-            const dd = ('0' + date.getDate()).slice(-2);
-            const hh = ('0' + date.getHours()).slice(-2);
-            const min = ('0' + date.getMinutes()).slice(-2);
-            const formattedDate = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
-            document.getElementById("editJadwal").value = formattedDate;
-        } else {
-            document.getElementById("editJadwal").value = '';
-        }
+        // Set CKEditor data for description with delay to ensure it's ready
+        console.log('Setting description:', training.trainingdescription);
+        setTimeout(() => {
+            setEditCKEditorData(training.trainingdescription);
+        }, 100);
 
-        document.getElementById("editLokasi").value = training.traininglocation;
-        document.getElementById("editSlot").value = training.trainingslot;
+        // Format and set schedule
+        console.log('Original schedule:', training.trainingschedule);
+        const formattedSchedule = formatDateForInput(training.trainingschedule);
+        document.getElementById("editJadwal").value = formattedSchedule;
+        console.log('Schedule set to:', document.getElementById("editJadwal").value);
 
-        // Set select region value
+        // Set region dropdown with more detailed handling
         const regionSelect = document.getElementById('editRegion');
-        if(regionSelect){
-            regionSelect.value = training.trainingregionid ?? '';
+        console.log('Setting region. Training region ID:', training.trainingregionid);
+        console.log('Available options:', Array.from(regionSelect.options).map(opt => ({value: opt.value, text: opt.text})));
+        
+        if (regionSelect) {
+            // First reset all options
+            regionSelect.selectedIndex = 0;
+            
+            // Try to find and select the correct option
+            if (training.trainingregionid) {
+                const targetValue = String(training.trainingregionid);
+                let found = false;
+                
+                Array.from(regionSelect.options).forEach((option, index) => {
+                    if (String(option.value) === targetValue) {
+                        regionSelect.selectedIndex = index;
+                        found = true;
+                        console.log('Region found and selected:', option.text, option.value);
+                    }
+                });
+                
+                if (!found) {
+                    console.warn('Region not found in dropdown:', targetValue);
+                }
+            }
         }
 
-        // Preview gambar current
+        // Handle image preview with better error handling
         const currentImagePreview = document.getElementById("currentImagePreview");
         const previewImage = document.getElementById("previewImage");
-        if (training.trainingimage) {
+        
+        console.log('Setting image:', training.trainingimage);
+        
+        if (training.trainingimage && training.trainingimage.trim() !== '') {
+            const imagePath = `/storage/training_images/${training.trainingimage}`;
+            console.log('Image path:', imagePath);
+            
+            previewImage.src = imagePath;
             currentImagePreview.classList.remove("hidden");
-            previewImage.src = `/storage/training_images/${training.trainingimage}`;
+            
+            previewImage.onload = function() {
+                console.log('Image loaded successfully');
+            };
+            
+            previewImage.onerror = function() {
+                console.log('Image failed to load, trying alternative path');
+                // Try without /storage/ prefix
+                previewImage.src = `training_images/${training.trainingimage}`;
+                
+                previewImage.onerror = function() {
+                    console.log('Image failed to load completely, hiding preview');
+                    currentImagePreview.classList.add("hidden");
+                };
+            };
         } else {
+            console.log('No image to display');
             currentImagePreview.classList.add("hidden");
             previewImage.src = '';
         }
 
-        // Set form action URL, sesuaikan route update training
+        // Set form action URL
         const editForm = document.getElementById('editForm');
         editForm.action = `/admin/training/${training.trainingid}`;
+        console.log('Form action set to:', editForm.action);
+        
+        console.log('=== EDIT MODAL SETUP COMPLETE ===');
     }
 
     function closeEditModal() {
         document.getElementById("editModal").classList.add("hidden");
+        
+        // Clear CKEditor data
+        if (CKEDITOR.instances['editDeskripsi']) {
+            CKEDITOR.instances['editDeskripsi'].setData('');
+        }
+        
+        // Reset form
+        document.getElementById('editForm').reset();
+        
+        // Hide image preview
+        document.getElementById("currentImagePreview").classList.add("hidden");
     }
 
     function openAddModal() {
@@ -287,47 +433,93 @@
         const addForm = document.getElementById('addForm');
         addForm.reset();
 
-        // Reset CKEditor data
+        // Reset CKEditor data for add modal
         if (CKEDITOR.instances['addDeskripsi']) {
             CKEDITOR.instances['addDeskripsi'].setData('');
         }
 
-        // Reset preview gambar add modal
-        document.getElementById('addPreviewImage').src = '';
-        document.getElementById('addPreviewImage').classList.add('hidden');
+        // Reset preview image
+        const addPreviewImage = document.getElementById('addPreviewImage');
+        addPreviewImage.src = '';
+        addPreviewImage.classList.add('hidden');
     }
 
     function closeAddModal() {
         document.getElementById("addModal").classList.add("hidden");
+        
+        // Reset CKEditor data
+        if (CKEDITOR.instances['addDeskripsi']) {
+            CKEDITOR.instances['addDeskripsi'].setData('');
+        }
+        
+        // Reset form
+        document.getElementById('addForm').reset();
+        
+        // Hide image preview
+        document.getElementById('addPreviewImage').classList.add('hidden');
     }
 
-    // Preview gambar saat pilih file di Edit modal
+    // Preview image when file is selected in Edit modal
     document.getElementById('editGambar').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const previewImage = document.getElementById('previewImage');
         const currentImagePreview = document.getElementById("currentImagePreview");
+        
         if (file) {
-            previewImage.src = URL.createObjectURL(file);
-            currentImagePreview.classList.remove('hidden');
-        } else {
-            previewImage.src = '';
-            currentImagePreview.classList.add('hidden');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                currentImagePreview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
         }
     });
 
-    // Preview gambar saat pilih file di Add modal
+    // Preview image when file is selected in Add modal
     document.getElementById('addGambar').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const previewImage = document.getElementById('addPreviewImage');
+        
         if (file) {
-            previewImage.src = URL.createObjectURL(file);
-            previewImage.classList.remove('hidden');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewImage.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
         } else {
             previewImage.src = '';
             previewImage.classList.add('hidden');
         }
     });
 
+    // Close modal when clicking outside
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeEditModal();
+        }
+    });
+
+    document.getElementById('addModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeAddModal();
+        }
+    });
+
+    // Handle form submission to sync CKEditor data
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+        // Sync CKEditor data before submission
+        if (CKEDITOR.instances['editDeskripsi']) {
+            CKEDITOR.instances['editDeskripsi'].updateElement();
+        }
+    });
+
+    document.getElementById('addForm').addEventListener('submit', function(e) {
+        // Sync CKEditor data before submission
+        if (CKEDITOR.instances['addDeskripsi']) {
+            CKEDITOR.instances['addDeskripsi'].updateElement();
+        }
+    });
 </script>
 </body>
 </html>
