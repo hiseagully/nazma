@@ -197,6 +197,12 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->back()->with('success', 'Profile updated!');
     })->name('profile.update');
 });
+// Hapus route profile lama yang function langsung
+// Route::get('/profile', function () { return view('user.profile'); });
+
+// Profile user sendiri
+Route::get('/profile', [UserController::class, 'editProfile'])->name('profile.edit');
+Route::post('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 Route::post('/cart/delete-items', [CartController::class, 'deleteItems']);
 

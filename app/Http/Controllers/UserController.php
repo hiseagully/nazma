@@ -47,7 +47,7 @@ class UserController extends Controller
         return view('admin.edituser', compact('user'));
     }
 
-    // Update user
+    // Update user (admin)
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -61,26 +61,8 @@ class UserController extends Controller
         return redirect()->route('admin.userdata')->with('success', 'User updated!');
     }
 
-    // Hapus user
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return redirect()->route('admin.userdata')->with('success', 'User deleted!');
-    }
-
-    // Tampilkan semua user untuk admin
-    public function adminIndex()
-    {
-        $users = User::all();
-        return view('admin.userdata', [
-            'users' => $users,
-            'activeMenu' => 'users', // <-- ini penting
-        ]);
-    }
-
-    // Update profile user
-    public function update(Request $request)
+    // Update profile user (khusus profile sendiri)
+    public function updateProfile(Request $request)
     {
         $request->validate([
             'user_name' => 'required|max:50',
@@ -112,7 +94,7 @@ class UserController extends Controller
     }
 
     // Tampilkan form edit profile user
-    public function edit()
+    public function editProfile()
     {
         $user = auth()->user();
         return view('user.profile', compact('user'));

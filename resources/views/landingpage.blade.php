@@ -32,7 +32,7 @@
     <section class="hero-section grid grid-cols-1 md:grid-cols-2 items-center gap-6 px-6 py-10">
       <div class="hero-text max-w-xl w-full">
         <p class="hero-subtitle">
-          <a href="/landingpage" class="text-[#FF7A00] hover:underline">Home</a>
+          <a href="/" class="text-[#FF7A00] hover:underline">Home</a>
         </p>
         <h1 class="hero-title text-3xl md:text-4xl font-bold leading-tight mb-4">
           Join the Training<br>
