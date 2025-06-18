@@ -1,4 +1,4 @@
- /* Global Reset */
+/* Global Reset */
     * {
       margin: 0;
       padding: 0;
@@ -124,47 +124,52 @@
     /* Our Service Section */
     .our-service-section {
       background-color: white;
-      padding-top: 4rem;
-      padding-bottom: 4rem;
+      padding-top: 8rem;    
+      padding-bottom: 8rem; 
       text-align: center;
     }
     .our-service-title {
       color: #f58220;
-      font-weight: 600;
+      font-weight: 650;
       margin-bottom: 3rem;
       user-select: none;
-      font-size: 1rem;
+      font-size: 2.25rem;   /* Ubah dari 1rem ke 2.25rem (36px) */
+      line-height: 1.2;
+      letter-spacing: -1px;
     }
     .our-service-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 4rem;
-      max-width: 640px;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;            /* Ubah dari 4rem ke 5rem */
+      max-width: 1000px;    /* Ubah dari 900px ke 1000px */
       margin-left: auto;
       margin-right: auto;
+      align-items: stretch;
     }
-    @media (min-width: 640px) {
+    @media (max-width: 900px) {
       .our-service-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 2rem;
       }
     }
     .service-icon {
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 1rem;
-      width: 100px;
-      height: 100px;
+      width: 140px;         /* Ubah dari 120px ke 140px */
+      height: 140px;
       user-select: none;
     }
     .service-title {
       color: #2f357f;
       font-weight: 600;
       margin-bottom: 0.5rem;
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
     .service-description {
-      font-size: 0.8rem;
-      max-width: 320px;
+      font-size: 1rem;
+      max-width: 100%;
       margin-left: auto;
       margin-right: auto;
       line-height: 1.25rem;
@@ -246,12 +251,9 @@
     .carousel-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 2rem;
       max-width: 1120px;
-      margin: 0 auto;
-      justify-content: center;
     }
-
     @media (min-width: 768px) {
       .carousel-grid {
         grid-template-columns: repeat(4, 1fr);
@@ -268,7 +270,7 @@
       user-select: none;
       display: flex;
       flex-direction: column;
-      max-width: 280px;
+      max-width: 320px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -290,7 +292,7 @@
 
     .carousel-grid img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
       flex-shrink: 0;
     }
@@ -328,3 +330,12 @@
     .carousel-dots span.active {
       background-color: #f58220;
     }
+
+    /* Tambahan untuk section full width */
+.section-full {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

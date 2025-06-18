@@ -24,4 +24,19 @@ class ProductController extends Controller
     // Jika ingin return JSON (untuk AJAX)
     return response()->json($products);
     }
+    public function show($id)
+    {
+        $product = \App\Models\ProductCollection::with(['catalog', 'region', 'images'])->findOrFail($id);
+
+        $recommendations = \App\Models\ProductCollection::with('images')
+            ->where('productcatalogid', $product->productcatalogid)
+            ->where('productid', '!=', $product->productid)
+            ->limit(6)
+            ->get();
+
+        return view('user.product.productdetail', [
+            'product' => $product,
+            'recommendations' => $recommendations,
+        ]);
+    }
 }

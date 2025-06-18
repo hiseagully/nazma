@@ -72,27 +72,42 @@
                     <td class="py-2 px-6 border-b text-center">{{ $product->productpricedollar }}</td>
                     <td class="py-2 px-6 border-b text-center">{{ $product->productweight }}</td>
                     <td class="py-2 px-6 border-b text-center">{{ $product->productstock }}</td>
-                    <td class="py-2 px-6 border-b flex justify-center gap-2 text-center">
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm flex items-center"
-                            data-id="{{ $product->productid }}"
-                            data-catalog="{{ $product->productcatalogid }}"
-                            data-region="{{ $product->productregionsid }}"
-                            data-name="{{ addslashes($product->productname) }}"
-                            data-description="{{ addslashes($product->productdescription) }}"
-                            data-pricerupiah="{{ $product->productpricerupiah }}"
-                            data-pricedollar="{{ $product->productpricedollar }}"
-                            data-weight="{{ $product->productweight }}"
-                            data-stock="{{ $product->productstock }}"
-                            onclick="openEditModal(this)">
-                            <i class="fas fa-edit mr-1"></i> Edit
+                    <td class="py-2 px-6 border-b text-center">
+                      <div class="flex justify-center gap-2">
+                        <!-- Tombol Edit -->
+                        <button
+                          class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm flex items-center"
+                          data-id="{{ $product->productid }}"
+                          data-catalog="{{ $product->productcatalogid }}"
+                          data-region="{{ $product->productregionsid }}"
+                          data-name="{{ addslashes($product->productname) }}"
+                          data-description="{{ addslashes($product->productdescription) }}"
+                          data-pricerupiah="{{ $product->productpricerupiah }}"
+                          data-pricedollar="{{ $product->productpricedollar }}"
+                          data-weight="{{ $product->productweight }}"
+                          data-stock="{{ $product->productstock }}"
+                          onclick="openEditModal(this)"
+                        >
+                          <i class="fas fa-edit mr-1"></i> Edit
                         </button>
-                        <form action="{{ route('productcollection.destroy', ['productcollection' => $product->productid]) }}" method="POST" onsubmit="return confirm('Delete this product?')" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center">
-                                <i class="fas fa-trash mr-1"></i> Delete
-                            </button>
+
+                        <!-- Form Delete -->
+                        <form
+                          action="{{ route('productcollection.destroy', ['productcollection' => $product->productid]) }}"
+                          method="POST"
+                          onsubmit="return confirm('Delete this product?')"
+                          class="inline"
+                        >
+                          @csrf
+                          @method('DELETE')
+                          <button
+                            type="submit"
+                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center"
+                          >
+                            <i class="fas fa-trash mr-1"></i> Delete
+                          </button>
                         </form>
+                      </div>
                     </td>
                 </tr>
                 @empty

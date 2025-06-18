@@ -48,10 +48,7 @@ Route::resource('training', TrainingProgramController::class);
 
 // Product (user)
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-Route::get('/productdetail/{id}', function ($id) {
-    $product = ProductCollection::with(['catalog', 'region'])->findOrFail($id);
-    return view('user.product.productdetail', compact('product'));
-});
+Route::get('/product/detail/{id}', [ProductController::class, 'show'])->name('product.detail');
 Route::get('/productcart', [CartController::class, 'productcart']);
 Route::get('/productdata', [ProductCollectionController::class, 'productdata'])->name('productdata');
 Route::post('/cart/add/{productid}', [CartController::class, 'add'])->name('cart.add');
