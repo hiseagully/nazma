@@ -50,4 +50,10 @@ class User extends Authenticatable
     {
         return $this->user_email;
     }
+
+    // Relasi ke cart
+    public function cart()
+    {
+        return $this->hasOne(\App\Models\Carts::class, 'user_id', 'user_id');
+    }
 }

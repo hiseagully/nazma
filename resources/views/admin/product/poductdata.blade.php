@@ -54,6 +54,20 @@
       <div class="mb-2"><strong>Kabupaten/Kota</strong><br>{{ $city }}</div>
       <div class="mb-2"><strong>Full Address</strong><br>{{ $user->full_address ?? '-' }}</div>
      </div>
+     <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 max-w-lg">
+      <h3 class="font-semibold mb-3 text-lg">Admin/User Pembuat Produk</h3>
+      @if(isset($admin))
+        <div class="mb-2"><strong>Email</strong><br>{{ $admin->user_email ?? '-' }}</div>
+        <div class="mb-2"><strong>Name</strong><br>{{ $admin->user_name ?? '-' }}</div>
+        <div class="mb-2"><strong>Phone Number</strong><br>{{ $admin->user_phone ?? '-' }}</div>
+        <div class="mb-2"><strong>Country</strong><br>{{ $admin->country_name ?? '-' }}</div>
+        <div class="mb-2"><strong>Provinsi</strong><br>{{ $admin->district_name ? trim(explode(',', $admin->district_name)[0]) : '-' }}</div>
+        <div class="mb-2"><strong>Kabupaten/Kota</strong><br>{{ $admin->district_name ? trim(explode(',', $admin->district_name)[1] ?? '-') : '-' }}</div>
+        <div class="mb-2"><strong>Full Address</strong><br>{{ $admin->full_address ?? '-' }}</div>
+      @else
+        <div class="text-gray-500">Data admin/pembuat produk tidak tersedia.</div>
+      @endif
+     </div>
      <div class="overflow-x-auto">
       <table class="min-w-full bg-white border border-gray-200 rounded-lg">
        <thead>

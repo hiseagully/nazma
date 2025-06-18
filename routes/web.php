@@ -49,7 +49,7 @@ Route::get('/productdetail/{id}', function ($id) {
     return view('user.product.productdetail', compact('product'));
 });
 Route::get('/productcart', [CartController::class, 'productcart']);
-Route::get('/productdata', function () { return view('user.product.productdata'); });
+Route::get('/productdata', [ProductCollectionController::class, 'productdata'])->name('productdata');
 Route::post('/cart/add/{productid}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/producttransaction', function () { return view('user.product.producttransaction'); });
 Route::get('/productorder', function () { return view('user.product.productorder'); });
@@ -192,3 +192,4 @@ Route::post('/midtrans/notification', [TrainingTransactionController::class, 'ha
 
 //search
 Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
+

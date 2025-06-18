@@ -11,6 +11,7 @@ class ProductCollection extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
+        'user_id',
         'productcatalogid',
         'productregionsid',
         'productname',

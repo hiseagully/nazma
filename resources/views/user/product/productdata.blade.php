@@ -63,10 +63,14 @@
      <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded">
       <div class="mb-2 font-semibold text-sm text-gray-700">Sender Address (Admin)</div>
       <div class="text-xs text-gray-700">
-        {{ $admin_name ?? '-' }}<br>
-        {{ $admin_full_address ?? '-' }}<br>
-        {{ $admin_district_name ?? '-' }}<br>
-        {{ $admin_country_name ?? '-' }}
+        @if(isset($admin) && $admin)
+          {{ $admin->user_name ?? '-' }}<br>
+          {{ $admin->full_address ?? '-' }}<br>
+          {{ $admin->district_name ?? '-' }}<br>
+          {{ $admin->country_name ?? '-' }}
+        @else
+          <span class="text-gray-400">Data admin tidak tersedia.</span>
+        @endif
       </div>
       <div class="mt-3 mb-2 font-semibold text-sm text-gray-700">Recipient Address (You)</div>
       <div class="text-xs text-gray-700">
@@ -81,54 +85,63 @@
     <section aria-labelledby="payment-title"class="bg-white rounded-xl p-6 w-full max-w-md shadow-md flex flex-col justify-between">
       <h2 class="font-bold text-lg mb-6" id="payment-title">Payment</h2>
       <!-- Produk dinamis dari localStorage -->
-      <div id="dynamic-product-list" class="space-y-4 mb-8"></div>
-      <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const productList = document.getElementById('dynamic-product-list');
-        let total = 0;
-        // Ambil data dari localStorage (checkoutProducts) atau fallback ke selectedCartItems
-        let products = JSON.parse(localStorage.getItem('checkoutProducts') || '[]');
-        if (!products.length) {
-          products = JSON.parse(localStorage.getItem('selectedCartItems') || '[]');
-        }
-        if (products.length === 0) {
-          productList.innerHTML = '<div class="text-gray-500 text-center">Tidak ada produk yang dipilih.</div>';
-        } else {
-          productList.innerHTML = '';
-          products.forEach(item => {
-            const subtotal = (item.qty || 1) * (item.price || item.productpricedollar || 0);
-            total += subtotal;
-            productList.innerHTML += `
-              <div class='flex items-center gap-3 py-2'>
-                <img alt='${item.name}' src='${item.image}' class='w-20 h-20 rounded-lg object-cover flex-shrink-0 border border-gray-200' width='80' height='80'/>
-                <div class='flex-1 min-w-0 flex flex-col justify-center'>
-                  <div class='flex items-center justify-between mb-0.5'>
-                    <span class='text-xs text-gray-500'>${item.category || '-'}</span>
-                    <span class='text-xs text-gray-700'>Qty: <span class='font-semibold'>${item.qty}</span></span>
-                  </div>
-                  <p class='font-semibold text-sm truncate mb-0.5' title='${item.name}'>${item.name}</p>
-                  <div class='flex items-center justify-between'>
-                    <span class='text-xs text-gray-500'>Price:</span>
-                    <span class='text-sm font-normal'>$ ${(item.price || item.productpricedollar || 0)}</span>
-                  </div>
-                  <div class='flex items-center justify-between mt-0.5'>
-                    <span class='text-xs text-gray-500'>Subtotal:</span>
-                    <span class='text-sm font-semibold'>$ ${subtotal}</span>
-                  </div>
+      <div id="dynamic-product-list" class="space-y-4 mb-8">
+        @if(isset($product))
+          @php
+            $qtyVal = isset($qty) ? (int)$qty : 1;
+            $subtotal = $product->productpricedollar * $qtyVal;
+            $totalPurchase = $subtotal;
+          @endphp
+          <div class='flex items-center gap-3 py-2'>
+            <img alt='{{ $product->productname }}' src='{{ count($product->images) ? asset('storage/' . $product->images->first()->image_path) : asset('images/noimage.png') }}' class='w-20 h-20 rounded-lg object-cover flex-shrink-0 border border-gray-200' width='80' height='80'/>
+            <div class='flex-1 min-w-0 flex flex-col justify-center'>
+              <div class='flex items-center justify-between mb-0.5'>
+                <span class='text-xs text-gray-500'>{{ $product->catalog->productcatalogname ?? '-' }}</span>
+                <span class='text-xs text-gray-700'>Qty: <span class='font-semibold'>{{ $qtyVal }}</span></span>
+              </div>
+              <p class='font-semibold text-sm truncate mb-0.5' title='{{ $product->productname }}'>{{ $product->productname }}</p>
+              <div class='flex items-center justify-between'>
+                <span class='text-xs text-gray-500'>Price:</span>
+                <span class='text-sm font-normal'>$ {{ $product->productpricedollar }}</span>
+              </div>
+              <div class='flex items-center justify-between mt-0.5'>
+                <span class='text-xs text-gray-500'>Subtotal:</span>
+                <span class='text-sm font-semibold'>$ {{ number_format($subtotal, 2) }}</span>
+              </div>
+            </div>
+          </div>
+        @elseif(isset($products) && $products->count())
+          @php $totalPurchase = 0; @endphp
+          @foreach($products as $prod)
+            @php
+              $qtyVal = isset($qtyMap[$prod->productid]) ? (int)$qtyMap[$prod->productid] : 1;
+              $subtotal = $prod->productpricedollar * $qtyVal;
+              $totalPurchase += $subtotal;
+            @endphp
+            <div class='flex items-center gap-3 py-2'>
+              <img alt='{{ $prod->productname }}' src='{{ count($prod->images) ? asset('storage/' . $prod->images->first()->image_path) : asset('images/noimage.png') }}' class='w-20 h-20 rounded-lg object-cover flex-shrink-0 border border-gray-200' width='80' height='80'/>
+              <div class='flex-1 min-w-0 flex flex-col justify-center'>
+                <div class='flex items-center justify-between mb-0.5'>
+                  <span class='text-xs text-gray-500'>{{ $prod->catalog->productcatalogname ?? '-' }}</span>
+                  <span class='text-xs text-gray-700'>Qty: <span class='font-semibold'>{{ $qtyVal }}</span></span>
+                </div>
+                <p class='font-semibold text-sm truncate mb-0.5' title='{{ $prod->productname }}'>{{ $prod->productname }}</p>
+                <div class='flex items-center justify-between'>
+                  <span class='text-xs text-gray-500'>Price:</span>
+                  <span class='text-sm font-normal'>$ {{ $prod->productpricedollar }}</span>
+                </div>
+                <div class='flex items-center justify-between mt-0.5'>
+                  <span class='text-xs text-gray-500'>Subtotal:</span>
+                  <span class='text-sm font-semibold'>$ {{ number_format($subtotal, 2) }}</span>
                 </div>
               </div>
-              <hr class='border-gray-200'/>
-            `;
-          });
-        }
-        // Update total purchase
-        const totalPurchase = document.getElementById('total-purchase');
-        if (totalPurchase) totalPurchase.textContent = `$ ${total}`;
-      });
-      </script>
+            </div>
+          @endforeach
+        @endif
+      </div>
       <div class="flex justify-between font-semibold text-sm">
         <span>Total Purchase:</span>
-        <span id="total-purchase">$ 0.00</span>
+        <span id="total-purchase">$ {{ number_format(isset($totalPurchase) ? $totalPurchase : 0, 2) }}</span>
       </div>
       <div class="flex flex-col gap-4">
         <div>

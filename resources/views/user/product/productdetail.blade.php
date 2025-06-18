@@ -75,9 +75,10 @@
             Add to cart
           </button>
         </form>
-        <a href="/productdata" class="w-full">
-          <button id="buy-now-btn" class="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full px-6 py-2 font-semibold hover:brightness-110 transition" type="button">Buy Now</button>
-        </a>
+        <form id="buy-now-form" action="{{ route('productcollection.show', ['productcollection' => $product->productid]) }}" method="GET" class="w-full">
+          <input type="hidden" name="qty" id="buy-now-qty" value="1">
+          <button id="buy-now-btn" class="w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full px-6 py-2 font-semibold hover:brightness-110 transition" type="submit">Buy Now</button>
+        </form>
       </div>
     </section>
   </main>
@@ -128,11 +129,14 @@
       const qtyValue = document.getElementById('qty-value');
       const totalPrice = document.getElementById('total-price');
       const cartQtyInput = document.getElementById('cart-qty');
+      const buyNowForm = document.getElementById('buy-now-form');
+      const buyNowQtyInput = document.getElementById('buy-now-qty');
       document.getElementById('qty-increase').onclick = function() {
         qty++;
         qtyValue.textContent = qty;
         totalPrice.textContent = '$' + (qty * price).toLocaleString();
         cartQtyInput.value = qty;
+        buyNowQtyInput.value = qty;
       };
       document.getElementById('qty-decrease').onclick = function() {
         if (qty > 1) {
@@ -140,26 +144,9 @@
           qtyValue.textContent = qty;
           totalPrice.textContent = '$' + (qty * price).toLocaleString();
           cartQtyInput.value = qty;
+          buyNowQtyInput.value = qty;
         }
       };
-
-      // BUY NOW: simpan data produk ke localStorage dan redirect
-      const buyNowBtn = document.getElementById('buy-now-btn');
-      if (buyNowBtn) {
-        buyNowBtn.addEventListener('click', function() {
-          const productData = {
-            id: {{ $product->productid }},
-            name: @json($product->productname),
-            image: @json(count($images) ? asset('storage/' . $images[0]->image_path) : asset('images/noimage.png')),
-            category: @json($product->catalog->productcatalogname ?? '-'),
-            productpricedollar: {{ $product->productpricedollar }},
-            productpricerupiah: {{ $product->productpricerupiah }},
-            qty: qty
-          };
-          localStorage.setItem('selectedCartItems', JSON.stringify([productData]));
-          window.location.href = '/productdata';
-        });
-      }
 
       // --- Carousel Logic ---
       const images = [
