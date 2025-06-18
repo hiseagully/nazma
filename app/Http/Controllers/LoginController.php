@@ -34,7 +34,7 @@ class LoginController extends Controller
         if ($user->role === 'admin') {
             return redirect('/dashboardadmin'); // Ganti dengan route dashboard admin kamu
         } else {
-            return redirect('/landingpage'); // Atau route user biasa
+            return redirect('/'); // Atau route user biasa
         }
     }
 
@@ -45,7 +45,7 @@ class LoginController extends Controller
     Auth::logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
-    return redirect('/landingpage');
+    return redirect('/');
 }
 }
 

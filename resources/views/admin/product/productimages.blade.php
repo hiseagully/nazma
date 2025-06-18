@@ -72,15 +72,28 @@
             </form>
           @endif
          </td>
-         <td class="py-2 px-4 border-b flex justify-center gap-2 text-center">
-          <form action="{{ route('productimages.destroy', $img->productimageid) }}" method="POST" onsubmit="return confirm('Delete this image?')" class="inline">
-           @csrf
-           @method('DELETE')
-           <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center">
-            <i class="fas fa-trash mr-1"></i> Delete
-           </button>
-          </form>
-         </td>
+          <td class="py-2 px-4 border-b text-center">
+            <div class="flex justify-center gap-2">
+              <!-- Delete Button -->
+              <form action="{{ route('productimages.destroy', $img->productimageid) }}" method="POST" onsubmit="return confirm('Delete this image?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center">
+                  <i class="fas fa-trash mr-1"></i> Delete
+                </button>
+              </form>
+
+              <!-- Set as Thumbnail Button (shown only if not already a thumbnail) -->
+              @unless($img->is_thumbnail)
+              <form action="{{ route('productimages.setThumbnail', $img->productimageid) }}" method="POST">
+                @csrf
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm flex items-center">
+                  <i class="fas fa-image mr-1"></i> Set Thumbnail
+                </button>
+              </form>
+              @endunless
+            </div>
+          </td>
         </tr>
         @empty
         <tr>

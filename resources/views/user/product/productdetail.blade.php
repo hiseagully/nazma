@@ -120,6 +120,26 @@
       </p>
     </div>
   </section>
+  @if($recommendations->count())
+  <section class="container mb-16">
+      <h3 class="description-title mb-4">Your Recommendation</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          @foreach($recommendations as $rec)
+          <a href="/product/detail/{{ $rec->productid }}" class="block bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+              <img src="{{ $rec->images->first() ? asset('storage/' . $rec->images->first()->image_path) : asset('images/noimage.png') }}"
+                   alt="{{ $rec->productname }}"
+                   class="w-full h-48 object-cover">
+              <div class="p-4">
+                  <div class="text-xs text-gray-400 mb-1">{{ $rec->catalog->productcatalogname ?? '-' }}</div>
+                  <div class="font-semibold text-base mb-1 truncate">{{ $rec->productname }}</div>
+                  <div class="text-orange-500 font-bold text-sm mb-1">${{ $rec->productpricedollar }}</div>
+                  <div class="text-xs text-gray-500 truncate">{{ Str::limit($rec->productdescription, 40) }}</div>
+              </div>
+          </a>
+          @endforeach
+      </div>
+  </section>
+  @endif
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       let qty = 1;

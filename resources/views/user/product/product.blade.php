@@ -30,7 +30,7 @@
    </div>
    <div id="product-list" aria-label="Product list" class="grid grid-cols-2 sm:grid-cols-5 gap-6">
     @foreach($products as $product)
-    <a href="/productdetail/{{ $product->productid }}">
+    <a href="/product/detail/{{ $product->productid }}">
       <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
         <img alt="{{ $product->productname }}" class="rounded-lg mb-3" height="200" loading="lazy" src="{{ optional($product->images->where('is_thumbnail', true)->first())->image_path ? asset('storage/' . $product->images->where('is_thumbnail', true)->first()->image_path) : asset('images/noimage.png') }}" width="200"/>
         <div class="flex justify-between items-center w-full">
@@ -57,7 +57,7 @@
     </a>
     @endforeach
    </div>
-   <div id="search-empty" class="hidden text-center text-gray-400 mt-8">Produk tidak ditemukan.</div>
+   <div id="search-empty" class="hidden text-center text-gray-400 mt-8">Produk not Found.</div>
   </main>
   <x-footer></x-footer>
   @php
@@ -127,7 +127,7 @@
 
     function renderProductCard(product) {
       return `
-      <a href="/productdetail/${product.productid}">
+      <a href="/product/detail/${product.productid}">
         <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
           <img alt="${product.productname}" class="rounded-lg mb-3" height="200" loading="lazy" src="${product.thumbnail ? product.thumbnail : '/images/noimage.png'}" width="200"/>
           <div class="flex justify-between items-center w-full">
@@ -166,7 +166,7 @@
         let html = '';
         allProducts.forEach(product => {
           html += `
-          <a href="/productdetail/${product.productid}">
+          <a href="/product/detail/${product.productid}">
             <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
               <img alt="${product.productname}" class="rounded-lg mb-3" height="200" loading="lazy" src="${product.thumbnail ? product.thumbnail : '/images/noimage.png'}" width="200"/>
               <div class="flex justify-between items-center w-full">
@@ -210,7 +210,7 @@
           const notMatch = allProducts.filter(p => !p.productname.toLowerCase().includes(keywordLower));
           match.forEach(product => {
             html += `
-            <a href="/productdetail/${product.productid}">
+            <a href="/product/detail/${product.productid}">
               <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
                 <img alt="${product.productname}" class="rounded-lg mb-3" height="200" loading="lazy" src="${product.thumbnail ? product.thumbnail : '/images/noimage.png'}" width="200"/>
                 <div class="flex justify-between items-center w-full">
@@ -234,7 +234,7 @@
           });
           notMatch.forEach(product => {
             html += `
-            <a href="/productdetail/${product.productid}">
+            <a href="/product/detail/${product.productid}">
               <article class="bg-white rounded-xl p-4 flex flex-col items-start select-none" style="font-family: 'Inter', sans-serif">
                 <img alt="${product.productname}" class="rounded-lg mb-3" height="200" loading="lazy" src="${product.thumbnail ? product.thumbnail : '/images/noimage.png'}" width="200"/>
                 <div class="flex justify-between items-center w-full">
