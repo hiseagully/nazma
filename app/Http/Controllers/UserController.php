@@ -99,4 +99,14 @@ class UserController extends Controller
         $user = auth()->user();
         return view('user.profile', compact('user'));
     }
+
+    // Tampilkan semua user untuk admin
+    public function adminIndex()
+    {
+        $users = User::all();
+        return view('admin.userdata', [
+            'users' => $users,
+            'activeMenu' => 'users',
+        ]);
+    }
 }
